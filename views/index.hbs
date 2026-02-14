@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }} - Marketing Solution</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    {{> header }}
+
+    <section class="hero">
+        <div class="container">
+            <h1>Heading</h1>
+            <p>Subheading <br> Subheading</p>
+            <a href="#" class="btn btn-primary">Join With Us</a>
+        </div>
+    </section>
+
+    <section class="about">
+        <div class="container">
+            <div class="section-heading">
+                <h2>About Us</h2>
+            </div>
+            <div class="about-grid">
+                <div>
+                    <h2>Heading</h2>
+                    <p>Subheading</p>
+                    <p>Subheading</p>
+                </div>
+                <div>
+                    <!-- Details from image -->
+                    <div style="background: white; padding: 20px; border-radius: 10px; box-shadow: var(--shadow-subtle);">
+                        <p><strong>Heading</strong></p>
+                        <p style="font-size: 0.9rem; color: var(--text-light);">Description detail...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="stats">
+        <div class="container">
+            <div class="stats-container">
+                <div class="stat-item">
+                    <h3>10,000+</h3>
+                    <p>Mạng lưới KOLs, KOCs lớn nhất</p>
+                </div>
+                <!-- Additional column as seen in design -->
+                <div style="text-align: left;">
+                    <h3 style="font-size: 2rem; color: var(--secondary);">Heading</h3>
+                    <p style="color: var(--text-light);">Subheading <br> Subheading</p>
+                    <a href="#" class="btn btn-primary" style="background: #3acbff; color: white; padding: 10px 20px; margin-top: 15px;">Read more</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="clients">
+        <div class="container">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px;">
+                <div>
+                  <h2 style="font-size: 1.5rem; color: var(--secondary);">Our Client</h2>
+                </div>
+                <div>
+                  <p style="color: var(--text-light); max-width: 300px; text-align: right; font-size: 0.9rem;">
+                    Nơi gửi gắm niềm tin của hơn 200+ chiến dịch lớn.
+                  </p>
+                </div>
+            </div>
+            <div class="clients-grid">
+                <div class="client-box"></div>
+                <div class="client-box"></div>
+                <div class="client-box" style="background: none; border: none; text-align: left; padding: 20px;">
+                    <p style="font-size: 0.8rem;">“Sự hài lòng của khách hàng là thước đo thành công của chúng tôi.”</p>
+                </div>
+                <div class="client-box"></div>
+                <div class="client-box"></div>
+                <div class="client-box" style="background: none; border: none; text-align: right; padding: 20px;">
+                    <p style="font-size: 0.8rem;">Đối tác chiến lược toàn diện trong lĩnh vực truyền thông.</p>
+                </div>
+                <div class="client-box"></div>
+                <div class="client-box"></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="services">
+        <div class="container">
+            <div class="section-heading">
+                <h2>What we do?</h2>
+            </div>
+            <div class="services-grid">
+                <div class="service-card"><h4>Name of service</h4><p>Description...</p></div>
+                <div class="service-card"><h4>Name of service</h4><p>Description...</p></div>
+                <div class="service-card"><h4>Name of service</h4><p>Description...</p></div>
+                <div class="service-card"><h4>Name of service</h4><p>Description...</p></div>
+                <div class="service-card"><h4>Name of service</h4><p>Description...</p></div>
+                <div class="service-card"><h4>Name of service</h4><p>Description...</p></div>
+                <div class="service-card"><h4>Name of service</h4><p>Description...</p></div>
+                <div class="service-card"><h4>Name of service</h4><p>Description...</p></div>
+                <div class="service-card"><h4>Name of service</h4><p>Description...</p></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="case-studies">
+        <div class="container">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px;">
+                <h2 style="color: var(--secondary);">Case studies</h2>
+                <a href="#" style="color: var(--primary); font-size: 0.9rem;">Xem tất cả các chiến dịch →</a>
+            </div>
+            <div class="case-card">
+                <div class="case-img"></div>
+                <div class="case-content">
+                    <h3>Title</h3>
+                    <p style="color: var(--text-light); margin: 15px 0;">Nội dung của chiến dịch đã triển khai thành công, mang lại hiệu quả cao cho khách hàng về doanh thu và thương hiệu.</p>
+                    <a href="#" style="color: var(--primary); font-weight: 600;">Xem chi tiết →</a>
+                </div>
+            </div>
+            <div class="case-card" style="grid-template-columns: 2fr 1fr;">
+                <div class="case-content">
+                    <h3>Title</h3>
+                    <p style="color: var(--text-light); margin: 15px 0;">Chiến dịch viral truyền cảm hứng trên mạng xã hội với hàng triệu lượt tương tác từ người dùng.</p>
+                    <a href="#" style="color: var(--primary); font-weight: 600;">Xem chi tiết →</a>
+                </div>
+                <div class="case-img"></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="faq">
+        <div class="container">
+            <div class="section-heading">
+                <h2>Frequency asked questions</h2>
+            </div>
+            <div class="faq-grid">
+                <div class="faq-img"></div>
+                <div>
+                    <h3 style="color: var(--secondary); margin-bottom: 20px;">Bạn còn thắc mắc ?</h3>
+                    <p style="color: var(--text-light); margin-bottom: 30px;">Để lại thông tin để được tư vấn miễn phí ngay hôm nay.</p>
+                    <a href="#" class="btn btn-primary" style="background: var(--primary); color: white;">Liên hệ ngay</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="contact-section" style="padding: 100px 0;">
+        <div class="container">
+            <div class="contact-box">
+                <h2 style="font-size: 2.5rem; color: var(--secondary); margin-bottom: 20px;">Contact Us!</h2>
+                <p style="color: var(--text-light); margin-bottom: 40px;">Chúng tôi luôn sẵn sàng lắng nghe và đưa ra giải pháp tốt nhất cho bạn.</p>
+                <a href="#" class="btn btn-primary" style="background: #3acbff; color: white; padding: 15px 40px;">Gửi tin nhắn cho chúng tôi</a>
+            </div>
+        </div>
+    </section>
+
+    {{> footer }}
+
+    <script src="/js/main.js"></script>
+</body>
+</html>
