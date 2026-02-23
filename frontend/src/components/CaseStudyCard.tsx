@@ -20,14 +20,14 @@ const CaseStudyCard = ({
   isReversed = false,
 }: CaseStudyCardProps) => {
   return (
-    <div id={id} className="scroll-mt-32 mb-10">
+    <div id={id} className="scroll-mt-24">
       <div
-        className={`group flex flex-col md:flex-row items-stretch min-h-[380px] bg-white rounded-2xl overflow-hidden border border-[#E8EDF2] hover:border-[#93D8FF] hover:shadow-[0_20px_60px_rgba(0,129,201,0.08)] transition-all duration-500 ${
+        className={`group flex flex-col md:flex-row items-stretch min-h-[320px] bg-white rounded-2xl overflow-hidden border border-[#E8EDF2] hover:border-[#93D8FF]/60 hover:shadow-[0_8px_40px_rgba(0,129,201,0.08)] transition-all duration-400 ${
           isReversed ? 'md:flex-row-reverse' : ''
         }`}
       >
         {/* Image Section */}
-        <div className="flex-1 relative overflow-hidden min-h-[250px] md:min-h-full bg-[#F7F9FC]">
+        <div className="md:w-[45%] relative overflow-hidden min-h-[220px] md:min-h-full bg-[#F7F9FC] shrink-0">
           {imgSrc ? (
             <img
               src={imgSrc}
@@ -41,12 +41,12 @@ const CaseStudyCard = ({
           )}
           {/* Gradient overlay */}
           <div
-            className={`absolute inset-0 bg-gradient-to-${isReversed ? 'l' : 'r'} from-transparent to-black/10 hidden md:block`}
+            className={`absolute inset-0 bg-gradient-to-${isReversed ? 'l' : 'r'} from-transparent to-black/5 hidden md:block`}
           ></div>
 
           {/* Tags on image */}
           {tags.length > 0 && (
-            <div className="absolute top-4 left-4 flex gap-2">
+            <div className="absolute top-4 left-4 flex flex-wrap gap-1.5">
               {tags.map((tag, i) => (
                 <span
                   key={i}
@@ -60,22 +60,22 @@ const CaseStudyCard = ({
         </div>
 
         {/* Content Section */}
-        <div className="flex-1 p-8 md:p-10 flex flex-col justify-center">
-          <h3 className="text-xl md:text-2xl font-bold text-[#0A1628] mb-4 leading-snug">
+        <div className="flex-1 p-7 md:p-9 flex flex-col justify-center">
+          <h3 className="text-lg md:text-xl font-bold text-[#0A1628] mb-3 leading-snug">
             {title}
           </h3>
-          <p className="text-gray-500 mb-6 leading-relaxed text-sm">
+          <p className="text-gray-500 mb-5 leading-relaxed text-[13px]">
             {description}
           </p>
 
           {/* Metric */}
           {metric && (
-            <div className="mb-6 pb-6 border-b border-[#E8EDF2]">
-              <div className="flex items-end gap-3">
-                <span className="text-3xl md:text-4xl font-extrabold text-[#0081C9] leading-none">
+            <div className="mb-5 pb-5 border-b border-[#F0F2F5]">
+              <div className="flex items-end gap-2.5">
+                <span className="text-2xl md:text-3xl font-extrabold text-[#0081C9] leading-none">
                   {metric}
                 </span>
-                <span className="text-[#999] text-xs font-medium uppercase tracking-[1px] pb-1">
+                <span className="text-[#999] text-[10px] font-medium uppercase tracking-[1px] pb-0.5">
                   {metricLabel}
                 </span>
               </div>
@@ -84,7 +84,7 @@ const CaseStudyCard = ({
 
           <a
             href="#"
-            className="text-[#0081C9] font-semibold text-sm flex items-center gap-2 group-hover:gap-3 transition-all"
+            className="text-[#0081C9] font-semibold text-sm flex items-center gap-1.5 group-hover:gap-2.5 transition-all"
           >
             Xem chi tiết <span className="text-base">→</span>
           </a>

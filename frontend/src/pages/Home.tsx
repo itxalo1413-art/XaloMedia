@@ -26,7 +26,7 @@ const Home = () => {
       <ScrollReveal>
         <CaseStudies />
       </ScrollReveal>
-      <Testimonials />
+      {/* <Testimonials /> */}
       <ScrollReveal>
         <FAQ />
       </ScrollReveal>

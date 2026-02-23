@@ -34,14 +34,18 @@ const About = () => {
           </ScrollReveal>
         </div>
 
-        {/* Gradient banner with "Since 2020" */}
-        <div className="relative w-full h-[350px] md:h-[450px] overflow-hidden">
-          <div className="absolute inset-0 hero-gradient-bg"></div>
-          <div className="absolute w-[400px] h-[400px] rounded-full bg-[#93D8FF]/10 blur-[100px] top-[-100px] right-[10%] hero-orb-1"></div>
-          <div className="absolute w-[300px] h-[300px] rounded-full bg-white/5 blur-[80px] bottom-[-50px] left-[20%] hero-orb-2"></div>
+        {/* Hero image banner */}
+        <div className="relative w-full h-[350px] md:h-[500px] overflow-hidden">
+          <img
+            src="/about-hero.png"
+            alt="Xalo Media Digital Workspace"
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0A1628]/80 via-[#0A1628]/40 to-transparent"></div>
+          <div className="absolute inset-0 bg-gradient-to-r from-[#0081C9]/20 to-transparent"></div>
 
           <div className="absolute inset-0 flex flex-col items-center justify-center z-10 text-center px-5">
-            <p className="text-white/50 text-sm tracking-[4px] uppercase mb-4">
+            <p className="text-white/60 text-sm tracking-[4px] uppercase mb-4">
               Since 2020
             </p>
             <h2 className="text-4xl md:text-6xl font-bold text-white leading-tight">
@@ -60,15 +64,71 @@ const About = () => {
           <ScrollReveal>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
               {[
-                { number: '10,000+', label: 'KOLs / KOCs', icon: '👥' },
-                { number: '500+', label: 'Brand Partners', icon: '🤝' },
-                { number: '2M+', label: 'Reach', icon: '📈' },
+                {
+                  number: '10,000+',
+                  label: 'KOLs / KOCs',
+                  icon: (
+                    <svg
+                      className="w-8 h-8 text-[#0081C9]"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={1.5}
+                        d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
+                      />
+                    </svg>
+                  ),
+                },
+                {
+                  number: '500+',
+                  label: 'Brand Partners',
+                  icon: (
+                    <svg
+                      className="w-8 h-8 text-[#0081C9]"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={1.5}
+                        d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                      />
+                    </svg>
+                  ),
+                },
+                {
+                  number: '2M+',
+                  label: 'Reach',
+                  icon: (
+                    <svg
+                      className="w-8 h-8 text-[#0081C9]"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={1.5}
+                        d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
+                      />
+                    </svg>
+                  ),
+                },
               ].map((stat, i) => (
                 <div
                   key={i}
-                  className="group bg-white rounded-2xl p-8 border border-[#E8EDF2] hover:border-[#93D8FF] hover:shadow-[0_20px_60px_rgba(0,129,201,0.08)] transition-all duration-500 text-center"
+                  className="group bg-white rounded-2xl p-8 border border-[#E8EDF2] hover:border-[#0081C9]/30 hover:shadow-[0_20px_60px_rgba(0,129,201,0.08)] transition-all duration-500 text-center"
                 >
-                  <span className="text-3xl mb-4 block">{stat.icon}</span>
+                  <div className="w-14 h-14 rounded-xl bg-[#0081C9]/8 flex items-center justify-center mx-auto mb-4 group-hover:bg-[#0081C9]/15 transition-colors duration-300">
+                    {stat.icon}
+                  </div>
                   <p className="text-3xl md:text-4xl font-extrabold text-[#0A1628] mb-2">
                     {stat.number}
                   </p>
@@ -80,6 +140,7 @@ const About = () => {
             </div>
           </ScrollReveal>
 
+          {/* Network section with image */}
           <ScrollReveal delay={0.15}>
             <div className="mt-16 flex flex-col md:flex-row items-center gap-10">
               <div className="flex-1">
@@ -97,22 +158,18 @@ const About = () => {
                   mang lại ROI cao nhất.
                 </p>
               </div>
-              <div className="flex-1 bg-gradient-to-br from-[#F0F7FF] to-[#E8F4FD] rounded-2xl p-10 flex items-center justify-center min-h-[280px]">
-                <div className="text-center">
-                  <div className="flex items-center justify-center gap-4 mb-6">
-                    {['🎥', '📱', '🎤', '💡'].map((emoji, i) => (
-                      <span
-                        key={i}
-                        className="w-14 h-14 rounded-full bg-white shadow-md flex items-center justify-center text-2xl"
-                      >
-                        {emoji}
-                      </span>
-                    ))}
-                  </div>
-                  <p className="text-[#0081C9] font-bold text-lg">
+              <div className="flex-1 rounded-2xl overflow-hidden min-h-[320px] relative">
+                <img
+                  src="/booking.png"
+                  alt="Mạng lưới KOLs/KOCs Xalo Media"
+                  className="absolute inset-0 w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0A1628]/60 to-transparent"></div>
+                <div className="absolute bottom-0 left-0 right-0 p-6">
+                  <p className="text-white font-bold text-lg">
                     Đa nền tảng • Đa ngành hàng
                   </p>
-                  <p className="text-gray-400 text-sm mt-1">
+                  <p className="text-white/60 text-sm mt-1">
                     TikTok • Instagram • YouTube • Facebook
                   </p>
                 </div>
@@ -173,15 +230,20 @@ const About = () => {
           <ScrollReveal delay={0.1}>
             <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
               {[
-                { name: 'Tiki', src: 'tiki.png' },
-                { name: 'VNPay', src: 'vnpay.png' },
-                { name: 'Viettel', src: 'viettel.png' },
-                { name: 'Pepsi', src: 'pepsi.png' },
-                { name: "L'Oréal", src: 'loreal.png' },
+                { name: 'Grab', src: '/Grab_Logo.svg.png' },
+                { name: 'Bitis', src: '/Icon-Bitis.webp' },
+                { name: 'FPT', src: '/Logo-FPT.webp' },
+                { name: 'MoMo', src: '/MoMo Logo.png' },
+                { name: 'Shopee', src: '/Shopee.svg.png' },
+                { name: 'Tiki', src: '/Tiki tách nền .png' },
+                { name: 'Lazada', src: '/lazada.png' },
+                { name: 'Techcombank', src: '/techcombank.webp' },
+                { name: 'VietJet Air', src: '/vietjetair.png' },
+                { name: 'Viettel', src: '/viettel.png' },
               ].map((partner, i) => (
                 <div
                   key={i}
-                  className="bg-white rounded-2xl p-6 border border-[#E8EDF2] hover:border-[#93D8FF] hover:shadow-[0_10px_40px_rgba(0,129,201,0.06)] transition-all duration-500 flex items-center justify-center min-h-[100px]"
+                  className="bg-white rounded-2xl p-6 border border-[#E8EDF2] hover:border-[#0081C9]/30 hover:shadow-[0_10px_40px_rgba(0,129,201,0.06)] transition-all duration-500 flex items-center justify-center min-h-[100px]"
                 >
                   <img
                     src={partner.src}
@@ -200,66 +262,106 @@ const About = () => {
         </div>
       </section>
 
-      {/* ═══════ VISION / MISSION ═══════ */}
+      {/* ═══════ VISION / MISSION with Images ═══════ */}
       <section className="relative w-full py-20 bg-white">
         <div className="max-w-[1240px] mx-auto px-5">
-          <div className="flex flex-col md:flex-row gap-14 items-start">
-            {/* Left heading */}
-            <ScrollReveal>
-              <div className="md:w-[380px] flex-shrink-0">
-                <p className="text-[#0081C9] font-semibold text-sm uppercase tracking-[3px] mb-3">
-                  Giá trị cốt lõi
-                </p>
-                <h3 className="text-2xl md:text-4xl font-bold text-[#0A1628] leading-snug">
-                  Chúng tôi tin vào{' '}
-                  <span className="text-[#0081C9]">sức mạnh kết nối</span>
-                </h3>
-              </div>
-            </ScrollReveal>
+          <ScrollReveal>
+            <div className="text-center mb-14">
+              <p className="text-[#0081C9] font-semibold text-sm uppercase tracking-[3px] mb-3">
+                Giá trị cốt lõi
+              </p>
+              <h3 className="text-2xl md:text-4xl font-bold text-[#0A1628] leading-snug">
+                Chúng tôi tin vào{' '}
+                <span className="text-[#0081C9]">sức mạnh kết nối</span>
+              </h3>
+            </div>
+          </ScrollReveal>
 
-            {/* Right cards */}
-            <div className="flex-1 flex flex-col gap-5">
-              <ScrollReveal delay={0.1}>
-                <div className="bg-gradient-to-br from-[#F0F7FF] to-white rounded-2xl p-8 border border-[#E8EDF2] hover:border-[#93D8FF] hover:shadow-[0_20px_60px_rgba(0,129,201,0.08)] transition-all duration-500">
-                  <div className="flex items-center gap-3 mb-4">
-                    <span className="w-10 h-10 rounded-full bg-[#0081C9]/10 flex items-center justify-center text-lg">
-                      ✦
-                    </span>
-                    <h4 className="text-lg font-bold text-[#0A1628]">
-                      Sứ mệnh
-                    </h4>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {/* Mission card */}
+            <ScrollReveal delay={0.1}>
+              <div className="group relative rounded-2xl overflow-hidden min-h-[380px] border border-[#E8EDF2] hover:border-[#0081C9]/30 hover:shadow-[0_20px_60px_rgba(0,129,201,0.08)] transition-all duration-500">
+                <img
+                  src="/about-team.png"
+                  alt="Đội ngũ Xalo Media"
+                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0A1628]/90 via-[#0A1628]/50 to-transparent"></div>
+                <div className="absolute bottom-0 left-0 right-0 p-8">
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="w-10 h-10 rounded-full bg-[#0081C9]/20 backdrop-blur-sm flex items-center justify-center">
+                      <svg
+                        className="w-5 h-5 text-[#93D8FF]"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={1.5}
+                          d="M13 10V3L4 14h7v7l9-11h-7z"
+                        />
+                      </svg>
+                    </div>
+                    <h4 className="text-xl font-bold text-white">Sứ mệnh</h4>
                   </div>
-                  <p className="text-gray-500 leading-relaxed">
+                  <p className="text-white/70 leading-relaxed">
                     Kết nối thương hiệu với đúng người, đúng thời điểm — thông
                     qua mạng lưới KOLs/KOCs lớn nhất và giải pháp truyền thông
                     sáng tạo, giúp doanh nghiệp bứt phá trên nền tảng số.
                   </p>
                 </div>
-              </ScrollReveal>
+              </div>
+            </ScrollReveal>
 
-              <ScrollReveal delay={0.2}>
-                <div className="bg-gradient-to-br from-[#F0F7FF] to-white rounded-2xl p-8 border border-[#E8EDF2] hover:border-[#93D8FF] hover:shadow-[0_20px_60px_rgba(0,129,201,0.08)] transition-all duration-500">
-                  <div className="flex items-center gap-3 mb-4">
-                    <span className="w-10 h-10 rounded-full bg-[#0081C9]/10 flex items-center justify-center text-lg">
-                      ◎
-                    </span>
-                    <h4 className="text-lg font-bold text-[#0A1628]">
-                      Tầm nhìn
-                    </h4>
+            {/* Vision card */}
+            <ScrollReveal delay={0.2}>
+              <div className="group relative rounded-2xl overflow-hidden min-h-[380px] border border-[#E8EDF2] hover:border-[#0081C9]/30 hover:shadow-[0_20px_60px_rgba(0,129,201,0.08)] transition-all duration-500">
+                <img
+                  src="/about-hero.png"
+                  alt="Tầm nhìn Xalo Media"
+                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0A1628]/90 via-[#0A1628]/50 to-transparent"></div>
+                <div className="absolute bottom-0 left-0 right-0 p-8">
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="w-10 h-10 rounded-full bg-[#0081C9]/20 backdrop-blur-sm flex items-center justify-center">
+                      <svg
+                        className="w-5 h-5 text-[#93D8FF]"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={1.5}
+                          d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                        />
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={1.5}
+                          d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+                        />
+                      </svg>
+                    </div>
+                    <h4 className="text-xl font-bold text-white">Tầm nhìn</h4>
                   </div>
-                  <p className="text-gray-500 leading-relaxed">
+                  <p className="text-white/70 leading-relaxed">
                     Trở thành agency hàng đầu Đông Nam Á về Influencer Marketing
                     và Livestream Commerce — nơi mà mọi thương hiệu đều có thể
                     tìm thấy giải pháp tăng trưởng bền vững.
                   </p>
                 </div>
-              </ScrollReveal>
-            </div>
+              </div>
+            </ScrollReveal>
           </div>
         </div>
       </section>
 
-      {/* ═══════ WHAT WE DO ═══════ */}
+      {/* ═══════ WHAT WE DO — with Images ═══════ */}
       <section className="relative w-full py-20 bg-[#F7F9FC]">
         <div className="max-w-[1240px] mx-auto px-5">
           <ScrollReveal>
@@ -282,45 +384,54 @@ const About = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
             {[
               {
-                icon: '🎬',
+                img: '/setupLive.png',
                 title: 'Setup Livestream',
                 desc: 'Dàn dựng studio, trang thiết bị và ekip chuyên nghiệp cho mọi phiên live.',
               },
               {
-                icon: '🤝',
+                img: '/booking.png',
                 title: 'Booking KOLs / KOCs',
                 desc: 'Kết nối thương hiệu với 10,000+ influencer từ nano đến mega level.',
               },
               {
-                icon: '📱',
+                img: '/about-content.png',
                 title: 'Social Content',
                 desc: 'Sản xuất content video, ảnh đa nền tảng — Reels, TikTok, YouTube Shorts.',
               },
               {
-                icon: '🛒',
+                img: '/about-livestream.png',
                 title: 'TikTok Shop Management',
                 desc: 'Quản lý toàn diện shop trên TikTok — từ listing đến chăm sóc đơn hàng.',
               },
               {
-                icon: '📊',
+                img: '/brandAw.png',
                 title: 'Brand Awareness',
                 desc: 'Chiến lược truyền thông đa kênh nâng cao nhận diện thương hiệu.',
               },
               {
-                icon: '🔄',
+                img: '/brandRejuvenation.png',
                 title: 'Brand Rejuvenation',
                 desc: 'Tái định vị, làm mới hình ảnh thương hiệu cho thế hệ khách hàng mới.',
               },
             ].map((service, i) => (
               <ScrollReveal key={i} delay={i * 0.08}>
-                <div className="group bg-white rounded-2xl p-7 border border-[#E8EDF2] hover:border-[#93D8FF] hover:shadow-[0_20px_60px_rgba(0,129,201,0.08)] transition-all duration-500 min-h-[200px] flex flex-col">
-                  <span className="text-3xl mb-4">{service.icon}</span>
-                  <h4 className="text-lg font-bold text-[#0A1628] mb-3">
-                    {service.title}
-                  </h4>
-                  <p className="text-gray-500 text-sm leading-relaxed flex-1">
-                    {service.desc}
-                  </p>
+                <div className="group bg-white rounded-2xl overflow-hidden border border-[#E8EDF2] hover:border-[#0081C9]/30 hover:shadow-[0_20px_60px_rgba(0,129,201,0.08)] transition-all duration-500">
+                  <div className="relative h-[180px] overflow-hidden">
+                    <img
+                      src={service.img}
+                      alt={service.title}
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+                  </div>
+                  <div className="p-6">
+                    <h4 className="text-lg font-bold text-[#0A1628] mb-2">
+                      {service.title}
+                    </h4>
+                    <p className="text-gray-500 text-sm leading-relaxed">
+                      {service.desc}
+                    </p>
+                  </div>
                 </div>
               </ScrollReveal>
             ))}
@@ -345,7 +456,7 @@ const About = () => {
 
                   <div className="flex flex-col gap-6">
                     <div className="flex items-center gap-4">
-                      <div className="w-11 h-11 rounded-full bg-white/10 flex items-center justify-center flex-shrink-0">
+                      <div className="w-11 h-11 rounded-full bg-[#0081C9]/20 flex items-center justify-center flex-shrink-0">
                         <svg
                           className="w-5 h-5 text-[#93D8FF]"
                           fill="none"
@@ -364,7 +475,7 @@ const About = () => {
                     </div>
 
                     <div className="flex items-center gap-4">
-                      <div className="w-11 h-11 rounded-full bg-white/10 flex items-center justify-center flex-shrink-0">
+                      <div className="w-11 h-11 rounded-full bg-[#0081C9]/20 flex items-center justify-center flex-shrink-0">
                         <svg
                           className="w-5 h-5 text-[#93D8FF]"
                           fill="none"
@@ -383,7 +494,7 @@ const About = () => {
                     </div>
 
                     <div className="flex items-center gap-4">
-                      <div className="w-11 h-11 rounded-full bg-white/10 flex items-center justify-center flex-shrink-0">
+                      <div className="w-11 h-11 rounded-full bg-[#0081C9]/20 flex items-center justify-center flex-shrink-0">
                         <svg
                           className="w-5 h-5 text-[#93D8FF]"
                           fill="none"
@@ -423,15 +534,28 @@ const About = () => {
                   <div className="flex flex-wrap gap-3">
                     <button
                       onClick={() => navigate('/contact')}
-                      className="bg-white text-[#0A1628] font-semibold px-6 py-3 rounded-xl hover:bg-[#93D8FF] hover:text-white transition-all duration-300 flex items-center gap-2"
+                      className="bg-[#0081C9] text-white font-semibold px-6 py-3 rounded-xl hover:bg-[#0081C9]/80 transition-all duration-300 flex items-center gap-2"
                     >
                       Gửi tin nhắn <span>→</span>
                     </button>
                     <a
                       href="tel:0786688149"
-                      className="border border-white/20 text-white font-semibold px-6 py-3 rounded-xl hover:bg-white/10 transition-all duration-300 flex items-center gap-2"
+                      className="border border-[#0081C9]/30 text-[#93D8FF] font-semibold px-6 py-3 rounded-xl hover:bg-[#0081C9]/10 transition-all duration-300 flex items-center gap-2"
                     >
-                      📞 Gọi ngay
+                      <svg
+                        className="w-4 h-4"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={1.5}
+                          d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+                        />
+                      </svg>
+                      Gọi ngay
                     </a>
                   </div>
                 </div>

@@ -1,18 +1,55 @@
-import { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
 
   const isHomePage = location.pathname === '/';
 
-  const getLink = (hash: string) => {
-    return isHomePage ? hash : `/${hash}`;
+  useEffect(() => {
+    if (!isHomePage) {
+      setScrolled(true);
+      return;
+    }
+
+    const handleScroll = () => {
+      // Hero section is 100vh, trigger transition before reaching end
+      const heroHeight = window.innerHeight - 100;
+      setScrolled(window.scrollY > heroHeight);
+    };
+
+    handleScroll(); // Check initial position
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [isHomePage]);
+
+  const handleServicesClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (isHomePage) {
+      document
+        .getElementById('services')
+        ?.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      navigate('/');
+      setTimeout(() => {
+        document
+          .getElementById('services')
+          ?.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+    }
   };
 
   return (
-    <header className="fixed top-0 left-0 right-0 h-[72px] z-[1000] bg-white border-b border-[#eee]">
+    <header
+      className={`fixed top-0 left-0 right-0 h-[72px] z-[1000] transition-all duration-300 ${
+        scrolled
+          ? 'bg-white border-b border-[#eee] shadow-sm'
+          : 'bg-transparent border-b border-transparent'
+      }`}
+    >
       <div className="max-w-[1240px] mx-auto px-5 h-full flex justify-between items-center">
         <div className="flex items-center">
           <Link to="/" className="w-16 h-16 flex items-center justify-center">
@@ -24,41 +61,55 @@ const Navbar = () => {
           </Link>
           <Link
             to="/"
-            className="text-2xl font-bold text-[#1a1a1a] tracking-tight"
+            className={`text-2xl font-bold tracking-tight transition-colors duration-300 ${
+              scrolled ? 'text-[#1a1a1a]' : 'text-white'
+            }`}
           >
-            xalo<span className="text-[#5BC0F8] font-semibold">.media</span>
+            xalo
+            <span
+              className={`font-semibold transition-colors duration-300 ${scrolled ? 'text-[#5BC0F8]' : 'text-[#93D8FF]'}`}
+            >
+              .media
+            </span>
           </Link>
         </div>
 
         {/* Desktop Menu */}
         <nav className="hidden md:block">
-          <ul className="flex gap-10 items-center list-none font-semibold text-[0.95rem] text-[#1a1a1a]">
+          <ul
+            className={`flex gap-10 items-center list-none font-semibold text-[0.95rem] transition-colors duration-300 ${scrolled ? 'text-[#1a1a1a]' : 'text-white'}`}
+          >
             <li className="relative h-16 flex items-center">
               <Link
                 to="/"
-                className={`transition-colors ${location.pathname === '/' ? 'text-[#0081C9]' : 'hover:text-[#5BC0F8]'}`}
+                className={`transition-colors ${location.pathname === '/' ? (scrolled ? 'text-[#0081C9]' : 'text-[#93D8FF]') : 'hover:text-[#5BC0F8]'}`}
               >
                 Home
               </Link>
               {location.pathname === '/' && (
-                <div className="absolute bottom-0 left-0 right-0 h-1 bg-[#0081C9] rounded-t-full"></div>
+                <div
+                  className={`absolute bottom-0 left-0 right-0 h-1 rounded-t-full ${scrolled ? 'bg-[#0081C9]' : 'bg-[#93D8FF]'}`}
+                ></div>
               )}
             </li>
             <li className="relative h-16 flex items-center">
               <Link
                 to="/about"
-                className={`transition-colors ${location.pathname === '/about' ? 'text-[#0081C9]' : 'hover:text-[#5BC0F8]'}`}
+                className={`transition-colors ${location.pathname === '/about' ? (scrolled ? 'text-[#0081C9]' : 'text-[#93D8FF]') : 'hover:text-[#5BC0F8]'}`}
               >
                 About
               </Link>
               {location.pathname === '/about' && (
-                <div className="absolute bottom-0 left-0 right-0 h-1 bg-[#0081C9] rounded-t-full"></div>
+                <div
+                  className={`absolute bottom-0 left-0 right-0 h-1 rounded-t-full ${scrolled ? 'bg-[#0081C9]' : 'bg-[#93D8FF]'}`}
+                ></div>
               )}
             </li>
             <li>
               <a
-                href={getLink('#services')}
-                className="hover:text-[#5BC0F8] transition-colors"
+                href="/#services"
+                onClick={handleServicesClick}
+                className="hover:text-[#5BC0F8] transition-colors cursor-pointer"
               >
                 Services
               </a>
@@ -66,12 +117,14 @@ const Navbar = () => {
             <li className="relative h-16 flex items-center">
               <Link
                 to="/case-studies"
-                className={`transition-colors ${location.pathname === '/case-studies' ? 'text-[#0081C9]' : 'hover:text-[#5BC0F8]'}`}
+                className={`transition-colors ${location.pathname === '/case-studies' ? (scrolled ? 'text-[#0081C9]' : 'text-[#93D8FF]') : 'hover:text-[#5BC0F8]'}`}
               >
                 Case Studies
               </Link>
               {location.pathname === '/case-studies' && (
-                <div className="absolute bottom-0 left-0 right-0 h-1 bg-[#0081C9] rounded-t-full"></div>
+                <div
+                  className={`absolute bottom-0 left-0 right-0 h-1 rounded-t-full ${scrolled ? 'bg-[#0081C9]' : 'bg-[#93D8FF]'}`}
+                ></div>
               )}
             </li>
             <li>
@@ -87,7 +140,7 @@ const Navbar = () => {
 
         {/* Mobile Menu Button */}
         <button
-          className="md:hidden text-[#1a1a1a] focus:outline-none p-2"
+          className={`md:hidden focus:outline-none p-2 transition-colors duration-300 ${scrolled ? 'text-[#1a1a1a]' : 'text-white'}`}
           onClick={() => setIsOpen(!isOpen)}
         >
           <svg
@@ -144,9 +197,12 @@ const Navbar = () => {
               About
             </Link>
             <a
-              href={getLink('#services')}
-              onClick={() => setIsOpen(false)}
-              className="hover:text-[#5BC0F8]"
+              href="/#services"
+              onClick={(e) => {
+                setIsOpen(false);
+                handleServicesClick(e);
+              }}
+              className="hover:text-[#5BC0F8] cursor-pointer"
             >
               Services
             </a>
