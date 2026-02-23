@@ -3,7 +3,6 @@ import Hero from '../components/Hero';
 import Services from '../components/Services';
 import PartnerLogos from '../components/PartnerLogos';
 import CaseStudies from '../components/CaseStudies';
-import Testimonials from '../components/Testimonials';
 import FAQ from '../components/FAQ';
 import ContactHighlight from '../components/ContactHighlight';
 import Footer from '../components/Footer';
