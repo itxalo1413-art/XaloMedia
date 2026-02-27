@@ -368,7 +368,7 @@ const Navbar = () => {
           }}
         >
           <div
-            className={`flex flex-col items-center pt-10 gap-8 text-xl font-semibold ${isDark ? 'text-[#E2E8F0]' : 'text-[#1a1a1a]'}`}
+            className={`flex flex-col items-start pt-10 gap-8 text-xl font-semibold pl-6 ${isDark ? 'text-[#E2E8F0]' : 'text-[#1a1a1a]'}`}
           >
             <Link
               to="/"
