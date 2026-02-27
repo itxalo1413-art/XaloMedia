@@ -22,12 +22,19 @@ const CaseStudyCard = ({
   return (
     <div id={id} className="scroll-mt-24">
       <div
-        className={`group flex flex-col md:flex-row items-stretch min-h-[320px] bg-white rounded-2xl overflow-hidden border border-[#E8EDF2] hover:border-[#93D8FF]/60 hover:shadow-[0_8px_40px_rgba(0,129,201,0.08)] transition-all duration-400 ${
+        className={`group flex flex-col md:flex-row items-stretch min-h-[320px] rounded-2xl overflow-hidden transition-all duration-400 ${
           isReversed ? 'md:flex-row-reverse' : ''
         }`}
+        style={{
+          backgroundColor: 'var(--bg-card)',
+          border: '1px solid var(--card-border)',
+        }}
       >
         {/* Image Section */}
-        <div className="md:w-[45%] relative overflow-hidden min-h-[220px] md:min-h-full bg-[#F7F9FC] shrink-0">
+        <div
+          className="md:w-[45%] relative overflow-hidden min-h-[220px] md:min-h-full shrink-0"
+          style={{ backgroundColor: 'var(--bg-secondary)' }}
+        >
           {imgSrc ? (
             <img
               src={imgSrc}
@@ -36,7 +43,12 @@ const CaseStudyCard = ({
             />
           ) : (
             <div className="absolute inset-0 flex items-center justify-center">
-              <span className="text-5xl font-bold text-gray-200">IMG</span>
+              <span
+                className="text-5xl font-bold"
+                style={{ color: 'var(--text-faint)' }}
+              >
+                IMG
+              </span>
             </div>
           )}
           {/* Gradient overlay */}
@@ -61,21 +73,36 @@ const CaseStudyCard = ({
 
         {/* Content Section */}
         <div className="flex-1 p-7 md:p-9 flex flex-col justify-center">
-          <h3 className="text-lg md:text-xl font-bold text-[#0A1628] mb-3 leading-snug">
+          <h3
+            className="text-lg md:text-xl font-bold mb-3 leading-snug"
+            style={{ color: 'var(--text-primary)' }}
+          >
             {title}
           </h3>
-          <p className="text-gray-500 mb-5 leading-relaxed text-[13px]">
+          <p
+            className="mb-5 leading-relaxed text-[13px]"
+            style={{ color: 'var(--text-muted)' }}
+          >
             {description}
           </p>
 
           {/* Metric */}
           {metric && (
-            <div className="mb-5 pb-5 border-b border-[#F0F2F5]">
+            <div
+              className="mb-5 pb-5"
+              style={{ borderBottom: '1px solid var(--border-color)' }}
+            >
               <div className="flex items-end gap-2.5">
-                <span className="text-2xl md:text-3xl font-extrabold text-[#0081C9] leading-none">
+                <span
+                  className="text-2xl md:text-3xl font-extrabold leading-none"
+                  style={{ color: 'var(--accent)' }}
+                >
                   {metric}
                 </span>
-                <span className="text-[#999] text-[10px] font-medium uppercase tracking-[1px] pb-0.5">
+                <span
+                  className="text-[10px] font-medium uppercase tracking-[1px] pb-0.5"
+                  style={{ color: 'var(--text-faint)' }}
+                >
                   {metricLabel}
                 </span>
               </div>
@@ -84,7 +111,8 @@ const CaseStudyCard = ({
 
           <a
             href="#"
-            className="text-[#0081C9] font-semibold text-sm flex items-center gap-1.5 group-hover:gap-2.5 transition-all"
+            className="font-semibold text-sm flex items-center gap-1.5 group-hover:gap-2.5 transition-all"
+            style={{ color: 'var(--accent)' }}
           >
             Xem chi tiết <span className="text-base">→</span>
           </a>

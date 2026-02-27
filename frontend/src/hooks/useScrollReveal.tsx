@@ -52,3 +52,41 @@ export const ScrollReveal = ({
     </div>
   );
 };
+
+/* ── 3D Scroll Reveal ─────────────────────────────────── */
+interface ScrollReveal3DProps {
+  children: React.ReactNode;
+  className?: string;
+  variant?: 'default' | 'right' | 'float';
+  delayIndex?: number;
+}
+
+export const ScrollReveal3D = ({
+  children,
+  className = '',
+  variant = 'default',
+  delayIndex = 0,
+}: ScrollReveal3DProps) => {
+  const { ref, isVisible } = useScrollReveal<HTMLDivElement>();
+
+  const variantClass =
+    variant === 'right'
+      ? 'sr3d-right'
+      : variant === 'float'
+        ? 'sr3d-float'
+        : '';
+
+  const delayClass =
+    delayIndex > 0 ? `sr3d-delay-${Math.min(delayIndex, 5)}` : '';
+
+  return (
+    <div
+      ref={ref}
+      className={`sr3d ${variantClass} ${delayClass} ${className}`}
+    >
+      <div className={`sr3d-inner ${isVisible ? 'revealed' : ''}`}>
+        {children}
+      </div>
+    </div>
+  );
+};

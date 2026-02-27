@@ -3,13 +3,17 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import BackgroundGrid from '../components/BackgroundGrid';
 import FloatingCTA from '../components/FloatingCTA';
-import { ScrollReveal } from '../hooks/useScrollReveal';
+import { ScrollReveal, ScrollReveal3D } from '../hooks/useScrollReveal';
+import PartnerLogos from '../components/PartnerLogos';
 
 const About = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="about bg-white min-h-screen">
+    <div
+      className="about min-h-screen"
+      style={{ backgroundColor: 'var(--bg-primary)' }}
+    >
       <BackgroundGrid />
       <Navbar />
 
@@ -19,14 +23,24 @@ const About = () => {
           <ScrollReveal>
             <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
               <div>
-                <p className="text-[#0081C9] font-semibold text-sm uppercase tracking-[3px] mb-3">
+                <p
+                  className="font-semibold text-sm uppercase tracking-[3px] mb-3"
+                  style={{ color: 'var(--accent)' }}
+                >
                   Về chúng tôi
                 </p>
-                <h1 className="text-4xl md:text-6xl font-bold text-[#0A1628] leading-tight">
-                  Câu chuyện <span className="text-[#0081C9]">Xalo Media</span>
+                <h1
+                  className="text-4xl md:text-6xl font-bold leading-tight"
+                  style={{ color: 'var(--text-primary)' }}
+                >
+                  Câu chuyện{' '}
+                  <span style={{ color: 'var(--accent)' }}>Xalo Media</span>
                 </h1>
               </div>
-              <p className="text-gray-500 max-w-[400px] text-base leading-relaxed">
+              <p
+                className="max-w-[400px] text-base leading-relaxed"
+                style={{ color: 'var(--text-muted)' }}
+              >
                 Đồng hành cùng hàng trăm thương hiệu trên hành trình chinh phục
                 thị trường số Việt Nam.
               </p>
@@ -35,31 +49,36 @@ const About = () => {
         </div>
 
         {/* Hero image banner */}
-        <div className="relative w-full h-[350px] md:h-[500px] overflow-hidden">
-          <img
-            src="/about-hero.png"
-            alt="Xalo Media Digital Workspace"
-            className="absolute inset-0 w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0A1628]/80 via-[#0A1628]/40 to-transparent"></div>
-          <div className="absolute inset-0 bg-gradient-to-r from-[#0081C9]/20 to-transparent"></div>
+        <ScrollReveal3D variant="float">
+          <div className="relative w-full h-[350px] md:h-[500px] overflow-hidden">
+            <img
+              src="/about-hero.png"
+              alt="Xalo Media Digital Workspace"
+              className="absolute inset-0 w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#0A1628]/80 via-[#0A1628]/40 to-transparent"></div>
+            <div className="absolute inset-0 bg-gradient-to-r from-[#0081C9]/20 to-transparent"></div>
 
-          <div className="absolute inset-0 flex flex-col items-center justify-center z-10 text-center px-5">
-            <p className="text-white/60 text-sm tracking-[4px] uppercase mb-4">
-              Since 2020
-            </p>
-            <h2 className="text-4xl md:text-6xl font-bold text-white leading-tight">
-              Digital Marketing{' '}
-              <span className="bg-gradient-to-r from-[#93D8FF] to-white bg-clip-text text-transparent">
-                Agency
-              </span>
-            </h2>
+            <div className="absolute inset-0 flex flex-col items-center justify-center z-10 text-center px-5">
+              <p className="text-white/60 text-sm tracking-[4px] uppercase mb-4">
+                Since 2020
+              </p>
+              <h2 className="text-4xl md:text-6xl font-bold text-white leading-tight">
+                Digital Marketing{' '}
+                <span className="bg-gradient-to-r from-[#93D8FF] to-white bg-clip-text text-transparent">
+                  Agency
+                </span>
+              </h2>
+            </div>
           </div>
-        </div>
+        </ScrollReveal3D>
       </section>
 
       {/* ═══════ STATS ═══════ */}
-      <section className="relative w-full py-20 bg-white">
+      <section
+        className="relative w-full py-20"
+        style={{ backgroundColor: 'var(--bg-primary)' }}
+      >
         <div className="max-w-[1240px] mx-auto px-5">
           <ScrollReveal>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
@@ -69,7 +88,8 @@ const About = () => {
                   label: 'KOLs / KOCs',
                   icon: (
                     <svg
-                      className="w-8 h-8 text-[#0081C9]"
+                      className="w-8 h-8"
+                      style={{ color: 'var(--accent)' }}
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -88,7 +108,8 @@ const About = () => {
                   label: 'Brand Partners',
                   icon: (
                     <svg
-                      className="w-8 h-8 text-[#0081C9]"
+                      className="w-8 h-8"
+                      style={{ color: 'var(--accent)' }}
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -107,7 +128,8 @@ const About = () => {
                   label: 'Reach',
                   icon: (
                     <svg
-                      className="w-8 h-8 text-[#0081C9]"
+                      className="w-8 h-8"
+                      style={{ color: 'var(--accent)' }}
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -122,20 +144,34 @@ const About = () => {
                   ),
                 },
               ].map((stat, i) => (
-                <div
-                  key={i}
-                  className="group bg-white rounded-2xl p-8 border border-[#E8EDF2] hover:border-[#0081C9]/30 hover:shadow-[0_20px_60px_rgba(0,129,201,0.08)] transition-all duration-500 text-center"
-                >
-                  <div className="w-14 h-14 rounded-xl bg-[#0081C9]/8 flex items-center justify-center mx-auto mb-4 group-hover:bg-[#0081C9]/15 transition-colors duration-300">
-                    {stat.icon}
+                <ScrollReveal3D key={i} delayIndex={i + 1}>
+                  <div
+                    className="group rounded-2xl p-8 transition-all duration-500 text-center"
+                    style={{
+                      backgroundColor: 'var(--bg-card)',
+                      border: '1px solid var(--card-border)',
+                    }}
+                  >
+                    <div
+                      className="w-14 h-14 rounded-xl flex items-center justify-center mx-auto mb-4 transition-colors duration-300"
+                      style={{ backgroundColor: 'rgba(0,129,201,0.08)' }}
+                    >
+                      {stat.icon}
+                    </div>
+                    <p
+                      className="text-3xl md:text-4xl font-extrabold mb-2"
+                      style={{ color: 'var(--text-primary)' }}
+                    >
+                      {stat.number}
+                    </p>
+                    <p
+                      className="text-sm font-medium uppercase tracking-[2px]"
+                      style={{ color: 'var(--text-faint)' }}
+                    >
+                      {stat.label}
+                    </p>
                   </div>
-                  <p className="text-3xl md:text-4xl font-extrabold text-[#0A1628] mb-2">
-                    {stat.number}
-                  </p>
-                  <p className="text-gray-400 text-sm font-medium uppercase tracking-[2px]">
-                    {stat.label}
-                  </p>
-                </div>
+                </ScrollReveal3D>
               ))}
             </div>
           </ScrollReveal>
@@ -144,43 +180,56 @@ const About = () => {
           <ScrollReveal delay={0.15}>
             <div className="mt-16 flex flex-col md:flex-row items-center gap-10">
               <div className="flex-1">
-                <p className="text-[#0081C9] font-semibold text-sm uppercase tracking-[3px] mb-3">
+                <p
+                  className="font-semibold text-sm uppercase tracking-[3px] mb-3"
+                  style={{ color: 'var(--accent)' }}
+                >
                   Mạng lưới
                 </p>
-                <h3 className="text-2xl md:text-4xl font-bold text-[#0A1628] mb-5 leading-snug">
+                <h3
+                  className="text-2xl md:text-4xl font-bold mb-5 leading-snug"
+                  style={{ color: 'var(--text-primary)' }}
+                >
                   Kết nối thương hiệu với{' '}
-                  <span className="text-[#0081C9]">hệ sinh thái số</span>
+                  <span style={{ color: 'var(--accent)' }}>
+                    hệ sinh thái số
+                  </span>
                 </h3>
-                <p className="text-gray-500 leading-relaxed mb-6">
+                <p
+                  className="leading-relaxed mb-6"
+                  style={{ color: 'var(--text-muted)' }}
+                >
                   Xalo Media sở hữu mạng lưới KOLs/KOCs lớn nhất Việt Nam, bao
                   phủ mọi ngành hàng từ FMCG, Thời trang, Công nghệ đến Fintech.
                   Chúng tôi không chỉ kết nối — mà còn tối ưu từng chiến dịch để
                   mang lại ROI cao nhất.
                 </p>
               </div>
-              <div className="flex-1 rounded-2xl overflow-hidden min-h-[320px] relative">
-                <img
-                  src="/booking.png"
-                  alt="Mạng lưới KOLs/KOCs Xalo Media"
-                  className="absolute inset-0 w-full h-full object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0A1628]/60 to-transparent"></div>
-                <div className="absolute bottom-0 left-0 right-0 p-6">
-                  <p className="text-white font-bold text-lg">
-                    Đa nền tảng • Đa ngành hàng
-                  </p>
-                  <p className="text-white/60 text-sm mt-1">
-                    TikTok • Instagram • YouTube • Facebook
-                  </p>
+              <ScrollReveal3D variant="right" className="flex-1">
+                <div className="rounded-2xl overflow-hidden min-h-[320px] relative">
+                  <img
+                    src="/booking.png"
+                    alt="Mạng lưới KOLs/KOCs Xalo Media"
+                    className="absolute inset-0 w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0A1628]/60 to-transparent"></div>
+                  <div className="absolute bottom-0 left-0 right-0 p-6">
+                    <p className="text-white font-bold text-lg">
+                      Đa nền tảng • Đa ngành hàng
+                    </p>
+                    <p className="text-white/60 text-sm mt-1">
+                      TikTok • Instagram • YouTube • Facebook
+                    </p>
+                  </div>
                 </div>
-              </div>
+              </ScrollReveal3D>
             </div>
           </ScrollReveal>
         </div>
       </section>
 
       {/* ═══════ CTA BANNER ═══════ */}
-      <section className="relative w-full overflow-hidden">
+      {/* <section className="relative w-full overflow-hidden">
         <div className="relative w-full py-20 md:py-28">
           <div className="absolute inset-0 hero-gradient-bg"></div>
           <div className="absolute w-[350px] h-[350px] rounded-full bg-[#93D8FF]/8 blur-[100px] top-[-50px] left-[-50px] hero-orb-1"></div>
@@ -211,76 +260,43 @@ const About = () => {
             </ScrollReveal>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* ═══════ PARTNER LOGOS ═══════ */}
-      <section className="relative w-full py-20 bg-[#F7F9FC]">
-        <div className="max-w-[1240px] mx-auto px-5">
-          <ScrollReveal>
-            <div className="text-center mb-12">
-              <p className="text-[#0081C9] font-semibold text-sm uppercase tracking-[3px] mb-3">
-                Đối tác
-              </p>
-              <h3 className="text-2xl md:text-4xl font-bold text-[#0A1628]">
-                Thương hiệu đã tin tưởng chúng tôi
-              </h3>
-            </div>
-          </ScrollReveal>
+        <PartnerLogos />
 
-          <ScrollReveal delay={0.1}>
-            <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-              {[
-                { name: 'Grab', src: '/Grab_Logo.svg.png' },
-                { name: 'Bitis', src: '/Icon-Bitis.webp' },
-                { name: 'FPT', src: '/Logo-FPT.webp' },
-                { name: 'MoMo', src: '/MoMo Logo.png' },
-                { name: 'Shopee', src: '/Shopee.svg.png' },
-                { name: 'Tiki', src: '/Tiki tách nền .png' },
-                { name: 'Lazada', src: '/lazada.png' },
-                { name: 'Techcombank', src: '/techcombank.webp' },
-                { name: 'VietJet Air', src: '/vietjetair.png' },
-                { name: 'Viettel', src: '/viettel.png' },
-              ].map((partner, i) => (
-                <div
-                  key={i}
-                  className="bg-white rounded-2xl p-6 border border-[#E8EDF2] hover:border-[#0081C9]/30 hover:shadow-[0_10px_40px_rgba(0,129,201,0.06)] transition-all duration-500 flex items-center justify-center min-h-[100px]"
-                >
-                  <img
-                    src={partner.src}
-                    alt={partner.name}
-                    className="max-h-[40px] max-w-[120px] object-contain opacity-60 hover:opacity-100 transition-opacity duration-300 grayscale hover:grayscale-0"
-                    onError={(e) => {
-                      (e.target as HTMLImageElement).style.display = 'none';
-                      (e.target as HTMLImageElement).parentElement!.innerHTML =
-                        `<span class="text-gray-400 font-semibold text-sm">${partner.name}</span>`;
-                    }}
-                  />
-                </div>
-              ))}
-            </div>
-          </ScrollReveal>
-        </div>
-      </section>
 
       {/* ═══════ VISION / MISSION with Images ═══════ */}
-      <section className="relative w-full py-20 bg-white">
+      <section
+        className="relative w-full py-20"
+        style={{ backgroundColor: 'var(--bg-primary)' }}
+      >
         <div className="max-w-[1240px] mx-auto px-5">
           <ScrollReveal>
             <div className="text-center mb-14">
-              <p className="text-[#0081C9] font-semibold text-sm uppercase tracking-[3px] mb-3">
+              <p
+                className="font-semibold text-sm uppercase tracking-[3px] mb-3"
+                style={{ color: 'var(--accent)' }}
+              >
                 Giá trị cốt lõi
               </p>
-              <h3 className="text-2xl md:text-4xl font-bold text-[#0A1628] leading-snug">
+              <h3
+                className="text-2xl md:text-4xl font-bold leading-snug"
+                style={{ color: 'var(--text-primary)' }}
+              >
                 Chúng tôi tin vào{' '}
-                <span className="text-[#0081C9]">sức mạnh kết nối</span>
+                <span style={{ color: 'var(--accent)' }}>sức mạnh kết nối</span>
               </h3>
             </div>
           </ScrollReveal>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {/* Mission card */}
-            <ScrollReveal delay={0.1}>
-              <div className="group relative rounded-2xl overflow-hidden min-h-[380px] border border-[#E8EDF2] hover:border-[#0081C9]/30 hover:shadow-[0_20px_60px_rgba(0,129,201,0.08)] transition-all duration-500">
+            <ScrollReveal3D delayIndex={1}>
+              <div
+                className="group relative rounded-2xl overflow-hidden min-h-[380px] transition-all duration-500"
+                style={{ border: '1px solid var(--card-border)' }}
+              >
                 <img
                   src="/about-team.png"
                   alt="Đội ngũ Xalo Media"
@@ -313,11 +329,14 @@ const About = () => {
                   </p>
                 </div>
               </div>
-            </ScrollReveal>
+            </ScrollReveal3D>
 
             {/* Vision card */}
-            <ScrollReveal delay={0.2}>
-              <div className="group relative rounded-2xl overflow-hidden min-h-[380px] border border-[#E8EDF2] hover:border-[#0081C9]/30 hover:shadow-[0_20px_60px_rgba(0,129,201,0.08)] transition-all duration-500">
+            <ScrollReveal3D variant="right" delayIndex={2}>
+              <div
+                className="group relative rounded-2xl overflow-hidden min-h-[380px] transition-all duration-500"
+                style={{ border: '1px solid var(--card-border)' }}
+              >
                 <img
                   src="/about-hero.png"
                   alt="Tầm nhìn Xalo Media"
@@ -356,25 +375,37 @@ const About = () => {
                   </p>
                 </div>
               </div>
-            </ScrollReveal>
+            </ScrollReveal3D>
           </div>
         </div>
       </section>
 
       {/* ═══════ WHAT WE DO — with Images ═══════ */}
-      <section className="relative w-full py-20 bg-[#F7F9FC]">
+      <section
+        className="relative w-full py-20"
+        style={{ backgroundColor: 'var(--bg-secondary)' }}
+      >
         <div className="max-w-[1240px] mx-auto px-5">
           <ScrollReveal>
             <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 mb-12">
               <div>
-                <p className="text-[#0081C9] font-semibold text-sm uppercase tracking-[3px] mb-3">
+                <p
+                  className="font-semibold text-sm uppercase tracking-[3px] mb-3"
+                  style={{ color: 'var(--accent)' }}
+                >
                   Dịch vụ
                 </p>
-                <h3 className="text-2xl md:text-4xl font-bold text-[#0A1628]">
+                <h3
+                  className="text-2xl md:text-4xl font-bold"
+                  style={{ color: 'var(--text-primary)' }}
+                >
                   Chúng tôi làm gì?
                 </h3>
               </div>
-              <p className="text-gray-500 max-w-[400px] text-base leading-relaxed">
+              <p
+                className="max-w-[400px] text-base leading-relaxed"
+                style={{ color: 'var(--text-muted)' }}
+              >
                 Giải pháp truyền thông toàn diện, từ livestream đến chiến lược
                 thương hiệu — giúp bạn tiếp cận đúng khách hàng.
               </p>
@@ -414,8 +445,18 @@ const About = () => {
                 desc: 'Tái định vị, làm mới hình ảnh thương hiệu cho thế hệ khách hàng mới.',
               },
             ].map((service, i) => (
-              <ScrollReveal key={i} delay={i * 0.08}>
-                <div className="group bg-white rounded-2xl overflow-hidden border border-[#E8EDF2] hover:border-[#0081C9]/30 hover:shadow-[0_20px_60px_rgba(0,129,201,0.08)] transition-all duration-500">
+              <ScrollReveal3D
+                key={i}
+                delayIndex={(i % 3) + 1}
+                variant={i % 2 === 0 ? 'default' : 'right'}
+              >
+                <div
+                  className="group rounded-2xl overflow-hidden transition-all duration-500"
+                  style={{
+                    backgroundColor: 'var(--bg-card)',
+                    border: '1px solid var(--card-border)',
+                  }}
+                >
                   <div className="relative h-[180px] overflow-hidden">
                     <img
                       src={service.img}
@@ -425,24 +466,33 @@ const About = () => {
                     <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
                   </div>
                   <div className="p-6">
-                    <h4 className="text-lg font-bold text-[#0A1628] mb-2">
+                    <h4
+                      className="text-lg font-bold mb-2"
+                      style={{ color: 'var(--text-primary)' }}
+                    >
                       {service.title}
                     </h4>
-                    <p className="text-gray-500 text-sm leading-relaxed">
+                    <p
+                      className="text-sm leading-relaxed"
+                      style={{ color: 'var(--text-muted)' }}
+                    >
                       {service.desc}
                     </p>
                   </div>
                 </div>
-              </ScrollReveal>
+              </ScrollReveal3D>
             ))}
           </div>
         </div>
       </section>
 
       {/* ═══════ CONTACT ═══════ */}
-      <section className="relative w-full py-20 bg-white">
+      <section
+        className="relative w-full py-20"
+        style={{ backgroundColor: 'var(--bg-primary)' }}
+      >
         <div className="max-w-[1240px] mx-auto px-5">
-          <ScrollReveal>
+          <ScrollReveal3D variant="float">
             <div className="bg-[#0A1628] rounded-2xl overflow-hidden">
               <div className="flex flex-col md:flex-row">
                 {/* Left — Contact info */}
@@ -561,7 +611,7 @@ const About = () => {
                 </div>
               </div>
             </div>
-          </ScrollReveal>
+          </ScrollReveal3D>
         </div>
       </section>
 

@@ -5,7 +5,7 @@ import BackgroundGrid from '../components/BackgroundGrid';
 import CaseStudySidebar from '../components/CaseStudySidebar';
 import CaseStudyCard from '../components/CaseStudyCard';
 import FloatingCTA from '../components/FloatingCTA';
-import { ScrollReveal } from '../hooks/useScrollReveal';
+import { ScrollReveal, ScrollReveal3D } from '../hooks/useScrollReveal';
 
 // Case studies grouped by industry
 const industries = [
@@ -84,7 +84,6 @@ const CaseStudiesPage = () => {
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
-        // Find the entry most visible in the viewport
         const visible = entries
           .filter((e) => e.isIntersecting)
           .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
@@ -100,7 +99,6 @@ const CaseStudiesPage = () => {
       },
     );
 
-    // Observe all industry sections
     Object.values(sectionRefs.current).forEach((el) => {
       if (el) observer.observe(el);
     });
@@ -117,7 +115,10 @@ const CaseStudiesPage = () => {
   };
 
   return (
-    <div className="case-studies-page bg-[#FAFBFD] min-h-screen">
+    <div
+      className="case-studies-page min-h-screen"
+      style={{ backgroundColor: 'var(--bg-secondary)' }}
+    >
       <BackgroundGrid />
       <Navbar />
 
@@ -190,10 +191,16 @@ const CaseStudiesPage = () => {
               <input
                 type="text"
                 placeholder="Tìm kiếm ngành hàng..."
-                className="w-full bg-white border border-[#E8EDF2] px-5 py-3 rounded-xl text-sm outline-none focus:border-[#0081C9] focus:ring-2 focus:ring-[#0081C9]/10 transition-all pr-12 shadow-sm"
+                className="w-full px-5 py-3 rounded-xl text-sm outline-none transition-all pr-12 shadow-sm"
+                style={{
+                  backgroundColor: 'var(--bg-card)',
+                  border: '1px solid var(--input-border)',
+                  color: 'var(--input-text)',
+                }}
               />
               <svg
-                className="w-5 h-5 absolute right-4 top-1/2 -translate-y-1/2 text-gray-400"
+                className="w-5 h-5 absolute right-4 top-1/2 -translate-y-1/2"
+                style={{ color: 'var(--text-faint)' }}
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -231,12 +238,24 @@ const CaseStudiesPage = () => {
                 {/* Industry heading */}
                 <ScrollReveal>
                   <div className="flex items-center gap-3 mb-6">
-                    <div className="w-1 h-6 bg-[#0081C9] rounded-full"></div>
-                    <h2 className="text-lg font-bold text-[#0A1628]">
+                    <div
+                      className="w-1 h-6 rounded-full"
+                      style={{ backgroundColor: 'var(--accent)' }}
+                    ></div>
+                    <h2
+                      className="text-lg font-bold"
+                      style={{ color: 'var(--text-primary)' }}
+                    >
                       {industry.label}
                     </h2>
-                    <div className="flex-1 h-px bg-[#E8EDF2]"></div>
-                    <span className="text-xs text-gray-400 font-medium">
+                    <div
+                      className="flex-1 h-px"
+                      style={{ backgroundColor: 'var(--border-color)' }}
+                    ></div>
+                    <span
+                      className="text-xs font-medium"
+                      style={{ color: 'var(--text-faint)' }}
+                    >
                       {industry.studies.length} dự án
                     </span>
                   </div>
@@ -245,7 +264,11 @@ const CaseStudiesPage = () => {
                 {/* Cards in this industry */}
                 <div className="flex flex-col gap-6">
                   {industry.studies.map((study, idx) => (
-                    <ScrollReveal key={idx} delay={idx * 0.1}>
+                    <ScrollReveal3D
+                      key={idx}
+                      delayIndex={idx + 1}
+                      variant={idx % 2 === 0 ? 'default' : 'right'}
+                    >
                       <CaseStudyCard
                         id={`${industry.id}-${idx}`}
                         title={study.title}
@@ -256,7 +279,7 @@ const CaseStudiesPage = () => {
                         tags={study.tags}
                         isReversed={idx % 2 !== 0}
                       />
-                    </ScrollReveal>
+                    </ScrollReveal3D>
                   ))}
                 </div>
               </div>

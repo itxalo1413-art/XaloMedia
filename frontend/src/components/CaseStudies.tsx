@@ -1,178 +1,238 @@
-import { Link } from 'react-router-dom';
+import { useEffect, useRef, useState, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 
+/* ── Data ──────────────────────────────────────────────────── */
 const caseStudies = [
   {
-    title: 'Chiến dịch Livestream cho thương hiệu mỹ phẩm hàng đầu',
-    client: "Shopee x L'Oréal",
-    metric: '2.5M+',
-    metricLabel: 'Lượt xem',
-    description:
-      'Tổ chức chuỗi 12 buổi livestream với KOLs hàng đầu, đạt doanh thu kỷ lục trong ngày sale đôi.',
+    id: 'shopee-loreal',
+    title: 'Chiến dịch Livestream kỷ lục',
+    category: 'Solutions',
     image: 'setupLive.png',
   },
   {
-    title: 'Ra mắt sản phẩm mới với chiến lược KOL đa tầng',
-    client: 'Vinamilk',
-    metric: '500+',
-    metricLabel: 'KOLs tham gia',
-    description:
-      'Chiến dịch booking 500+ micro & macro KOLs trên TikTok, Instagram tạo viral tự nhiên.',
+    id: 'vinamilk',
+    title: 'Product Launch đa tầng',
+    category: 'Solutions',
     image: 'booking.png',
   },
   {
-    title: 'Tái định vị thương hiệu thời trang local brand',
-    client: 'Local Brand X',
-    metric: '180%',
-    metricLabel: 'Tăng nhận diện',
-    description:
-      'Làm mới toàn bộ hình ảnh digital, content strategy và influencer marketing trong 3 tháng.',
+    id: 'local-brand-x',
+    title: 'Tái định vị thương hiệu',
+    category: 'Solutions',
     image: 'brandAw.png',
   },
   {
-    title: 'Brand Awareness cho ứng dụng fintech',
-    client: 'MoMo',
-    metric: '10M+',
-    metricLabel: 'Impressions',
-    description:
-      'Chiến dịch truyền thông đa kênh kết hợp KOLs và paid media, tối ưu chi phí trên mỗi lượt tiếp cận.',
+    id: 'momo',
+    title: 'Phủ sóng Fintech',
+    category: 'Solutions',
     image: 'brandRejuvenation.png',
+  },
+  {
+    id: 'vinfast',
+    title: 'Ra mắt xe điện toàn cầu',
+    category: 'Solutions',
+    image:
+      'https://images.unsplash.com/photo-1560958089-b8a1929cea89?q=80&w=2071&auto=format&fit=crop',
+  },
+  {
+    id: 'vietjet',
+    title: 'Chiến dịch mùa hè rực rỡ',
+    category: 'Solutions',
+    image:
+      'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=2074&auto=format&fit=crop',
+  },
+  {
+    id: 'tiktok-shop',
+    title: 'Mega Sale Festival',
+    category: 'Solutions',
+    image:
+      'https://images.unsplash.com/photo-1611162617474-5b21e879e113?q=80&w=1974&auto=format&fit=crop',
+  },
+  {
+    id: 'honda',
+    title: 'Đánh thức đam mê phân khối lớn',
+    category: 'Solutions',
+    image:
+      'https://images.unsplash.com/photo-1558981403-c5f9899a28bc?q=80&w=2070&auto=format&fit=crop',
   },
 ];
 
-const CaseStudies = () => (
-  <section id="casestudy" className="w-full bg-white py-24">
-    <div className="max-w-[1240px] mx-auto px-5">
-      {/* Section Header */}
-      <div className="flex flex-col md:flex-row md:justify-between md:items-end mb-16 gap-6">
-        <div>
-          <p className="text-[#0081C9] font-semibold text-sm uppercase tracking-[3px] mb-3">
-            Case Studies
-          </p>
-          <h2 className="text-3xl md:text-5xl font-bold text-[#0A1628] leading-tight">
-            Kết quả thực tế,
-            <br />
-            <span className="text-[#0081C9]">con số không nói dối</span>
-          </h2>
-        </div>
-        <Link
-          to="/case-studies"
-          className="text-[#0081C9] font-semibold hover:underline inline-flex items-center gap-2"
+/* ── Scroll-reveal hook ───────────────────────────────────── */
+const useScrollReveal = (threshold = 0.15) => {
+  const ref = useRef<HTMLDivElement>(null);
+  const [revealed, setRevealed] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setRevealed(true);
+          obs.unobserve(el);
+        }
+      },
+      { threshold },
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, [threshold]);
+
+  return { ref, revealed };
+};
+
+const CaseStudyCard = ({
+  cs,
+  index,
+  isOdd,
+  onClick,
+}: {
+  cs: (typeof caseStudies)[0];
+  index: number;
+  isOdd: boolean;
+  onClick: () => void;
+}) => {
+  const { ref, revealed } = useScrollReveal(0.1);
+  const numStr = String(index + 1).padStart(2, '0');
+
+  return (
+    <div
+      ref={ref}
+      className={`relative flex flex-col group cursor-pointer transition-all duration-1000 ease-[cubic-bezier(0.25,1,0.5,1)] ${
+        revealed ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-16'
+      }`}
+      style={{
+        marginTop: isOdd ? '60px' : '0',
+        transitionDelay: `${(index % 4) * 100}ms`, // Stagger effect per row
+      }}
+      onClick={onClick}
+    >
+      {/* Large number behind */}
+      <span
+        className="absolute -top-12 md:-top-16 lg:-top-24 left-0 text-[100px] md:text-[140px] lg:text-[180px] xl:text-[200px] font-black leading-none select-none pointer-events-none transition-transform duration-700 group-hover:-translate-y-2"
+        style={{ color: 'hsl(220, 10%, 84%)', zIndex: 0 }}
+      >
+        {numStr}
+      </span>
+
+      {/* Card image */}
+      <div
+        className="relative z-10 w-full aspect-square rounded-3xl overflow-hidden mb-5 flex-shrink-0"
+        style={{ background: 'hsl(220, 10%, 85%)' }}
+      >
+        <img
+          src={cs.image}
+          alt={cs.title}
+          className="w-full h-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] group-hover:scale-105"
+        />
+        <div className="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition-colors duration-500" />
+      </div>
+
+      {/* Label */}
+      <p
+        className="text-xs md:text-sm font-medium tracking-wide uppercase mb-2"
+        style={{ color: 'hsl(220, 10%, 50%)' }}
+      >
+        {cs.category}
+      </p>
+
+      {/* Title + arrow */}
+      <div className="flex items-start justify-between gap-3 mt-auto relative z-10">
+        <h3
+          className="text-lg md:text-xl lg:text-2xl font-semibold leading-tight line-clamp-2"
+          style={{ color: 'hsl(217, 50%, 15%)' }}
         >
-          Xem tất cả case studies <span className="text-lg">→</span>
-        </Link>
-      </div>
-
-      {/* Featured Case - Image + Content split */}
-      <div className="group relative rounded-2xl overflow-hidden mb-5 cursor-pointer grid grid-cols-1 md:grid-cols-2 min-h-[400px] md:min-h-[480px] bg-[#0A1628]">
-        {/* Image Side */}
-        <div className="relative overflow-hidden min-h-[240px] md:min-h-full">
-          <img
-            src={caseStudies[0].image}
-            alt={caseStudies[0].title}
-            className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent to-[#0A1628]/60 hidden md:block"></div>
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[#0A1628]/60 md:hidden"></div>
-        </div>
-
-        {/* Content Side */}
-        <div className="flex flex-col justify-center p-8 md:p-14 relative">
-          {/* Decorative circle */}
-          <div className="absolute top-[-40px] right-[-40px] w-[200px] h-[200px] rounded-full bg-[#0081C9]/5 pointer-events-none"></div>
-
-          <span className="text-[#93D8FF]/70 text-xs font-semibold uppercase tracking-[2px] mb-4">
-            {caseStudies[0].client}
-          </span>
-          <h3 className="text-2xl md:text-3xl font-bold text-white mb-4 leading-tight">
-            {caseStudies[0].title}
-          </h3>
-          <p className="text-white/60 text-sm mb-8 leading-relaxed max-w-[400px]">
-            {caseStudies[0].description}
-          </p>
-
-          {/* Metric */}
-          <div className="flex items-end gap-3 mb-6">
-            <span className="text-5xl md:text-6xl font-extrabold text-[#93D8FF] leading-none">
-              {caseStudies[0].metric}
-            </span>
-            <span className="text-white/40 text-xs font-medium uppercase tracking-[1px] pb-2">
-              {caseStudies[0].metricLabel}
-            </span>
-          </div>
-
-          <span className="text-[#93D8FF] font-semibold text-sm inline-flex items-center gap-2 group-hover:gap-3 transition-all">
-            Xem chi tiết <span className="text-lg">→</span>
-          </span>
-        </div>
-      </div>
-
-      {/* Secondary Cases - 3 Column Grid with Images */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-        {caseStudies.slice(1).map((cs, index) => (
-          <div
-            key={index}
-            className="group relative rounded-2xl overflow-hidden cursor-pointer bg-white border border-[#E8EDF2] hover:border-[#93D8FF] hover:shadow-[0_20px_60px_rgba(0,129,201,0.1)] transition-all duration-500 flex flex-col"
+          {cs.title}
+        </h3>
+        <div className="flex-shrink-0 mt-1 transition-transform duration-300 group-hover:translate-x-2">
+          <svg
+            className="w-6 h-6 md:w-8 md:h-8"
+            viewBox="0 0 70 70"
+            fill="none"
+            stroke="currentColor"
+            style={{ color: 'hsl(217, 50%, 15%)' }}
           >
-            {/* Image Area */}
-            <div className="relative overflow-hidden h-[180px]">
-              <img
-                src={cs.image}
-                alt={cs.title}
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent"></div>
-              {/* Client badge on image */}
-              <div className="absolute top-3 left-3">
-                <span className="bg-white/90 backdrop-blur-sm text-[#0081C9] text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider">
-                  {cs.client}
-                </span>
-              </div>
-            </div>
-
-            {/* Content */}
-            <div className="p-6 flex flex-col justify-between flex-1">
-              <div>
-                <h3 className="text-base font-bold text-[#0A1628] mb-2 leading-snug">
-                  {cs.title}
-                </h3>
-                <p className="text-[#666] text-sm leading-relaxed">
-                  {cs.description}
-                </p>
-              </div>
-
-              {/* Bottom - Metric + Link */}
-              <div className="mt-5 pt-5 border-t border-[#E8EDF2]">
-                <div className="flex items-end justify-between">
-                  <div>
-                    <span className="text-3xl font-extrabold text-[#0081C9] leading-none">
-                      {cs.metric}
-                    </span>
-                    <p className="text-[#999] text-[10px] font-medium uppercase tracking-[1px] mt-1">
-                      {cs.metricLabel}
-                    </p>
-                  </div>
-                  <span className="text-[#0081C9] font-semibold text-sm inline-flex items-center gap-1 group-hover:gap-2 transition-all opacity-0 group-hover:opacity-100">
-                    Chi tiết <span className="text-base">→</span>
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
-
-      {/* Bottom CTA */}
-      <div className="text-center mt-16">
-        <Link
-          to="/case-studies"
-          className="inline-flex items-center px-8 py-3.5 gap-2 bg-[#0A1628] rounded-full font-semibold text-white text-sm hover:bg-[#0081C9] transition-all duration-300"
-        >
-          Khám phá thêm case studies
-          <span>→</span>
-        </Link>
+            <path
+              d="M35.103 27 43 34.897l-7.897 7.896M43 35.071H26"
+              strokeWidth="2"
+              vectorEffect="non-scaling-stroke"
+            />
+          </svg>
+        </div>
       </div>
     </div>
-  </section>
-);
+  );
+};
+
+/* ── Main Component ───────────────────────────────────────── */
+const CaseStudies = () => {
+  const navigate = useNavigate();
+  const { ref: headerRef, revealed: headerRevealed } = useScrollReveal(0.2);
+
+  const handleCardClick = useCallback(() => {
+    navigate('/case-studies');
+  }, [navigate]);
+
+  return (
+    <section
+      id="case-studies"
+      className="py-20 md:py-28 overflow-hidden"
+      style={{ background: 'hsl(220, 10%, 94%)' }}
+    >
+      <div
+        ref={headerRef}
+        className={`max-w-[1240px] mx-auto px-6 mb-12 md:mb-20 cs-text-slide cs-stagger-1 ${headerRevealed ? 'revealed' : ''}`}
+      >
+        <h2
+          className="text-3xl md:text-5xl lg:text-6xl font-bold leading-[1.1]"
+          style={{ color: 'hsl(217, 50%, 15%)' }}
+        >
+          Biến chiến lược thành doanh thu qua từng dự án.
+        </h2>
+      </div>
+
+      {/* Grid Cards Container */}
+      <div className="w-full relative max-w-[1240px] mx-auto px-6 mt-16 md:mt-24">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-32 md:gap-y-48 md:gap-x-8 lg:gap-x-10 pb-12 pt-8">
+          {caseStudies.map((cs, i) => (
+            <CaseStudyCard
+              key={cs.id || i}
+              cs={cs}
+              index={i}
+              isOdd={i % 2 === 1}
+              onClick={handleCardClick}
+            />
+          ))}
+        </div>
+
+        {/* View All text link */}
+        <div className="flex justify-start mt-8 md:mt-12 pb-12">
+          <button
+            onClick={handleCardClick}
+            className="group relative inline-flex items-center justify-center text-sm md:text-base font-bold tracking-wider uppercase transition-all duration-300 hover:opacity-80"
+            style={{ color: '#00AEFF' }}
+          >
+            <span className="flex items-center gap-2">
+              View all Case Studies
+              <svg
+                className="w-4 h-4 md:w-5 md:h-5 transition-transform duration-300 group-hover:translate-x-2"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={2}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M14 5l7 7m0 0l-7 7m7-7H3"
+                />
+              </svg>
+            </span>
+          </button>
+        </div>
+      </div>
+    </section>
+  );
+};
 
 export default CaseStudies;
