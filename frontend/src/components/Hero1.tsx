@@ -17,10 +17,14 @@ const Hero1 = () => {
   >('initial');
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
     // 1. Wait for 'xalo media' to finish its initial zoom-up phrase
     const shrinkTimer = setTimeout(() => {
       setIntroStage('shrinking');
-    }, 1500); // 2.5s for initial slow zoom up
+    }, 1500); // 1.5s for initial slow zoom up
 
     // 2. Wait for 'xalo.' to shrink to final size, then fade in video
     const videoTimer = setTimeout(() => {
@@ -38,6 +42,19 @@ const Hero1 = () => {
       clearTimeout(videoTimer);
     };
   }, []);
+
+  // Prevent scrolling until the video starts
+  useEffect(() => {
+    if (introStage !== 'video') {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [introStage]);
 
   // 3D perspective tilt on mouse move (similar to Hero)
   const handleMouseMove = useCallback(
@@ -162,6 +179,19 @@ const Hero1 = () => {
           </div>
         </h1>
 
+        <h1
+          className={`text-4xl md:text-[4rem] lg:text-[4.5rem] font-bold mb-6 leading-[1.1] text-center transition-opacity duration-700 ${
+            introStage === 'initial' ? 'opacity-0' : 'opacity-100'
+          }`}
+          style={{ transitionDelay: '0.4s' }}
+        >
+          Kết nối thương hiệu với
+          <br />
+          <span className="bg-gradient-to-r from-[#93D8FF] to-white bg-clip-text text-transparent ">
+            hàng triệu khách hàng
+          </span>
+        </h1>
+
         <p
           className={`text-lg md:text-xl text-white/70 mt-6 mb-10 text-center leading-relaxed max-w-[600px] mx-auto transition-opacity duration-700 ${
             introStage === 'initial' ? 'opacity-0' : 'opacity-100'
@@ -172,6 +202,59 @@ const Hero1 = () => {
           <br className="hidden md:block" />
           giúp thương hiệu của bạn bứt phá thị trường.
         </p>
+      </div>
+
+      {/* Scroll Indicator — Spinning Golden Aspect Spiral */}
+      <div
+        className="absolute bottom-[2vh] left-1/2 z-30 pointer-events-none"
+        style={{ transform: 'translateX(-50%)' }}
+      >
+        <div
+          className={`flex items-center justify-center w-36 h-48 transition-[transform,opacity] duration-[1500ms] ease-[cubic-bezier(0.34,1.56,0.64,1)] origin-center
+            ${
+              introStage === 'video'
+                ? 'opacity-100 scale-100 rotate-0'
+                : 'opacity-0 scale-[0.2] -rotate-[360deg]'
+            }
+          `}
+          style={{ transitionDelay: '0.8s' }}
+        >
+          <svg
+            viewBox="0 0 120 180"
+            className="w-full h-full text-white/90 drop-shadow-md"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.5"
+          >
+            {/* Golden aspect spiral path */}
+            <path
+              d="M 66,74 C 30,85 5,55 15,25 C 25,-5 85,-10 105,25 C 130,65 110,120 85,145 C 75,155 60,170 52,176"
+              strokeLinecap="round"
+              className="opacity-90"
+            />
+            {/* Arrowhead */}
+            <path
+              d="M 45,166 L 52,176 L 63,168"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+            {/* 'Scroll' written elegantly */}
+            <text
+              x="52"
+              y="60"
+              fill="currentColor"
+              stroke="none"
+              textAnchor="middle"
+              className="text-[26px] tracking-wide"
+              style={{
+                fontFamily:
+                  "'Caveat', 'Dancing Script', 'Playfair Display', cursive",
+              }}
+            >
+              Scroll
+            </text>
+          </svg>
+        </div>
       </div>
     </section>
   );

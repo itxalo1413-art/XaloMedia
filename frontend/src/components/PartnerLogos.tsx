@@ -37,7 +37,7 @@ const PartnerLogos = () => {
           <div className="flex-1 md:text-left">
             <p className="text-lg" style={{ color: 'var(--text-muted)' }}>
               Với mạng lưới hơn 10,000 KOLs/KOCs đa ngành hàng, chúng tôi đã
-              triển khai 500+ chiến dịch Influencer Marketing và Livestream
+              triển khai hàng trăm chiến dịch Influencer Marketing và Livestream
               Commerce cho các thương hiệu lớn.
             </p>
             <p className="text-lg mt-2" style={{ color: 'var(--text-muted)' }}>

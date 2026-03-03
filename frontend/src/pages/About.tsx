@@ -199,8 +199,8 @@ const About = () => {
                   className="leading-relaxed mb-6"
                   style={{ color: 'var(--text-muted)' }}
                 >
-                  Xalo Media sở hữu mạng lưới KOLs/KOCs lớn nhất Việt Nam, bao
-                  phủ mọi ngành hàng từ FMCG, Thời trang, Công nghệ đến Fintech.
+                  Xalo Media sở hữu mạng lưới KOLs/KOCs lớn ở Việt Nam, bao phủ
+                  mọi ngành hàng từ FMCG, Thời trang, Công nghệ đến Fintech.
                   Chúng tôi không chỉ kết nối — mà còn tối ưu từng chiến dịch để
                   mang lại ROI cao nhất.
                 </p>
@@ -263,120 +263,80 @@ const About = () => {
       </section> */}
 
       {/* ═══════ PARTNER LOGOS ═══════ */}
-        <PartnerLogos />
+      <PartnerLogos />
 
-
-      {/* ═══════ VISION / MISSION with Images ═══════ */}
+      {/* ═══════ CORE VALUES (TEXT LAYOUT) ═══════ */}
       <section
-        className="relative w-full py-20"
+        className="relative w-full py-20 md:py-32"
         style={{ backgroundColor: 'var(--bg-primary)' }}
       >
-        <div className="max-w-[1240px] mx-auto px-5">
+        <div className="max-w-[1240px] px-5">
           <ScrollReveal>
-            <div className="text-center mb-14">
-              <p
-                className="font-semibold text-sm uppercase tracking-[3px] mb-3"
-                style={{ color: 'var(--accent)' }}
-              >
-                Giá trị cốt lõi
-              </p>
-              <h3
-                className="text-2xl md:text-4xl font-bold leading-snug"
-                style={{ color: 'var(--text-primary)' }}
-              >
-                Chúng tôi tin vào{' '}
-                <span style={{ color: 'var(--accent)' }}>sức mạnh kết nối</span>
-              </h3>
-            </div>
-          </ScrollReveal>
+            <div className="flex flex-col md:flex-row">
+              {/* Left Column: Heading */}
+              <div className="w-full md:w-[70%] pr-0 md:pr-10 mb-10 md:mb-0 flex items-center justify-center">
+                <h2
+                  className="text-4xl md:text-5xl lg:text-7xl font-bold"
+                  style={{ color: 'var(--text-primary)' }}
+                >
+                  Giá trị
+                  <br />
+                  cốt lõi
+                </h2>
+              </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {/* Mission card */}
-            <ScrollReveal3D delayIndex={1}>
-              <div
-                className="group relative rounded-2xl overflow-hidden min-h-[380px] transition-all duration-500"
-                style={{ border: '1px solid var(--card-border)' }}
-              >
-                <img
-                  src="/about-team.png"
-                  alt="Đội ngũ Xalo Media"
-                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0A1628]/90 via-[#0A1628]/50 to-transparent"></div>
-                <div className="absolute bottom-0 left-0 right-0 p-8">
-                  <div className="flex items-center gap-3 mb-3">
-                    <div className="w-10 h-10 rounded-full bg-[#0081C9]/20 backdrop-blur-sm flex items-center justify-center">
-                      <svg
-                        className="w-5 h-5 text-[#93D8FF]"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={1.5}
-                          d="M13 10V3L4 14h7v7l9-11h-7z"
-                        />
-                      </svg>
-                    </div>
-                    <h4 className="text-xl font-bold text-white">Sứ mệnh</h4>
-                  </div>
-                  <p className="text-white/70 leading-relaxed">
+              {/* Right Column: Mission & Vision */}
+              <div className="w-full md:w-[60%] flex flex-col relative md:pl-12 lg:pl-16">
+                {/* Vertical Divider (Desktop Only) */}
+                <div
+                  className="hidden md:block absolute left-0 top-0 bottom-0 w-[1px]"
+                  style={{ backgroundColor: 'var(--card-border)' }}
+                ></div>
+
+                {/* Item 1: Mission */}
+                <div className="pb-10 md:pb-16 mb-10 md:mb-16 relative">
+                  {/* Horizontal Divider */}
+                  <div
+                    className="absolute bottom-0 left-0 right-0 h-[1px]"
+                    style={{ backgroundColor: 'var(--card-border)' }}
+                  ></div>
+
+                  <h3
+                    className="text-2xl md:text-3xl font-bold mb-4"
+                    style={{ color: 'var(--text-primary)' }}
+                  >
+                    Sứ mệnh
+                  </h3>
+                  <p
+                    className="text-base md:text-lg leading-relaxed max-w-[90%]"
+                    style={{ color: 'var(--text-muted)' }}
+                  >
                     Kết nối thương hiệu với đúng người, đúng thời điểm — thông
-                    qua mạng lưới KOLs/KOCs lớn nhất và giải pháp truyền thông
-                    sáng tạo, giúp doanh nghiệp bứt phá trên nền tảng số.
+                    qua mạng lưới KOLs/KOCs lớn và giải pháp truyền thông sáng
+                    tạo, giúp doanh nghiệp bứt phá trên nền tảng số.
                   </p>
                 </div>
-              </div>
-            </ScrollReveal3D>
 
-            {/* Vision card */}
-            <ScrollReveal3D variant="right" delayIndex={2}>
-              <div
-                className="group relative rounded-2xl overflow-hidden min-h-[380px] transition-all duration-500"
-                style={{ border: '1px solid var(--card-border)' }}
-              >
-                <img
-                  src="/about-hero.png"
-                  alt="Tầm nhìn Xalo Media"
-                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0A1628]/90 via-[#0A1628]/50 to-transparent"></div>
-                <div className="absolute bottom-0 left-0 right-0 p-8">
-                  <div className="flex items-center gap-3 mb-3">
-                    <div className="w-10 h-10 rounded-full bg-[#0081C9]/20 backdrop-blur-sm flex items-center justify-center">
-                      <svg
-                        className="w-5 h-5 text-[#93D8FF]"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={1.5}
-                          d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                        />
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={1.5}
-                          d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
-                        />
-                      </svg>
-                    </div>
-                    <h4 className="text-xl font-bold text-white">Tầm nhìn</h4>
-                  </div>
-                  <p className="text-white/70 leading-relaxed">
-                    Trở thành agency hàng đầu Đông Nam Á về Influencer Marketing
+                {/* Item 2: Vision */}
+                <div>
+                  <h3
+                    className="text-2xl md:text-3xl font-bold mb-4"
+                    style={{ color: 'var(--text-primary)' }}
+                  >
+                    Tầm nhìn
+                  </h3>
+                  <p
+                    className="text-base md:text-lg leading-relaxed max-w-[90%]"
+                    style={{ color: 'var(--text-muted)' }}
+                  >
+                    Trở thành agency hàng đầu Việt Nam về Influencer Marketing
                     và Livestream Commerce — nơi mà mọi thương hiệu đều có thể
                     tìm thấy giải pháp tăng trưởng bền vững.
                   </p>
                 </div>
               </div>
-            </ScrollReveal3D>
-          </div>
+            </div>
+          </ScrollReveal>
         </div>
       </section>
 
@@ -447,17 +407,18 @@ const About = () => {
             ].map((service, i) => (
               <ScrollReveal3D
                 key={i}
+                className="h-full"
                 delayIndex={(i % 3) + 1}
                 variant={i % 2 === 0 ? 'default' : 'right'}
               >
                 <div
-                  className="group rounded-2xl overflow-hidden transition-all duration-500"
+                  className="group rounded-2xl overflow-hidden transition-all duration-500 h-full flex flex-col"
                   style={{
                     backgroundColor: 'var(--bg-card)',
                     border: '1px solid var(--card-border)',
                   }}
                 >
-                  <div className="relative h-[180px] overflow-hidden">
+                  <div className="relative h-[180px] overflow-hidden shrink-0">
                     <img
                       src={service.img}
                       alt={service.title}
@@ -465,7 +426,7 @@ const About = () => {
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
                   </div>
-                  <div className="p-6">
+                  <div className="p-6 flex-1 flex flex-col">
                     <h4
                       className="text-lg font-bold mb-2"
                       style={{ color: 'var(--text-primary)' }}

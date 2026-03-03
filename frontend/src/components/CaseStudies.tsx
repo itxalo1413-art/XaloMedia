@@ -6,52 +6,52 @@ const caseStudies = [
   {
     id: 'shopee-loreal',
     title: 'Chiến dịch Livestream kỷ lục',
-    category: 'Solutions',
+ 
     image: 'setupLive.png',
   },
   {
     id: 'vinamilk',
     title: 'Product Launch đa tầng',
-    category: 'Solutions',
+ 
     image: 'booking.png',
   },
   {
     id: 'local-brand-x',
     title: 'Tái định vị thương hiệu',
-    category: 'Solutions',
+ 
     image: 'brandAw.png',
   },
   {
     id: 'momo',
     title: 'Phủ sóng Fintech',
-    category: 'Solutions',
+ 
     image: 'brandRejuvenation.png',
   },
   {
     id: 'vinfast',
     title: 'Ra mắt xe điện toàn cầu',
-    category: 'Solutions',
+ 
     image:
       'https://images.unsplash.com/photo-1560958089-b8a1929cea89?q=80&w=2071&auto=format&fit=crop',
   },
   {
     id: 'vietjet',
     title: 'Chiến dịch mùa hè rực rỡ',
-    category: 'Solutions',
+ 
     image:
       'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=2074&auto=format&fit=crop',
   },
   {
     id: 'tiktok-shop',
     title: 'Mega Sale Festival',
-    category: 'Solutions',
+ 
     image:
       'https://images.unsplash.com/photo-1611162617474-5b21e879e113?q=80&w=1974&auto=format&fit=crop',
   },
   {
     id: 'honda',
     title: 'Đánh thức đam mê phân khối lớn',
-    category: 'Solutions',
+ 
     image:
       'https://images.unsplash.com/photo-1558981403-c5f9899a28bc?q=80&w=2070&auto=format&fit=crop',
   },
@@ -133,7 +133,6 @@ const CaseStudyCard = ({
         className="text-xs md:text-sm font-medium tracking-wide uppercase mb-2"
         style={{ color: 'hsl(220, 10%, 50%)' }}
       >
-        {cs.category}
       </p>
 
       {/* Title + arrow */}
@@ -187,7 +186,7 @@ const CaseStudies = () => {
           className="text-3xl md:text-5xl lg:text-6xl font-bold leading-[1.1]"
           style={{ color: 'hsl(217, 50%, 15%)' }}
         >
-          Biến chiến lược thành doanh thu qua từng dự án.
+          Dấu ấn vừa qua
         </h2>
       </div>
 
@@ -210,7 +209,7 @@ const CaseStudies = () => {
           <button
             onClick={handleCardClick}
             className="group relative inline-flex items-center justify-center text-sm md:text-base font-bold tracking-wider uppercase transition-all duration-300 hover:opacity-80"
-            style={{ color: '#00AEFF' }}
+            style={{ color: '#93D8FF' }}
           >
             <span className="flex items-center gap-2">
               View all Case Studies

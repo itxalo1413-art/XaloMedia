@@ -84,7 +84,7 @@ export const ScrollReveal3D = ({
       ref={ref}
       className={`sr3d ${variantClass} ${delayClass} ${className}`}
     >
-      <div className={`sr3d-inner ${isVisible ? 'revealed' : ''}`}>
+      <div className={`sr3d-inner h-full ${isVisible ? 'revealed' : ''}`}>
         {children}
       </div>
     </div>

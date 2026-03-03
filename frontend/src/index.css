@@ -713,7 +713,8 @@ html.dark .theme-toggle .moon-icon {
    HERO INTRO ZOOM ANIMATION (Multi-stage)
    ═══════════════════════════════════════════════════════════ */
 .zoom-intro-stage-1 {
-  animation: zoom-intro-stage-1-anim 2.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+  animation: zoom-intro-stage-1-anim 2.5s cubic-bezier(0.2, 0.8, 0.2, 1)
+    forwards;
 }
 
 @keyframes zoom-intro-stage-1-anim {
@@ -742,5 +743,13 @@ html.dark .theme-toggle .moon-icon {
   100% {
     transform: scale(1);
     opacity: 1;
+  }
+}
+
+/* ── Services Horizontal Slider – responsive card size ── */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .services-card {
+    width: clamp(200px, 55vw, 500px) !important;
+    height: 58vh !important;
   }
 }

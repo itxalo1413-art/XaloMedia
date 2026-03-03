@@ -181,7 +181,7 @@ const Navbar = () => {
         </div>
 
         {/* Desktop Menu */}
-        <nav className="hidden md:block">
+        <nav className="hidden lg:block">
           <ul
             className={`flex gap-8 items-center list-none font-semibold text-[0.95rem] transition-colors duration-300 ${scrolledText}`}
           >
@@ -296,7 +296,7 @@ const Navbar = () => {
         </nav>
 
         {/* Mobile: Theme Toggle + Menu Button */}
-        <div className="flex items-center gap-2 md:hidden">
+        <div className="flex items-center gap-2 lg:hidden">
           <button
             onClick={toggle}
             className="theme-toggle"
@@ -361,7 +361,7 @@ const Navbar = () => {
 
         {/* Mobile Menu Overlay */}
         <div
-          className={`fixed inset-0 z-[999] transition-transform duration-300 ease-in-out md:hidden ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}
+          className={`fixed inset-0 z-[999] transition-transform duration-300 ease-in-out lg:hidden ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}
           style={{
             top: '72px',
             backgroundColor: isDark ? '#0F1923' : '#ffffff',
