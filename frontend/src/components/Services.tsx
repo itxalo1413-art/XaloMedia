@@ -42,14 +42,14 @@ const services = [
 const Services = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
-  const [translateX, setTranslateX] = useState(0);
   const [headerVisible, setHeaderVisible] = useState(false);
   const headerRef = useRef<HTMLDivElement>(null);
+  const rafRef = useRef<number>(0);
 
   // Total "extra" scroll height allocated for horizontal scrolling
   const SCROLL_MULTIPLIER = services.length;
 
-  // Measure & compute translateX on scroll
+  // Direct DOM manipulation on scroll — no React re-render, no jank
   useEffect(() => {
     const compute = () => {
       const section = sectionRef.current;
@@ -57,37 +57,39 @@ const Services = () => {
       if (!section || !track) return;
 
       const rect = section.getBoundingClientRect();
-      const vh = window.innerHeight;
       const sectionH = section.offsetHeight;
+      const vh = window.innerHeight;
 
-      // How far we've scrolled past the section's top edge
       const scrolled = -rect.top;
-      // Max scrollable distance within the section (section height minus one screen)
       const maxScroll = sectionH - vh;
 
       if (maxScroll <= 0) {
-        setTranslateX(0);
+        track.style.transform = 'translateX(0px)';
         return;
       }
 
-      // Progress: 0 at top, 1 at bottom
       const progress = Math.max(0, Math.min(1, scrolled / maxScroll));
-
-      // Max horizontal translation = track scroll width - viewport width
       const maxTranslate = track.scrollWidth - window.innerWidth;
+      const tx = -progress * Math.max(0, maxTranslate);
 
-      setTranslateX(-progress * Math.max(0, maxTranslate));
+      // Apply directly to DOM — skips React render cycle entirely
+      track.style.transform = `translateX(${tx}px)`;
     };
 
-    window.addEventListener('scroll', compute, { passive: true });
+    const onScroll = () => {
+      cancelAnimationFrame(rafRef.current);
+      rafRef.current = requestAnimationFrame(compute);
+    };
+
+    window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('resize', compute);
-    // Run once on mount + after images load
     compute();
-    const timer = setTimeout(compute, 1000);
+    const timer = setTimeout(compute, 500);
 
     return () => {
-      window.removeEventListener('scroll', compute);
+      window.removeEventListener('scroll', onScroll);
       window.removeEventListener('resize', compute);
+      cancelAnimationFrame(rafRef.current);
       clearTimeout(timer);
     };
   }, []);
@@ -148,7 +150,7 @@ const Services = () => {
             ref={trackRef}
             className="flex gap-5 h-full absolute top-0 left-0 pl-5 md:pl-10 lg:pl-[max(40px,calc((100vw-1240px)/2+20px))] pr-10"
             style={{
-              transform: `translateX(${translateX}px)`,
+              transform: 'translateX(0px)',
               willChange: 'transform',
             }}
           >
