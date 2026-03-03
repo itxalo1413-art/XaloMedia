@@ -131,7 +131,7 @@ const Services = () => {
           style={{
             opacity: headerVisible ? 1 : 0,
             transform: headerVisible ? 'translateY(0)' : 'translateY(30px)',
-            transition: 'opacity 0.7s ease, transform 0.7s ease',
+            transition: 'opacity 0.2s ease, transform 0.35s ease',
           }}
         >
           <p className="text-[#93D8FF] font-semibold text-sm uppercase tracking-[3px] mb-3">
