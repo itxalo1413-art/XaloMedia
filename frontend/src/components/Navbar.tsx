@@ -8,7 +8,9 @@ const Navbar = () => {
   const [activeSection, setActiveSection] = useState<string>('');
   const location = useLocation();
   const navigate = useNavigate();
-  const { isDark, toggle } = useTheme();
+  const { isDark
+    // ,toggle
+   } = useTheme();
 
   const isHomePage = location.pathname === '/';
 
