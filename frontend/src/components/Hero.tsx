@@ -100,10 +100,10 @@ const Hero = () => {
         }}
       >
         {/* Hero logo wordmark — xalo. */}
-        <div className="mb-6 hero-logo" aria-hidden="true">
+        {/* <div className="mb-6 hero-logo" aria-hidden="true">
           <span className="hero-logo-main">xalo</span>
           <span className="hero-logo-dot">.</span>
-        </div>
+        </div> */}
 
         <p
           className="text-[#93D8FF] font-semibold text-sm uppercase tracking-[4px] mb-6 hero-fade-in"
@@ -168,7 +168,7 @@ const Hero = () => {
       </div>
 
       {/* Bottom fade to white */}
-      <div className="absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-white to-transparent"></div>
+      {/* <div className="absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-white to-transparent"></div> */}
     </section>
   );
 };

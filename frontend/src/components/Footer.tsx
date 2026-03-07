@@ -111,12 +111,12 @@ const Footer = () => (
           <h4 className="font-bold mb-8 text-base text-white/95">Về Xa Lộ</h4>
           <ul className="space-y-4 opacity-70 text-sm font-medium list-none p-0 m-0">
             <li>
-              <a href="#" className="hover:text-[#5BC0F8] transition-colors">
+              <a href="/about" className="hover:text-[#5BC0F8] transition-colors">
                 About Us
               </a>
             </li>
             <li>
-              <a href="#" className="hover:text-[#5BC0F8] transition-colors">
+              <a href="/case-studies" className="hover:text-[#5BC0F8] transition-colors">
                 Case Studies
               </a>
             </li>
@@ -131,7 +131,7 @@ const Footer = () => (
               </a>
             </li>
             <li>
-              <a href="#" className="hover:text-[#5BC0F8] transition-colors">
+              <a href="/contact" className="hover:text-[#5BC0F8] transition-colors">
                 Liên hệ
               </a>
             </li>

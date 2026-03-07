@@ -7,7 +7,7 @@ import FloatingCTA from '../components/FloatingCTA';
 import BackgroundGrid from '../components/BackgroundGrid';
 import { ScrollReveal, ScrollReveal3D } from '../hooks/useScrollReveal';
 import { useNavigate } from 'react-router-dom';
-import Hero1 from '../components/Hero1';
+import Hero from '../components/Hero';
 
 const Home = () => {
   const navigate = useNavigate();
@@ -15,7 +15,7 @@ const Home = () => {
     <div className="home">
       <BackgroundGrid />
       <Navbar />
-      <Hero1 />
+      <Hero />
       <ScrollReveal>
         {/* <Services /> */}
         {/* ═══════ WHAT WE DO — with Images ═══════ */}

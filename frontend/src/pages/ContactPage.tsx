@@ -1,10 +1,61 @@
+import { useState } from 'react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import BackgroundGrid from '../components/BackgroundGrid';
 import FloatingCTA from '../components/FloatingCTA';
 import { ScrollReveal, ScrollReveal3D } from '../hooks/useScrollReveal';
+import { submitContact } from '../lib/api';
 
 const ContactPage = () => {
+  const [form, setForm] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    company: '',
+    service: '',
+    message: '',
+  });
+  const [status, setStatus] = useState<
+    'idle' | 'loading' | 'success' | 'error'
+  >('idle');
+  const [errorMsg, setErrorMsg] = useState('');
+
+  const handleChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >,
+  ) => setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!form.name || !form.email || !form.message) return;
+    setStatus('loading');
+    try {
+      await submitContact({
+        name: form.name,
+        email: form.email,
+        phone: form.phone || undefined,
+        company: form.company || undefined,
+        service: form.service || undefined,
+        message: form.message,
+      });
+      setStatus('success');
+      setForm({
+        name: '',
+        email: '',
+        phone: '',
+        company: '',
+        service: '',
+        message: '',
+      });
+    } catch (err) {
+      setStatus('error');
+      setErrorMsg(
+        err instanceof Error ? err.message : 'Có lỗi xảy ra, vui lòng thử lại.',
+      );
+    }
+  };
+
   return (
     <div
       className="contact-page min-h-screen"
@@ -179,7 +230,33 @@ const ContactPage = () => {
                 boxShadow: 'var(--card-hover-shadow)',
               }}
             >
-              <form className="flex flex-col gap-6">
+              <form className="flex flex-col gap-6" onSubmit={handleSubmit}>
+                {/* Success banner */}
+                {status === 'success' && (
+                  <div
+                    className="rounded-xl p-4 text-sm font-semibold text-center"
+                    style={{
+                      backgroundColor: 'rgba(0,200,120,0.1)',
+                      color: '#00c878',
+                      border: '1px solid rgba(0,200,120,0.3)',
+                    }}
+                  >
+                    ✅ Tin nhắn đã được gửi! Chúng tôi sẽ liên hệ trong 24 giờ.
+                  </div>
+                )}
+                {status === 'error' && (
+                  <div
+                    className="rounded-xl p-4 text-sm font-semibold text-center"
+                    style={{
+                      backgroundColor: 'rgba(255,80,80,0.1)',
+                      color: '#ff5050',
+                      border: '1px solid rgba(255,80,80,0.3)',
+                    }}
+                  >
+                    ❌ {errorMsg}
+                  </div>
+                )}
+
                 {/* Name + Email Row */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                   <div className="flex flex-col gap-2">
@@ -190,8 +267,12 @@ const ContactPage = () => {
                       Họ và tên <span className="text-red-400">*</span>
                     </label>
                     <input
+                      name="name"
+                      value={form.name}
+                      onChange={handleChange}
                       type="text"
                       placeholder="Nguyễn Văn A"
+                      required
                       className="w-full p-3.5 rounded-xl text-sm outline-none focus:ring-2 focus:ring-[#0081C9]/10 transition-all"
                       style={{
                         backgroundColor: 'var(--input-bg)',
@@ -208,8 +289,12 @@ const ContactPage = () => {
                       Email <span className="text-red-400">*</span>
                     </label>
                     <input
+                      name="email"
+                      value={form.email}
+                      onChange={handleChange}
                       type="email"
                       placeholder="email@company.com"
+                      required
                       className="w-full p-3.5 rounded-xl text-sm outline-none focus:ring-2 focus:ring-[#0081C9]/10 transition-all"
                       style={{
                         backgroundColor: 'var(--input-bg)',
@@ -230,6 +315,9 @@ const ContactPage = () => {
                       Số điện thoại
                     </label>
                     <input
+                      name="phone"
+                      value={form.phone}
+                      onChange={handleChange}
                       type="tel"
                       placeholder="0912 345 678"
                       className="w-full p-3.5 rounded-xl text-sm outline-none focus:ring-2 focus:ring-[#0081C9]/10 transition-all"
@@ -248,6 +336,9 @@ const ContactPage = () => {
                       Công ty / Thương hiệu
                     </label>
                     <input
+                      name="company"
+                      value={form.company}
+                      onChange={handleChange}
                       type="text"
                       placeholder="Tên công ty"
                       className="w-full p-3.5 rounded-xl text-sm outline-none focus:ring-2 focus:ring-[#0081C9]/10 transition-all"
@@ -269,6 +360,9 @@ const ContactPage = () => {
                     Dịch vụ quan tâm
                   </label>
                   <select
+                    name="service"
+                    value={form.service}
+                    onChange={handleChange}
                     className="w-full p-3.5 rounded-xl text-sm outline-none focus:ring-2 focus:ring-[#0081C9]/10 transition-all"
                     style={{
                       backgroundColor: 'var(--input-bg)',
@@ -295,23 +389,35 @@ const ContactPage = () => {
                     Nội dung tin nhắn <span className="text-red-400">*</span>
                   </label>
                   <textarea
+                    name="message"
+                    value={form.message}
+                    onChange={handleChange}
                     rows={5}
                     placeholder="Mô tả chi tiết nhu cầu của bạn..."
+                    required
                     className="w-full p-3.5 rounded-xl text-sm outline-none resize-none focus:ring-2 focus:ring-[#0081C9]/10 transition-all"
                     style={{
                       backgroundColor: 'var(--input-bg)',
                       border: '1px solid var(--input-border)',
                       color: 'var(--input-text)',
                     }}
-                  ></textarea>
+                  />
                 </div>
 
                 {/* Submit */}
                 <button
                   type="submit"
-                  className="w-full bg-[#93D8FF] text-[#00406E] font-semibold py-4 rounded-xl flex items-center justify-center gap-2 hover:bg-[#0081C9] hover:text-white transition-all duration-300 mt-2"
+                  disabled={status === 'loading'}
+                  className="w-full bg-[#93D8FF] text-[#00406E] font-semibold py-4 rounded-xl flex items-center justify-center gap-2 hover:bg-[#0081C9] hover:text-white transition-all duration-300 mt-2 disabled:opacity-60 disabled:cursor-not-allowed"
                 >
-                  Gửi tin nhắn <span>→</span>
+                  {status === 'loading' ? (
+                    'Đang gửi...'
+                  ) : (
+                    <>
+                      {' '}
+                      Gửi tin nhắn <span>→</span>{' '}
+                    </>
+                  )}
                 </button>
               </form>
             </div>

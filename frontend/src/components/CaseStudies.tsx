@@ -109,7 +109,7 @@ const CaseStudyCard = ({
     >
       {/* Large number behind */}
       <span
-        className="absolute -top-12 md:-top-16 lg:-top-24 left-0 text-[100px] md:text-[140px] lg:text-[180px] xl:text-[200px] font-black leading-none select-none pointer-events-none transition-transform duration-700 group-hover:-translate-y-2"
+        className="absolute -top-12 md:-top-16 lg:-top-24 left-0 text-[100px] md:text-[140px] lg:text-[180px] xl:text-[200px] font-black leading-none select-none pointer-events-none transition-transform duration-700 group-hover:-translate-y-8"
         style={{ color: 'hsl(220, 10%, 84%)', zIndex: 0 }}
       >
         {numStr}
@@ -117,7 +117,7 @@ const CaseStudyCard = ({
 
       {/* Card image */}
       <div
-        className="relative z-10 w-full aspect-square rounded-3xl overflow-hidden mb-5 flex-shrink-0"
+        className="relative z-10 w-full aspect-square rounded-sm overflow-hidden mb-5 flex-shrink-0"
         style={{ background: 'hsl(220, 10%, 85%)' }}
       >
         <img
@@ -176,7 +176,7 @@ const CaseStudies = () => {
     <section
       id="case-studies"
       className="py-20 md:py-28 overflow-hidden"
-      style={{ background: 'hsl(220, 10%, 94%)' }}
+      style={{ background: '#EAE8E4' }}
     >
       <div
         ref={headerRef}

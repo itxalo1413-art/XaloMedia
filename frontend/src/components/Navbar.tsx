@@ -29,75 +29,35 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [isHomePage]);
 
+  // Scroll-position-based active section:
+  // 'services' only when the sticky section is in view; '' (Home) everywhere else.
   useEffect(() => {
     if (!isHomePage) {
       setActiveSection('');
       return;
     }
 
-    const section = document.getElementById('services');
-    if (!section) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setActiveSection('services');
-        } else {
-          // Khi services KHÔNG còn trong viewport
-          setActiveSection('');
-        }
-      },
-      {
-        threshold: 0.5, // 50% section visible thì mới active
-      },
-    );
-
-    observer.observe(section);
-
-    return () => observer.disconnect();
-  }, [isHomePage]);
-
-  // Track active section using IntersectionObserver
-  useEffect(() => {
-    if (!isHomePage) {
-      setActiveSection('');
-      return;
-    }
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveSection(entry.target.id);
-          }
-        });
-      },
-      {
-        rootMargin: '-50% 0px -50% 0px', // Trigger when section hits middle of viewport
-      },
-    );
-
-    // Add all sections you want to track here
-    const sections = ['services'];
-    sections.forEach((id) => {
-      const element = document.getElementById(id);
-      if (element) {
-        observer.observe(element);
+    const check = () => {
+      const section = document.getElementById('services');
+      if (!section) {
+        setActiveSection('');
+        return;
       }
-    });
 
-    // Check if at the very top (Home)
-    const handleScrollTop = () => {
-      if (window.scrollY < 100) {
+      const rect = section.getBoundingClientRect();
+      const mid = window.innerHeight / 2;
+
+      // Active when the section's sticky pin area covers the viewport midpoint
+      if (rect.top <= mid && rect.bottom >= mid) {
+        setActiveSection('services');
+      } else {
         setActiveSection('');
       }
     };
-    window.addEventListener('scroll', handleScrollTop, { passive: true });
 
-    return () => {
-      observer.disconnect();
-      window.removeEventListener('scroll', handleScrollTop);
-    };
+    check();
+    window.addEventListener('scroll', check, { passive: true });
+    return () => window.removeEventListener('scroll', check);
   }, [isHomePage, location.pathname]);
 
   const handleServicesClick = (e: React.MouseEvent) => {
@@ -246,43 +206,7 @@ const Navbar = () => {
             </li>
 
             {/* ═══ Dark Mode Toggle ═══ */}
-            <li>
-              <button
-                onClick={toggle}
-                className="theme-toggle"
-                aria-label="Toggle dark mode"
-                title={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
-              >
-                {/* Moon icon */}
-                <svg
-                  className="moon-icon"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth={2}
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
-                  />
-                </svg>
-                {/* Sun icon */}
-                <svg
-                  className="sun-icon"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth={2}
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"
-                  />
-                </svg>
-              </button>
-            </li>
+
 
             <li>
               <Link
@@ -296,7 +220,7 @@ const Navbar = () => {
         </nav>
 
         {/* Mobile: Theme Toggle + Menu Button */}
-        <div className="flex items-center gap-2 lg:hidden">
+        {/* <div className="flex items-center gap-2 lg:hidden">
           <button
             onClick={toggle}
             className="theme-toggle"
@@ -357,7 +281,7 @@ const Navbar = () => {
               )}
             </svg>
           </button>
-        </div>
+        </div> */}
 
         {/* Mobile Menu Overlay */}
         <div
@@ -383,19 +307,7 @@ const Navbar = () => {
             >
               Home
             </Link>
-            <Link
-              to="/about"
-              onClick={() => setIsOpen(false)}
-              className={
-                location.pathname === '/about'
-                  ? isDark
-                    ? 'text-[#93D8FF]'
-                    : 'text-[#0081C9]'
-                  : 'hover:text-[#5BC0F8]'
-              }
-            >
-              About
-            </Link>
+
             <a
               href="/#services"
               onClick={(e) => {
@@ -415,6 +327,19 @@ const Navbar = () => {
                 ></span>
               )}
             </a>
+            <Link
+              to="/about"
+              onClick={() => setIsOpen(false)}
+              className={
+                location.pathname === '/about'
+                  ? isDark
+                    ? 'text-[#93D8FF]'
+                    : 'text-[#0081C9]'
+                  : 'hover:text-[#5BC0F8]'
+              }
+            >
+              About
+            </Link>
             <Link
               to="/case-studies"
               onClick={() => setIsOpen(false)}

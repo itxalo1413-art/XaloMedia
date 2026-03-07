@@ -753,3 +753,81 @@ html.dark .theme-toggle .moon-icon {
     height: 58vh !important;
   }
 }
+
+/* ─────────────────────────────────────────────────────────
+   MOBILE / TABLET — Reduce heavy animations for performance
+   Applies to all screens narrower than 1024px (iPad + phone)
+   ───────────────────────────────────────────────────────── */
+@media (max-width: 1023px) {
+  /* Stop animated gradient — static dark blue */
+  .hero-gradient-bg {
+    animation: none;
+    background: #0a1628;
+    background-size: 100% 100%;
+  }
+
+  /* Stop floating orbs */
+  .hero-orb-1,
+  .hero-orb-2,
+  .hero-orb-3 {
+    animation: none;
+  }
+
+  /* Stop background grid movement */
+  .bg-grid-animate {
+    animation: none;
+  }
+
+  /* Stop idle icon bounce */
+  .svc-icon-micro {
+    animation: none;
+  }
+
+  /* Hero logo — keep impact once, stop breathe loop */
+  .hero-logo {
+    animation: hero-logo-impact 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+  .hero-logo-dot {
+    animation: none;
+  }
+
+  /* Simplify card hover — no translateY GPU composite */
+  .svc-hover-lift:hover {
+    transform: none !important;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+  }
+  .svc-hover-lift {
+    transition: box-shadow 0.25s ease;
+  }
+
+  /* Disable cursor glow (no hover on touch screens) */
+  .card-glow::before {
+    display: none;
+  }
+
+  /* Remove image blur on service cards (expensive GPU op) */
+  .services-card img,
+  img.blur-\[2px\] {
+    filter: none !important;
+  }
+
+  /* Simplify case study reveals — no 3D, no clip-path */
+  .cs-image-reveal {
+    clip-path: none !important;
+    transform: none !important;
+    transition: opacity 0.35s ease;
+  }
+  .cs-text-slide {
+    transform: none !important;
+    transition: opacity 0.35s ease;
+  }
+  .cs-metric-pop {
+    transform: none !important;
+    transition: opacity 0.35s ease;
+  }
+  .cs-divider {
+    transform: none !important;
+    transition: opacity 0.35s ease;
+  }
+}
+

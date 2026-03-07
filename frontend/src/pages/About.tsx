@@ -51,13 +51,16 @@ const About = () => {
         {/* Hero image banner */}
         <ScrollReveal3D variant="float">
           <div className="relative w-full h-[350px] md:h-[500px] overflow-hidden">
-            <img
-              src="/about-hero.png"
-              alt="Xalo Media Digital Workspace"
-              className="absolute inset-0 w-full h-full object-cover"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#0A1628]/80 via-[#0A1628]/40 to-transparent"></div>
-            <div className="absolute inset-0 bg-gradient-to-r from-[#0081C9]/20 to-transparent"></div>
+            {/* Animated gradient background — matches old hero style */}
+            <div className="absolute inset-0 hero-gradient-bg" />
+
+            {/* Floating orbs */}
+            <div className="absolute w-[350px] h-[350px] rounded-full bg-[#93D8FF]/8 blur-[100px] top-[-50px] left-[-50px] hero-orb-1" />
+            <div className="absolute w-[300px] h-[300px] rounded-full bg-white/5 blur-[80px] bottom-[-80px] right-[5%] hero-orb-2" />
+            <div className="absolute w-[200px] h-[200px] rounded-full bg-[#0081C9]/15 blur-[70px] top-[30%] right-[25%]" />
+
+            {/* Subtle noise overlay for texture */}
+            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#0A1628]/60" />
 
             <div className="absolute inset-0 flex flex-col items-center justify-center z-10 text-center px-5">
               <p className="text-white/60 text-sm tracking-[4px] uppercase mb-4">
@@ -76,109 +79,108 @@ const About = () => {
 
       {/* ═══════ STATS ═══════ */}
       <section
-        className="relative w-full py-20"
+        className="relative w-full overflow-hidden"
         style={{ backgroundColor: 'var(--bg-primary)' }}
       >
-        <div className="max-w-[1240px] mx-auto px-5">
+        {/* Top thin accent line */}
+        <div className="w-full h-px bg-gradient-to-r from-transparent via-[#0081C9]/30 to-transparent" />
+
+        <div className="max-w-[1240px] mx-auto px-5 py-16 md:py-24">
           <ScrollReveal>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+            {/* Row: big headline left + description right */}
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-14">
+              <h2
+                className="text-3xl md:text-4xl font-bold leading-tight"
+                style={{ color: 'var(--text-primary)' }}
+              >
+                Con số{' '}
+                <span style={{ color: 'var(--accent)' }}>nói lên tất cả</span>
+              </h2>
+              <p
+                className="max-w-[340px] text-sm leading-relaxed"
+                style={{ color: 'var(--text-muted)' }}
+              >
+                Hơn 4 năm hoạt động, Xalo Media đã xây dựng hệ sinh thái truyền
+                thông số mạnh mẽ tại thị trường Việt Nam.
+              </p>
+            </div>
+
+            {/* Stats strip */}
+            <div
+              className="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x"
+              style={{ borderColor: 'var(--card-border)' }}
+            >
               {[
                 {
                   number: '10,000+',
                   label: 'KOLs / KOCs',
-                  icon: (
-                    <svg
-                      className="w-8 h-8"
-                      style={{ color: 'var(--accent)' }}
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={1.5}
-                        d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
-                      />
-                    </svg>
-                  ),
+                  sub: 'Mạng lưới influencer lớn ở Việt Nam, bao phủ mọi ngành hàng.',
+                  accent: '#0081C9',
                 },
                 {
                   number: '500+',
                   label: 'Brand Partners',
-                  icon: (
-                    <svg
-                      className="w-8 h-8"
-                      style={{ color: 'var(--accent)' }}
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={1.5}
-                        d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                      />
-                    </svg>
-                  ),
+                  sub: 'Đồng hành cùng thương hiệu từ startup đến tập đoàn đa quốc gia.',
+                  accent: '#00AEFF',
                 },
                 {
                   number: '2M+',
-                  label: 'Reach',
-                  icon: (
-                    <svg
-                      className="w-8 h-8"
-                      style={{ color: 'var(--accent)' }}
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={1.5}
-                        d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
-                      />
-                    </svg>
-                  ),
+                  label: 'Lượt tiếp cận',
+                  sub: 'Reach hàng tuần trên các nền tảng TikTok, Instagram, YouTube.',
+                  accent: '#93D8FF',
                 },
               ].map((stat, i) => (
-                <ScrollReveal3D key={i} delayIndex={i + 1}>
+                <div
+                  key={i}
+                  className="group px-0 md:px-10 py-10 md:py-0 first:pl-0 last:pr-0 flex flex-col gap-3 cursor-default"
+                >
+                  {/* Accent bar top */}
                   <div
-                    className="group rounded-2xl p-8 transition-all duration-500 text-center"
-                    style={{
-                      backgroundColor: 'var(--bg-card)',
-                      border: '1px solid var(--card-border)',
-                    }}
+                    className="w-10 h-1 rounded-full mb-2 transition-all duration-500 group-hover:w-20"
+                    style={{ backgroundColor: stat.accent }}
+                  />
+
+                  {/* Big number */}
+                  <p
+                    className="text-5xl md:text-6xl lg:text-7xl font-black tracking-tight leading-none"
+                    style={{ color: stat.accent }}
                   >
-                    <div
-                      className="w-14 h-14 rounded-xl flex items-center justify-center mx-auto mb-4 transition-colors duration-300"
-                      style={{ backgroundColor: 'rgba(0,129,201,0.08)' }}
-                    >
-                      {stat.icon}
-                    </div>
-                    <p
-                      className="text-3xl md:text-4xl font-extrabold mb-2"
-                      style={{ color: 'var(--text-primary)' }}
-                    >
-                      {stat.number}
-                    </p>
-                    <p
-                      className="text-sm font-medium uppercase tracking-[2px]"
-                      style={{ color: 'var(--text-faint)' }}
-                    >
-                      {stat.label}
-                    </p>
-                  </div>
-                </ScrollReveal3D>
+                    {stat.number}
+                  </p>
+
+                  {/* Label */}
+                  <p
+                    className="text-base font-bold uppercase tracking-[2px]"
+                    style={{ color: 'var(--text-primary)' }}
+                  >
+                    {stat.label}
+                  </p>
+
+                  {/* Sub description */}
+                  <p
+                    className="text-sm leading-relaxed max-w-[260px] opacity-70"
+                    style={{ color: 'var(--text-muted)' }}
+                  >
+                    {stat.sub}
+                  </p>
+                </div>
               ))}
             </div>
           </ScrollReveal>
+        </div>
 
-          {/* Network section with image */}
+        {/* Bottom thin accent line */}
+        <div className="w-full h-px bg-gradient-to-r from-transparent via-[#0081C9]/30 to-transparent" />
+      </section>
+
+      {/* ═══════ NETWORK ═══════ */}
+      <section
+        className="relative w-full py-20"
+        style={{ backgroundColor: 'var(--bg-primary)' }}
+      >
+        <div className="max-w-[1240px] mx-auto px-5">
           <ScrollReveal delay={0.15}>
-            <div className="mt-16 flex flex-col md:flex-row items-center gap-10">
+            <div className="flex flex-col md:flex-row items-center gap-10">
               <div className="flex-1">
                 <p
                   className="font-semibold text-sm uppercase tracking-[3px] mb-3"

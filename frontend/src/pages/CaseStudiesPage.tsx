@@ -80,30 +80,55 @@ const CaseStudiesPage = () => {
   const [activeTab, setActiveTab] = useState(tabs[0].id);
   const sectionRefs = useRef<Record<string, HTMLElement | null>>({});
 
-  // Scroll-spy: detect which industry section is in view
+  // Scroll-spy: stable position-based approach with debounce
+  // — no IntersectionObserver jumpiness on mobile
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries
-          .filter((e) => e.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+    let rafId = 0;
+    let debounceTimer: ReturnType<typeof setTimeout>;
 
-        if (visible.length > 0) {
-          const id = visible[0].target.getAttribute('data-industry');
-          if (id) setActiveTab(id);
+    const detectActive = () => {
+      const vh = window.innerHeight;
+      // Target point: 40% from the top of the viewport
+      const targetY = vh * 0.4;
+
+      let closest = '';
+      let closestDist = Infinity;
+
+      Object.entries(sectionRefs.current).forEach(([id, el]) => {
+        if (!el) return;
+        const rect = el.getBoundingClientRect();
+        // Distance from the section's center to our target point
+        const sectionCenter = rect.top + rect.height / 2;
+        const dist = Math.abs(sectionCenter - targetY);
+        if (dist < closestDist) {
+          closestDist = dist;
+          closest = id;
         }
-      },
-      {
-        rootMargin: '-100px 0px -40% 0px',
-        threshold: [0, 0.25, 0.5, 0.75, 1],
-      },
-    );
+      });
 
-    Object.values(sectionRefs.current).forEach((el) => {
-      if (el) observer.observe(el);
-    });
+      if (closest) setActiveTab(closest);
+    };
 
-    return () => observer.disconnect();
+    const onScroll = () => {
+      cancelAnimationFrame(rafId);
+      clearTimeout(debounceTimer);
+
+      rafId = requestAnimationFrame(() => {
+        // Immediate update for responsiveness
+        detectActive();
+        // Debounced settle: re-confirm after scroll stops (120ms)
+        debounceTimer = setTimeout(detectActive, 120);
+      });
+    };
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    detectActive(); // Set initial active on mount
+
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      cancelAnimationFrame(rafId);
+      clearTimeout(debounceTimer);
+    };
   }, []);
 
   const scrollToSection = (id: string) => {
@@ -133,9 +158,9 @@ const CaseStudiesPage = () => {
             <ScrollReveal>
               <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
                 <div>
-                  <p className="text-[#93D8FF] font-semibold text-sm uppercase tracking-[3px] mb-3">
+                  {/* <p className="text-[#93D8FF] font-semibold text-sm uppercase tracking-[3px] mb-3">
                     Portfolio
-                  </p>
+                  </p> */}
                   <h1 className="text-4xl md:text-6xl font-bold text-white leading-tight">
                     Case Studies
                   </h1>

@@ -46,6 +46,15 @@ const Services = () => {
   const headerRef = useRef<HTMLDivElement>(null);
   const rafRef = useRef<number>(0);
 
+  // Preload all service images as soon as this component mounts
+  // (user is still in the hero section at this point)
+  useEffect(() => {
+    services.forEach((s) => {
+      const img = new Image();
+      img.src = s.image;
+    });
+  }, []);
+
   // Total "extra" scroll height allocated for horizontal scrolling
   const SCROLL_MULTIPLIER = services.length;
 
@@ -164,20 +173,24 @@ const Services = () => {
                   marginTop: '20px',
                 }}
               >
-                {/* Image */}
+                {/* Image — no scale/transition on mobile, smooth hover only on desktop */}
                 <img
                   src={service.image}
                   alt={service.title}
-                  className="absolute inset-0 w-full h-full object-cover opacity-85 group-hover:opacity-100 transition-all duration-700 group-hover:scale-105"
+                  loading="eager"
+                  decoding="async"
+                  className="absolute inset-0 w-full h-full object-cover opacity-90 lg:opacity-85 lg:group-hover:opacity-100 lg:transition-all lg:duration-700 lg:group-hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent group-hover:from-black/60 transition duration-500" />
+                {/* Gradient overlay — no transition on mobile */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent lg:group-hover:from-black/60 lg:transition lg:duration-500" />
 
                 {/* Title + Description */}
                 <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8 z-10">
                   <h3 className="text-xl md:text-2xl lg:text-3xl font-extrabold tracking-tight text-white mb-2">
                     {service.title}
                   </h3>
-                  <p className="text-white/70 text-sm md:text-base leading-relaxed max-w-[500px] opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-2 group-hover:translate-y-0">
+                  {/* Description: always visible on mobile; hover-reveal only on desktop */}
+                  <p className="text-white/70 text-sm md:text-base leading-relaxed max-w-[500px] opacity-100 lg:opacity-0 lg:group-hover:opacity-100 lg:transition-all lg:duration-500 lg:translate-y-0 lg:group-hover:translate-y-0">
                     {service.description}
                   </p>
                 </div>

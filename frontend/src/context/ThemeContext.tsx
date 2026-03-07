@@ -22,10 +22,11 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
   const [isDark, setIsDark] = useState(() => {
     if (typeof window !== 'undefined') {
       const saved = localStorage.getItem('theme');
+      // Chỉ dùng saved value nếu user đã từng chủ động chọn theme
+      // Lần đầu vào trang → luôn light
       if (saved) return saved === 'dark';
-      return window.matchMedia('(prefers-color-scheme: dark)').matches;
     }
-    return false;
+    return false; // default: light
   });
 
   useEffect(() => {
