@@ -163,10 +163,10 @@ const Footer = () => (
             </li>
             <li>
               <a
-                href="mailto:xalo@gmail.com"
+                href="mailto:annanguyenn@xalomedia.vn"
                 className="hover:text-[#5BC0F8] transition-colors"
               >
-                xalo@gmail.com
+                annanguyenn@xalomedia.vn
               </a>
             </li>
             <li>

@@ -136,7 +136,7 @@ const ContactPage = () => {
                   </svg>
                 ),
                 title: 'Email',
-                value: 'xalo@gmail.com',
+                value: 'annanguyenn@xalomedia.vn',
               },
               {
                 icon: (

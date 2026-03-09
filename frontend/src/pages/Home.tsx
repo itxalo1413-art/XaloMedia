@@ -188,7 +188,7 @@ const Home = () => {
                           />
                         </svg>
                       </div>
-                      <span className="text-white/70">xalo@gmail.com</span>
+                      <span className="text-white/70">Annanguyenn@xalomedia.vn</span>
                     </div>
 
                     <div className="flex items-center gap-4">
