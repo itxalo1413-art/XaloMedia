@@ -202,32 +202,7 @@ const CaseStudies = () => {
             </h2>
           </div>
 
-          <div className="hidden md:block pb-2">
-            <button
-              onClick={handleCardClick}
-              className="group relative inline-flex items-center justify-center text-sm font-bold tracking-[2px] uppercase transition-all duration-300 hover:text-[#0081C9] text-[#0A1628]"
-            >
-              <span className="relative z-10 flex items-center gap-3">
-                Xem tất cả dự án
-                <span className="w-8 h-8 rounded-full border border-current flex items-center justify-center transition-transform duration-300 group-hover:translate-x-2 group-hover:bg-[#0081C9] group-hover:text-white group-hover:border-transparent">
-                  <svg
-                    className="w-4 h-4"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    strokeWidth={2}
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M14 5l7 7m0 0l-7 7m7-7H3"
-                    />
-                  </svg>
-                </span>
-              </span>
-              <span className="absolute bottom-0 left-0 w-full h-[1px] bg-black/10 origin-right transition-transform duration-300 scale-x-100 group-hover:scale-x-0" />
-            </button>
-          </div>
+          
         </div>
       </div>
 
@@ -260,8 +235,38 @@ const CaseStudies = () => {
                   onClick={handleCardClick}
                 />
               ))}
+              
+          </div>
+
+           <div className="hidden md:block pb-2">
+            <button
+              onClick={handleCardClick}
+              className="group relative inline-flex items-center justify-center text-sm font-bold tracking-[2px] uppercase transition-all duration-300 hover:text-[#0081C9] text-[#0A1628]"
+            >
+              <span className="relative z-10 flex items-center gap-3">
+                Xem tất cả dự án
+                <span className="w-8 h-8 rounded-full border border-current flex items-center justify-center transition-transform duration-300 group-hover:translate-x-2 group-hover:bg-[#0081C9] group-hover:text-white group-hover:border-transparent">
+                  <svg
+                    className="w-4 h-4"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth={2}
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M14 5l7 7m0 0l-7 7m7-7H3"
+                    />
+                  </svg>
+                </span>
+              </span>
+              <span className="absolute bottom-0 left-0 w-full h-[1px] bg-black/10 origin-right transition-transform duration-300 scale-x-100 group-hover:scale-x-0" />
+            </button>
           </div>
         </div>
+
+       
       </div>
 
       {/* Mobile-only View All Button */}

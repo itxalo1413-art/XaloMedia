@@ -61,13 +61,14 @@ const Footer = () => (
               </span>
             </span>
           </div>
-          <h3 className="text-xl font-bold mb-6 text-white/95 text-left">
+          <h3 className="text-xl font-bold mb-5 text-white/95 text-left">
             Digital Marketing Agency
           </h3>
           <p className="opacity-70 leading-relaxed max-w-sm text-[0.95rem] text-left">
-            Đối tác marketing số đáng tin cậy với hơn 2000 KOLs/KOCs và 100+
-            talents chuyên nghiệp. Chúng tôi giúp thương hiệu kết nối với khách
-            hàng thông qua các giải pháp marketing hiệu quả.
+            Đồng hành cùng thương hiệu kiến tạo sức bật mạnh mẽ trên không gian
+            số. Từ chiến lược sáng tạo đa kênh đến mạng lưới 10,000+ KOLs/KOCs,
+            chúng tôi cam kết mang lại tăng trưởng thực chất và những chiến dịch
+            đột phá.
           </p>
         </div>
 
@@ -111,12 +112,18 @@ const Footer = () => (
           <h4 className="font-bold mb-8 text-base text-white/95">Về Xa Lộ</h4>
           <ul className="space-y-4 opacity-70 text-sm font-medium list-none p-0 m-0">
             <li>
-              <a href="/about" className="hover:text-[#5BC0F8] transition-colors">
+              <a
+                href="/about"
+                className="hover:text-[#5BC0F8] transition-colors"
+              >
                 About Us
               </a>
             </li>
             <li>
-              <a href="/case-studies" className="hover:text-[#5BC0F8] transition-colors">
+              <a
+                href="/case-studies"
+                className="hover:text-[#5BC0F8] transition-colors"
+              >
                 Case Studies
               </a>
             </li>
@@ -131,7 +138,10 @@ const Footer = () => (
               </a>
             </li>
             <li>
-              <a href="/contact" className="hover:text-[#5BC0F8] transition-colors">
+              <a
+                href="/contact"
+                className="hover:text-[#5BC0F8] transition-colors"
+              >
                 Liên hệ
               </a>
             </li>
