@@ -276,24 +276,24 @@ const About = () => {
           <ScrollReveal>
             <div className="flex flex-col md:flex-row">
               {/* Left Column: Heading */}
-              <div className="w-full md:w-[70%] pr-0 md:pr-10 mb-10 md:mb-0 flex items-center justify-center">
+              <div className="w-full md:w-[40%] pr-0 md:pr-10 mb-10 md:mb-0 flex md:items-start justify-center md:justify-start">
                 <h2
-                  className="text-4xl md:text-5xl lg:text-7xl font-bold"
+                  className="text-4xl md:text-5xl lg:text-7xl font-bold leading-[1.1] md:mt-4 md:sticky md:top-32"
                   style={{ color: 'var(--text-primary)' }}
                 >
-                  Giá trị
+                  Định hướng
                   <br />
-                  cốt lõi
+                  <span style={{ color: 'var(--accent)' }}>phát triển</span>
                 </h2>
               </div>
 
-              {/* Right Column: Mission & Vision */}
-              <div className="w-full md:w-[60%] flex flex-col relative md:pl-12 lg:pl-16">
+              {/* Right Column: Mission, Vision & Core Values */}
+              <div className="w-full md:w-[60%] flex flex-col relative md:pl-16 lg:pl-20">
                 {/* Vertical Divider (Desktop Only) */}
                 <div
                   className="hidden md:block absolute left-0 top-0 bottom-0 w-[1px]"
                   style={{ backgroundColor: 'var(--card-border)' }}
-                ></div>
+                />
 
                 {/* Item 1: Mission */}
                 <div className="pb-10 md:pb-16 mb-10 md:mb-16 relative">
@@ -301,7 +301,7 @@ const About = () => {
                   <div
                     className="absolute bottom-0 left-0 right-0 h-[1px]"
                     style={{ backgroundColor: 'var(--card-border)' }}
-                  ></div>
+                  />
 
                   <h3
                     className="text-2xl md:text-3xl font-bold mb-4"
@@ -320,7 +320,12 @@ const About = () => {
                 </div>
 
                 {/* Item 2: Vision */}
-                <div>
+                <div className="pb-10 md:pb-16 mb-10 md:mb-16 relative">
+                  {/* Horizontal Divider */}
+                  <div
+                    className="absolute bottom-0 left-0 right-0 h-[1px]"
+                    style={{ backgroundColor: 'var(--card-border)' }}
+                  />
                   <h3
                     className="text-2xl md:text-3xl font-bold mb-4"
                     style={{ color: 'var(--text-primary)' }}
@@ -335,6 +340,57 @@ const About = () => {
                     và Livestream Commerce — nơi mà mọi thương hiệu đều có thể
                     tìm thấy giải pháp tăng trưởng bền vững.
                   </p>
+                </div>
+
+                {/* Item 3: Core Values */}
+                <div>
+                  <h3
+                    className="text-2xl md:text-3xl font-bold mb-6"
+                    style={{ color: 'var(--text-primary)' }}
+                  >
+                    Giá trị cốt lõi
+                  </h3>
+                  <div className="flex flex-col gap-4 md:gap-6">
+                    <div className="flex items-start gap-4">
+                      <div className="w-1.5 h-1.5 rounded-full mt-2.5 bg-[#0081C9] flex-shrink-0" />
+                      <p
+                        className="text-base md:text-lg leading-relaxed"
+                        style={{ color: 'var(--text-muted)' }}
+                      >
+                        <strong style={{ color: 'var(--text-primary)' }}>
+                          Sáng tạo bứt phá:
+                        </strong>{' '}
+                        Không lối mòn, luôn tìm kiếm góc nhìn mới để tạo ra sự
+                        khác biệt.
+                      </p>
+                    </div>
+                    <div className="flex items-start gap-4">
+                      <div className="w-1.5 h-1.5 rounded-full mt-2.5 bg-[#00AEFF] flex-shrink-0" />
+                      <p
+                        className="text-base md:text-lg leading-relaxed"
+                        style={{ color: 'var(--text-muted)' }}
+                      >
+                        <strong style={{ color: 'var(--text-primary)' }}>
+                          Chất lượng thực chất:
+                        </strong>{' '}
+                        View thật, số thật, chuyển đổi thật. Đặt ROI của khách
+                        hàng lên hàng đầu.
+                      </p>
+                    </div>
+                    <div className="flex items-start gap-4">
+                      <div className="w-1.5 h-1.5 rounded-full mt-2.5 bg-[#93D8FF] flex-shrink-0" />
+                      <p
+                        className="text-base md:text-lg leading-relaxed"
+                        style={{ color: 'var(--text-muted)' }}
+                      >
+                        <strong style={{ color: 'var(--text-primary)' }}>
+                          Đồng hành trọn vẹn:
+                        </strong>{' '}
+                        Cùng thương hiệu đi qua mọi giai đoạn, từ lúc lên ý
+                        tưởng cho tới lúc chốt deal.
+                      </p>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

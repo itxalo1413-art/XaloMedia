@@ -759,11 +759,9 @@ html.dark .theme-toggle .moon-icon {
    Applies to all screens narrower than 1024px (iPad + phone)
    ───────────────────────────────────────────────────────── */
 @media (max-width: 1023px) {
-  /* Stop animated gradient — static dark blue */
+  /* Gradient animation kept on mobile — slowed slightly for battery */
   .hero-gradient-bg {
-    animation: none;
-    background: #0a1628;
-    background-size: 100% 100%;
+    animation-duration: 16s;
   }
 
   /* Stop floating orbs */

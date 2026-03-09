@@ -1,4 +1,4 @@
-import { useRef, useCallback } from 'react';
+import { useRef, useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useScrollProgress } from '../hooks/useScrollProgress';
 
@@ -6,42 +6,53 @@ const Hero = () => {
   const heroRef = useRef<HTMLElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const { ref: scrollRef, progress } = useScrollProgress();
+  const [isDesktop, setIsDesktop] = useState(() =>
+    typeof window !== 'undefined'
+      ? window.matchMedia('(min-width: 1024px)').matches
+      : true,
+  );
 
-  // Scroll-linked 3D: content tilts back and recedes as user scrolls down
-  const scrollRotateX = progress * 6; // 0 → 6deg tilt back
-  const scrollTranslateZ = -(progress * 60); // 0 → -60px into depth
-  const scrollOpacity = 1 - progress * 0.4; // 1 → 0.6 fade
-
-  // Parallax speeds for orbs
-  const orbParallax1 = progress * -80;
-  const orbParallax2 = progress * -50;
-  const orbParallax3 = progress * -30;
-
-  // 3D perspective tilt on mouse move
-  const handleMouseMove = useCallback((e: React.MouseEvent<HTMLElement>) => {
-    if (!contentRef.current) return;
-    const rect = heroRef.current!.getBoundingClientRect();
-    const x = (e.clientX - rect.left) / rect.width - 0.5; // -0.5 → 0.5
-    const y = (e.clientY - rect.top) / rect.height - 0.5;
-
-    // Tilt content subtly (additive with scroll)
-    contentRef.current.style.setProperty('--mouse-rx', `${-y * 4}deg`);
-    contentRef.current.style.setProperty('--mouse-ry', `${x * 4}deg`);
-
-    // Move orbs with parallax
-    const orbs = heroRef.current!.querySelectorAll<HTMLDivElement>('.hero-orb');
-    orbs.forEach((orb, i) => {
-      const factor = (i + 1) * 15;
-      orb.style.setProperty('--mouse-tx', `${x * factor}px`);
-      orb.style.setProperty('--mouse-ty', `${y * factor}px`);
-    });
+  useEffect(() => {
+    const mq = window.matchMedia('(min-width: 1024px)');
+    const handler = (e: MediaQueryListEvent) => setIsDesktop(e.matches);
+    mq.addEventListener('change', handler);
+    return () => mq.removeEventListener('change', handler);
   }, []);
+
+  // Scroll-linked 3D: only on desktop
+  const scrollRotateX = isDesktop ? progress * 6 : 0;
+  const scrollTranslateZ = isDesktop ? -(progress * 60) : 0;
+  const scrollOpacity = isDesktop ? 1 - progress * 0.4 : 1;
+
+  // Parallax for orbs — lighter on mobile
+  const orbParallax1 = isDesktop ? progress * -80 : progress * -20;
+  const orbParallax2 = isDesktop ? progress * -50 : progress * -10;
+  const orbParallax3 = isDesktop ? progress * -30 : 0;
+
+  // 3D perspective tilt on mouse move — desktop only
+  const handleMouseMove = useCallback(
+    (e: React.MouseEvent<HTMLElement>) => {
+      if (!isDesktop || !contentRef.current) return;
+      const rect = heroRef.current!.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width - 0.5;
+      const y = (e.clientY - rect.top) / rect.height - 0.5;
+      contentRef.current.style.setProperty('--mouse-rx', `${-y * 4}deg`);
+      contentRef.current.style.setProperty('--mouse-ry', `${x * 4}deg`);
+      const orbs =
+        heroRef.current!.querySelectorAll<HTMLDivElement>('.hero-orb');
+      orbs.forEach((orb, i) => {
+        const factor = (i + 1) * 15;
+        orb.style.setProperty('--mouse-tx', `${x * factor}px`);
+        orb.style.setProperty('--mouse-ty', `${y * factor}px`);
+      });
+    },
+    [isDesktop],
+  );
 
   const handleMouseLeave = useCallback(() => {
     if (!contentRef.current) return;
     contentRef.current.style.setProperty('--mouse-rx', '0deg');
     contentRef.current.style.setProperty('--mouse-ry', '0deg');
-
     const orbs = heroRef.current!.querySelectorAll<HTMLDivElement>('.hero-orb');
     orbs.forEach((orb) => {
       orb.style.setProperty('--mouse-tx', '0px');
@@ -93,10 +104,14 @@ const Hero = () => {
         ref={contentRef}
         className="max-w-[900px] mx-auto px-5 text-center relative z-10"
         style={{
-          transform: `perspective(1200px) rotateX(calc(${scrollRotateX}deg + var(--mouse-rx, 0deg))) rotateY(var(--mouse-ry, 0deg)) translateZ(${scrollTranslateZ}px)`,
+          transform: isDesktop
+            ? `perspective(1200px) rotateX(calc(${scrollRotateX}deg + var(--mouse-rx, 0deg))) rotateY(var(--mouse-ry, 0deg)) translateZ(${scrollTranslateZ}px)`
+            : 'none',
           opacity: scrollOpacity,
-          transition: 'transform 0.15s ease-out, opacity 0.15s ease-out',
-          willChange: 'transform, opacity',
+          transition: isDesktop
+            ? 'transform 0.15s ease-out, opacity 0.15s ease-out'
+            : 'none',
+          willChange: isDesktop ? 'transform, opacity' : 'auto',
         }}
       >
         {/* Hero logo wordmark — xalo. */}
@@ -167,8 +182,15 @@ const Hero = () => {
         </div>
       </div>
 
-      {/* Bottom fade to white */}
-      {/* <div className="absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-white to-transparent"></div> */}
+      {/* Smooth gradient bridge → section below */}
+      <div
+        className="absolute bottom-0 left-0 right-0 pointer-events-none"
+        style={{
+          height: '120px',
+          background:
+            'linear-gradient(to bottom, transparent 0%, rgba(10,22,40,0.75) 100%)',
+        }}
+      />
     </section>
   );
 };
