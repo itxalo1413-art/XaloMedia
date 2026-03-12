@@ -154,7 +154,7 @@ const Navbar = () => {
                 onClick={handleHomeClick}
                 className={`transition-colors ${location.pathname === '/' && activeSection !== 'services' ? activeColor : 'hover:text-[#5BC0F8]'}`}
               >
-                Home
+                Trang chủ
               </Link>
               {location.pathname === '/' && activeSection !== 'services' && (
                 <div
@@ -172,7 +172,7 @@ const Navbar = () => {
                     : 'hover:text-[#5BC0F8]'
                 }`}
               >
-                Services
+                Dịch vụ
               </a>
               {activeSection === 'services' && isHomePage && (
                 <div
@@ -185,7 +185,7 @@ const Navbar = () => {
                 to="/about"
                 className={`transition-colors ${location.pathname === '/about' ? activeColor : 'hover:text-[#5BC0F8]'}`}
               >
-                About
+                Về chúng tôi
               </Link>
               {location.pathname === '/about' && (
                 <div
@@ -199,7 +199,7 @@ const Navbar = () => {
                 to="/case-studies"
                 className={`transition-colors ${location.pathname === '/case-studies' ? activeColor : 'hover:text-[#5BC0F8]'}`}
               >
-                Case Studies
+                Case-studies
               </Link>
               {location.pathname === '/case-studies' && (
                 <div
@@ -215,7 +215,7 @@ const Navbar = () => {
                 to="/contact"
                 className={`bg-[#93D8FF] text-[#00406E] px-6 py-2.5 rounded-[4px] font-bold text-sm tracking-wide hover:opacity-90 transition-all`}
               >
-                Contact Us
+                Liên hệ
               </Link>
             </li>
           </ul>
@@ -275,7 +275,7 @@ const Navbar = () => {
                   : 'hover:text-[#5BC0F8]'
               }
             >
-              Home
+              Trang chủ
             </Link>
 
             <a
@@ -290,7 +290,7 @@ const Navbar = () => {
                   : 'hover:text-[#5BC0F8]'
               }`}
             >
-              Services
+              Dịch vụ
               {activeSection === 'services' && isHomePage && (
                 <span
                   className={`absolute left-[-1rem] top-1/2 -translate-y-1/2 w-1.5 h-1/2 rounded-r-md ${activeBorderColor}`}
@@ -308,7 +308,7 @@ const Navbar = () => {
                   : 'hover:text-[#5BC0F8]'
               }
             >
-              About
+              Về chúng tôi
             </Link>
             <Link
               to="/case-studies"
@@ -321,14 +321,14 @@ const Navbar = () => {
                   : 'hover:text-[#5BC0F8]'
               }
             >
-              Case Studies
+              Dự án
             </Link>
             <Link
               to="/contact"
               onClick={() => setIsOpen(false)}
               className="bg-[#93D8FF] text-[#00406E] px-8 py-3 rounded-[4px] hover:opacity-90"
             >
-              Contact Us
+              Liên hệ
             </Link>
           </div>
         </div>

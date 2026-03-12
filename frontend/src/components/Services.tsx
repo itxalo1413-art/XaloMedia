@@ -2,94 +2,12 @@ import useEmblaCarousel from 'embla-carousel-react';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const services = [
-  {
-    title: 'Setup Livestream',
-    description:
-      'Giải pháp livestream chuyên nghiệp từ thiết bị, bối cảnh đến kịch bản — giúp thương hiệu tạo dấu ấn mạnh mẽ trên mọi nền tảng.',
-    details:
-      'Chúng tôi cung cấp trọn gói thiết lập livestream: từ lựa chọn thiết bị chuyên nghiệp (camera, mic, lighting) đến xây dựng bối cảnh phù hợp nhận diện thương hiệu và viết kịch bản bán hàng tối ưu chuyển đổi. Đội ngũ kỹ thuật và sản xuất nội dung của Xalo Media đảm bảo mỗi buổi livestream diễn ra liền mạch, hấp dẫn và đạt doanh số.',
-    highlights: [
-      'Thiết bị studio chuẩn',
-      'Kịch bản bán hàng tối ưu',
-      'Setup on-site toàn quốc',
-      'Hỗ trợ kỹ thuật real-time',
-    ],
-    image: 'setupLive.png',
-  },
-  {
-    title: 'Booking KOCs, KOLs',
-    description:
-      'Kết nối thương hiệu với mạng lưới hàng ngàn KOLs/KOCs uy tín, phù hợp ngành hàng và ngân sách.',
-    details:
-      'Xalo Media sở hữu database hơn 5,000+ KOLs/KOCs được phân loại theo ngành hàng, tệp audience, mức độ engagement và ngân sách. Chúng tôi đảm nhiệm toàn bộ quy trình từ brief, lựa chọn người phù hợp, đàm phán hợp đồng đến quản lý nội dung và báo cáo hiệu quả chiến dịch.',
-    highlights: [
-      '5,000+ KOLs/KOCs đã verified',
-      'Matching theo target audience',
-      'Quản lý hợp đồng & content',
-      'Báo cáo ROI chi tiết',
-    ],
-    image: 'booking.png',
-  },
-  {
-    title: 'Brand Awareness',
-    description:
-      'Chiến lược truyền thông đa kênh giúp thương hiệu tiếp cận đúng đối tượng, đúng thời điểm.',
-    details:
-      'Chúng tôi thiết kế chiến lược brand awareness toàn diện trên TikTok, Facebook, Instagram và YouTube — từ nghiên cứu insight khách hàng, xây dựng messaging đến phân bổ ngân sách và tối ưu hóa liên tục. Mục tiêu là xây dựng nhận diện thương hiệu bền vững và tăng trưởng organic reach dài hạn.',
-    highlights: [
-      'Chiến lược đa nền tảng',
-      'Content calendar 30/60/90 ngày',
-      'A/B testing & optimization',
-      'Monthly performance report',
-    ],
-    image: 'brandAw.png',
-  },
-  {
-    title: 'Brand Rejuvenation',
-    description:
-      'Làm mới hình ảnh thương hiệu với chiến lược sáng tạo, tái định vị để bứt phá thị trường.',
-    details:
-      'Brand Rejuvenation là dịch vụ tái định hình toàn diện hình ảnh thương hiệu — bao gồm audit nhận diện hiện tại, xây dựng brand identity mới, refresh visual system và triển khai chiến dịch ra mắt hình ảnh mới trên social media. Phù hợp với các thương hiệu muốn tiếp cận tệp khách hàng mới hoặc cạnh tranh mạnh mẽ hơn.',
-    highlights: [
-      'Brand audit toàn diện',
-      'Visual identity mới',
-      'Chiến dịch relaunch',
-      'Đo lường brand perception',
-    ],
-    image: 'brandRejuvenation.png',
-  },
-  {
-    title: 'TikTok Shop Management',
-    description:
-      'Quản lý toàn diện TikTok Shop — từ onboarding sản phẩm, tối ưu listing đến chăm sóc đơn hàng.',
-    details:
-      'Đội ngũ chuyên gia TikTok Shop của Xalo Media quản lý toàn bộ vòng đời gian hàng: setup tài khoản và gian hàng, upload và tối ưu listing sản phẩm (SEO tiêu đề, hình ảnh, giá), chạy Flash Sale & Voucher, quản lý đơn hàng, chăm sóc review khách hàng và phân tích dữ liệu để scale doanh thu.',
-    highlights: [
-      'Setup & onboarding nhanh',
-      'Tối ưu listing & SEO shop',
-      'Flash Sale & Voucher strategy',
-      'Analytics & scaling',
-    ],
-    image: 'about-livestream.png',
-  },
-  {
-    title: 'Social Content',
-    description:
-      'Sản xuất nội dung sáng tạo đa nền tảng — Reels, TikTok, YouTube Shorts.',
-    details:
-      'Xalo Media sản xuất nội dung video short-form chuyên nghiệp, tối ưu cho thuật toán từng nền tảng. Từ ý tưởng sáng tạo, viết script, quay dựng đến post và phân tích hiệu quả — đội ngũ content creator và editor của chúng tôi đảm bảo mỗi video đều viral-ready và phù hợp với DNA thương hiệu.',
-    highlights: [
-      'Script & concept sáng tạo',
-      'Quay & dựng chuyên nghiệp',
-      'Tối ưu cho từng nền tảng',
-      'Lịch đăng & analytics',
-    ],
-    image: 'about-content.png',
-  },
-];
+import { fetchServices, type ApiService } from '../lib/api';
 
-const SCROLL_MULTIPLIER = services.length;
+type ServiceType = Pick<
+  ApiService,
+  'title' | 'description' | 'details' | 'highlights' | 'image' | 'industry'
+>;
 
 const isTouch =
   typeof window !== 'undefined' &&
@@ -98,13 +16,11 @@ const isTouch =
 // ─────────────────────────────────────────────
 // Shared Card Content (Inline Expansion)
 // ─────────────────────────────────────────────
-type Service = (typeof services)[number];
-
 const CardInner = ({
   service,
   isExpanded,
 }: {
-  service: Service;
+  service: ServiceType;
   isExpanded: boolean;
 }) => {
   const navigate = useNavigate();
@@ -183,7 +99,7 @@ const CardInner = ({
           </p>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 md:gap-4 mb-6 lg:mb-8">
-            {service.highlights.map((h, i) => (
+            {(service.highlights || []).map((h, i) => (
               <div key={i} className="flex items-center gap-2.5">
                 <div className="w-1.5 h-1.5 rounded-full bg-[#93D8FF] flex-shrink-0 shadow-[0_0_8px_rgba(147,216,255,0.6)]" />
                 <span className="text-white/95 text-xs md:text-sm font-medium">
@@ -197,7 +113,10 @@ const CardInner = ({
             <button
               onClick={(e) => {
                 e.stopPropagation();
-                navigate('/case-studies');
+                const industryId = service.industry 
+                  ? (typeof service.industry === 'string' ? service.industry : (service.industry as any)?._id)
+                  : '';
+                navigate(industryId ? `/case-studies#${industryId}` : '/case-studies');
               }}
               className="inline-flex items-center gap-2.5 px-6 py-3 rounded-full font-semibold text-sm
                 bg-white text-[#0A1628] hover:bg-[#93D8FF] transition-all duration-300 hover:scale-105 active:scale-95"
@@ -227,7 +146,7 @@ const CardInner = ({
 // ─────────────────────────────────────────────
 // Mobile carousel (Embla)
 // ─────────────────────────────────────────────
-const MobileCarousel = () => {
+const MobileCarousel = ({ services }: { services: ServiceType[] }) => {
   const [emblaRef, emblaApi] = useEmblaCarousel({
     align: 'center',
     dragFree: false,
@@ -327,6 +246,23 @@ const Services = () => {
   const rafRef = useRef<number>(0);
   const [headerVisible, setHeaderVisible] = useState(false);
   const [expandedTitle, setExpandedTitle] = useState<string | null>(null);
+  const [services, setServices] = useState<ServiceType[]>([]);
+  const [isDesktop, setIsDesktop] = useState(typeof window !== 'undefined' ? window.innerWidth >= 1024 : true);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const handleResize = () => {
+      setIsDesktop(window.innerWidth >= 1024);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  useEffect(() => {
+    fetchServices()
+      .then((data) => setServices(data))
+      .catch((err) => console.error('Error fetching services:', err));
+  }, []);
 
   // ── Mobile: giữ user 3s bằng cách block vertical touchmove ──
   useEffect(() => {
@@ -373,7 +309,7 @@ const Services = () => {
 
   // ── Desktop: scroll-driven horizontal animation ──
   useEffect(() => {
-    if (isTouch) return;
+    if (!isDesktop) return;
 
     const compute = () => {
       const section = sectionRef.current;
@@ -436,7 +372,7 @@ const Services = () => {
       id="services"
       className="bg-[#0A1628] relative"
       style={{
-        height: isTouch ? '100vh' : `${SCROLL_MULTIPLIER * 100}vh`,
+        height: !isDesktop ? '100vh' : `${Math.max(1, services.length) * 100}vh`,
       }}
     >
       <div className="sticky top-0 h-screen overflow-hidden flex flex-col justify-center">
@@ -462,10 +398,12 @@ const Services = () => {
         </div>
 
         {/* Mobile: Embla carousel */}
-        {isTouch && <MobileCarousel />}
+        {!isDesktop && services.length > 0 && (
+          <MobileCarousel services={services} />
+        )}
 
         {/* Desktop: horizontal scroll track */}
-        {!isTouch && (
+        {isDesktop && (
           <div className="flex-1 min-h-0 overflow-hidden relative">
             <div
               ref={trackRef}

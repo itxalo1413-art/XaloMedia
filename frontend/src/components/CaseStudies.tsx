@@ -1,47 +1,7 @@
 import { useEffect, useRef, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-/* ── Data ──────────────────────────────────────────────────── */
-const caseStudies = [
-  {
-    id: 'shopee-loreal',
-    title: 'Chiến dịch Livestream kỷ lục',
-    category: 'Livestream',
-    image: 'setupLive.png',
-  },
-  {
-    id: 'vinamilk',
-    title: 'Product Launch đa tầng',
-    category: 'Campaign',
-    image: 'booking.png',
-  },
-  {
-    id: 'local-brand-x',
-    title: 'Tái định vị thương hiệu',
-    category: 'Branding',
-    image: 'brandAw.png',
-  },
-  {
-    id: 'momo',
-    title: 'Phủ sóng Fintech',
-    category: 'Social Content',
-    image: 'brandRejuvenation.png',
-  },
-  {
-    id: 'vinfast',
-    title: 'Ra mắt xe điện toàn cầu',
-    category: 'Global PR',
-    image:
-      'https://images.unsplash.com/photo-1560958089-b8a1929cea89?q=80&w=2071&auto=format&fit=crop',
-  },
-  {
-    id: 'vietjet',
-    title: 'Chiến dịch mùa hè rực rỡ',
-    category: 'Digital Marketing',
-    image:
-      'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=2074&auto=format&fit=crop',
-  },
-];
+import { fetchCaseStudies, type ApiCaseStudy } from '../lib/api';
 
 /* ── Scroll-reveal hook ───────────────────────────────────── */
 const useScrollReveal = (threshold = 0.1) => {
@@ -73,9 +33,9 @@ const CaseStudyCard = ({
   index,
   onClick,
 }: {
-  cs: (typeof caseStudies)[0];
+  cs: ApiCaseStudy;
   index: number;
-  onClick: () => void;
+  onClick: (id: string) => void;
 }) => {
   const { ref, revealed } = useScrollReveal(0.15);
 
@@ -95,14 +55,14 @@ const CaseStudyCard = ({
       style={{
         transitionDelay: `${(index % 2) * 150}ms`,
       }}
-      onClick={onClick}
+      onClick={() => onClick(cs._id)}
     >
       <div
         className={`relative w-full overflow-hidden rounded-2xl ${aspectRatio} bg-[#E2E0D9]`}
       >
         {/* Background Image with Parallax & Scale effect */}
         <img
-          src={cs.image}
+          src={cs.imgSrc.startsWith('http') ? cs.imgSrc : `/${cs.imgSrc}`}
           alt={cs.title}
           loading="lazy"
           className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1.2s] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-110"
@@ -119,7 +79,7 @@ const CaseStudyCard = ({
           {/* Category Pill */}
           <div className="overflow-hidden mb-3">
             <span className="inline-block px-3 py-1 bg-white/10 backdrop-blur-md border border-white/20 rounded-full text-[10px] md:text-xs font-semibold uppercase tracking-widest text-[#93D8FF] transform translate-y-0 transition-transform duration-500 group-hover:-translate-y-1">
-              {cs.category}
+              {typeof cs.industry === 'object' ? (cs.industry as any).name : 'Dự án'}
             </span>
           </div>
 
@@ -165,8 +125,21 @@ const CaseStudyCard = ({
 const CaseStudies = () => {
   const navigate = useNavigate();
   const { ref: headerRef, revealed: headerRevealed } = useScrollReveal(0.2);
+  const [studies, setStudies] = useState<ApiCaseStudy[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const handleCardClick = useCallback(() => {
+  useEffect(() => {
+    fetchCaseStudies()
+      .then((data) => setStudies(data.slice(0, 6))) // Show only first 6 on homepage
+      .catch((err) => console.error('Failed to fetch case studies:', err))
+      .finally(() => setLoading(false));
+  }, []);
+
+  const handleCardClick = useCallback((id: string) => {
+    navigate(`/case-studies/${id}`);
+  }, [navigate]);
+
+  const handleViewAll = useCallback(() => {
     navigate('/case-studies');
   }, [navigate]);
 
@@ -208,41 +181,47 @@ const CaseStudies = () => {
 
       {/* Dynamic Grid Layout */}
       <div className="max-w-[1400px] mx-auto px-6 md:px-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10 lg:gap-16 items-start">
-          {/* Left Column (Even items, pushed down slightly for staggered look) */}
-          <div className="flex flex-col gap-6 md:gap-10 lg:gap-16 md:mt-16">
-            {caseStudies
-              .filter((_, i) => i % 2 === 0)
-              .map((cs, i) => (
-                <CaseStudyCard
-                  key={cs.id}
-                  cs={cs}
-                  index={i * 2} // Original index
-                  onClick={handleCardClick}
-                />
-              ))}
+        {loading ? (
+          <div className="flex justify-center py-20">
+            <div className="w-10 h-10 border-4 border-[#0081C9] border-t-transparent rounded-full animate-spin"></div>
           </div>
+        ) : studies.length === 0 ? (
+          <div className="text-center py-20 text-gray-500">Chưa có dữ liệu dự án.</div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10 lg:gap-16 items-start">
+            {/* Left Column (Even items, pushed down slightly for staggered look) */}
+            <div className="flex flex-col gap-6 md:gap-10 lg:gap-16 md:mt-16">
+              {studies
+                .filter((_, i) => i % 2 === 0)
+                .map((cs, i) => (
+                  <CaseStudyCard
+                    key={cs._id}
+                    cs={cs}
+                    index={i * 2} // Original index
+                    onClick={handleCardClick}
+                  />
+                ))}
+            </div>
 
-          {/* Right Column (Odd items) */}
-          <div className="flex flex-col gap-6 md:gap-10 lg:gap-16">
-            {caseStudies
-              .filter((_, i) => i % 2 === 1)
-              .map((cs, i) => (
-                <CaseStudyCard
-                  key={cs.id}
-                  cs={cs}
-                  index={i * 2 + 1} // Original index
-                  onClick={handleCardClick}
-                />
-              ))}
-              
-          </div>
+            {/* Right Column (Odd items) */}
+            <div className="flex flex-col gap-6 md:gap-10 lg:gap-16">
+              {studies
+                .filter((_, i) => i % 2 === 1)
+                .map((cs, i) => (
+                  <CaseStudyCard
+                    key={cs._id}
+                    cs={cs}
+                    index={i * 2 + 1} // Original index
+                    onClick={handleCardClick}
+                  />
+                ))}
+            </div>
 
-           <div className="hidden md:block pb-2">
-            <button
-              onClick={handleCardClick}
-              className="group relative inline-flex items-center justify-center text-sm font-bold tracking-[2px] uppercase transition-all duration-300 hover:text-[#0081C9] text-[#0A1628]"
-            >
+            <div className="hidden md:block pb-2">
+              <button
+                onClick={handleViewAll}
+                className="group relative inline-flex items-center justify-center text-sm font-bold tracking-[2px] uppercase transition-all duration-300 hover:text-[#0081C9] text-[#0A1628]"
+              >
               <span className="relative z-10 flex items-center gap-3">
                 Xem tất cả dự án
                 <span className="w-8 h-8 rounded-full border border-current flex items-center justify-center transition-transform duration-300 group-hover:translate-x-2 group-hover:bg-[#0081C9] group-hover:text-white group-hover:border-transparent">
@@ -265,14 +244,13 @@ const CaseStudies = () => {
             </button>
           </div>
         </div>
-
-       
+      )}
       </div>
 
       {/* Mobile-only View All Button */}
       <div className="mt-16 flex justify-center md:hidden px-6">
         <button
-          onClick={handleCardClick}
+          onClick={handleViewAll}
           className="w-full py-4 rounded-xl bg-[#0A1628] text-white text-sm font-bold tracking-widest uppercase flex items-center justify-center gap-3 active:scale-[0.98] transition-transform"
         >
           Xem tất cả dự án

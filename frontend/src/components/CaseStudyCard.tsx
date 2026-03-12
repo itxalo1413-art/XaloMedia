@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 interface CaseStudyCardProps {
   id: string;
   title: string;
@@ -109,13 +111,13 @@ const CaseStudyCard = ({
             </div>
           )}
 
-          <a
-            href="#"
+          <Link
+            to={`/case-studies/${id}`}
             className="font-semibold text-sm flex items-center gap-1.5 group-hover:gap-2.5 transition-all"
             style={{ color: 'var(--accent)' }}
           >
             Xem chi tiết <span className="text-base">→</span>
-          </a>
+          </Link>
         </div>
       </div>
     </div>

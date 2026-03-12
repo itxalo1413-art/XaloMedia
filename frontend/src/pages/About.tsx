@@ -1,4 +1,6 @@
 import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { fetchServices, type ApiService } from '../lib/api';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import BackgroundGrid from '../components/BackgroundGrid';
@@ -8,6 +10,13 @@ import PartnerLogos from '../components/PartnerLogos';
 
 const About = () => {
   const navigate = useNavigate();
+  const [services, setServices] = useState<ApiService[]>([]);
+
+  useEffect(() => {
+    fetchServices()
+      .then((data) => setServices(data))
+      .catch((err) => console.error('Error fetching services:', err));
+  }, []);
 
   return (
     <div
@@ -100,7 +109,7 @@ const About = () => {
                 className="max-w-[340px] text-sm leading-relaxed"
                 style={{ color: 'var(--text-muted)' }}
               >
-                Hơn 4 năm hoạt động, Xalo Media đã xây dựng hệ sinh thái truyền
+                Hơn 5 năm hoạt động, Xalo Media đã xây dựng hệ sinh thái truyền
                 thông số mạnh mẽ tại thị trường Việt Nam.
               </p>
             </div>
@@ -398,6 +407,67 @@ const About = () => {
         </div>
       </section>
 
+      {/* ═══════ RECRUITMENT CTA ═══════ */}
+      <section
+        className="relative w-full py-20"
+        style={{ backgroundColor: 'var(--bg-primary)' }}
+      >
+        <div className="max-w-[1240px] mx-auto px-5">
+          <ScrollReveal>
+            <div
+              className="relative rounded-3xl overflow-hidden p-8 md:p-16 text-center"
+              style={{
+                backgroundColor: 'var(--bg-card)',
+                border: '1px solid var(--card-border)',
+              }}
+            >
+              {/* Background Accents */}
+              <div className="absolute top-0 right-0 w-[300px] h-[300px] bg-[#0081C9]/5 blur-[80px] -mr-32 -mt-32 rounded-full" />
+              <div className="absolute bottom-0 left-0 w-[200px] h-[200px] bg-[#93D8FF]/5 blur-[60px] -ml-20 -mb-20 rounded-full" />
+
+              <div className="relative z-10 w-full max-w-[800px] mx-auto">
+                <p
+                  className="font-semibold text-sm uppercase tracking-[4px] mb-4"
+                  style={{ color: 'var(--accent)' }}
+                >
+                  Gia nhập đội ngũ
+                </p>
+                <h2
+                  className="text-3xl md:text-5xl font-bold mb-6 leading-tight"
+                  style={{ color: 'var(--text-primary)' }}
+                >
+                  Xây dựng tương lai{' '}
+                  <span style={{ color: 'var(--accent)' }}>Digital Marketing</span>{' '}
+                  cùng Xalo Media
+                </h2>
+                <p
+                  className="text-base md:text-lg mb-10 leading-relaxed"
+                  style={{ color: 'var(--text-muted)' }}
+                >
+                  Chúng tôi luôn tìm kiếm những tài năng sáng tạo, đam mê và sẵn
+                  sàng bứt phá giới hạn. Khám phá các cơ hội nghề nghiệp và đồng
+                  hành cùng chúng tôi ngay hôm nay.
+                </p>
+                <div className="flex flex-wrap items-center justify-center gap-4">
+                  <button
+                    onClick={() => navigate('/recruitment')}
+                    className="group bg-[#0081C9] text-white font-semibold px-8 py-4 rounded-xl hover:bg-[#0081C9]/90 transition-all duration-300 flex items-center gap-2 shadow-lg shadow-[#0081C9]/20"
+                  >
+                    Xem vị trí đang tuyển{' '}
+                    <span className="group-hover:translate-x-1 transition-transform">
+                      →
+                    </span>
+                  </button>
+                  <p className="text-sm font-medium" style={{ color: 'var(--text-muted)' }}>
+                    Hoặc gửi CV trực tiếp tới <span className="text-[#93D8FF]">hr@xalomedia.vn</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </ScrollReveal>
+        </div>
+      </section>
+
       {/* ═══════ WHAT WE DO — with Images ═══════ */}
       <section
         className="relative w-full py-20"
@@ -431,38 +501,7 @@ const About = () => {
           </ScrollReveal>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-            {[
-              {
-                img: '/setupLive.png',
-                title: 'Setup Livestream',
-                desc: 'Dàn dựng studio, trang thiết bị và ekip chuyên nghiệp cho mọi phiên live.',
-              },
-              {
-                img: '/booking.png',
-                title: 'Booking KOLs / KOCs',
-                desc: 'Kết nối thương hiệu với 10,000+ influencer từ nano đến mega level.',
-              },
-              {
-                img: '/about-content.png',
-                title: 'Social Content',
-                desc: 'Sản xuất content video, ảnh đa nền tảng — Reels, TikTok, YouTube Shorts.',
-              },
-              {
-                img: '/about-livestream.png',
-                title: 'TikTok Shop Management',
-                desc: 'Quản lý toàn diện shop trên TikTok — từ listing đến chăm sóc đơn hàng.',
-              },
-              {
-                img: '/brandAw.png',
-                title: 'Brand Awareness',
-                desc: 'Chiến lược truyền thông đa kênh nâng cao nhận diện thương hiệu.',
-              },
-              {
-                img: '/brandRejuvenation.png',
-                title: 'Brand Rejuvenation',
-                desc: 'Tái định vị, làm mới hình ảnh thương hiệu cho thế hệ khách hàng mới.',
-              },
-            ].map((service, i) => (
+            {services.map((service, i) => (
               <ScrollReveal3D
                 key={i}
                 className="h-full"
@@ -470,7 +509,8 @@ const About = () => {
                 variant={i % 2 === 0 ? 'default' : 'right'}
               >
                 <div
-                  className="group rounded-2xl overflow-hidden transition-all duration-500 h-full flex flex-col"
+                  className="group rounded-2xl overflow-hidden transition-all duration-500 h-full flex flex-col cursor-pointer"
+                  onClick={() => navigate('/services')}
                   style={{
                     backgroundColor: 'var(--bg-card)',
                     border: '1px solid var(--card-border)',
@@ -478,7 +518,7 @@ const About = () => {
                 >
                   <div className="relative h-[180px] overflow-hidden shrink-0">
                     <img
-                      src={service.img}
+                      src={service.image}
                       alt={service.title}
                       className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                     />
@@ -492,10 +532,10 @@ const About = () => {
                       {service.title}
                     </h4>
                     <p
-                      className="text-sm leading-relaxed"
+                      className="text-sm leading-relaxed line-clamp-3"
                       style={{ color: 'var(--text-muted)' }}
                     >
-                      {service.desc}
+                      {service.description}
                     </p>
                   </div>
                 </div>
@@ -585,7 +625,8 @@ const About = () => {
                         </svg>
                       </div>
                       <span className="text-white/70">
-                        250 Nguyễn Đình Chính, P. Phú Nhuận, TP.HCM
+                        250 Nguyễn Đình Chính, Phường 11, Phú Nhuận, Thành phố
+                        Hồ Chí Minh, Việt Nam
                       </span>
                     </div>
                   </div>

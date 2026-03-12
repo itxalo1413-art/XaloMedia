@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import BackgroundGrid from '../components/BackgroundGrid';
@@ -6,79 +7,111 @@ import CaseStudySidebar from '../components/CaseStudySidebar';
 import CaseStudyCard from '../components/CaseStudyCard';
 import FloatingCTA from '../components/FloatingCTA';
 import { ScrollReveal, ScrollReveal3D } from '../hooks/useScrollReveal';
-
-// Case studies grouped by industry
-const industries = [
-  {
-    id: 'livestream',
-    label: 'Livestream & E-Commerce',
-    studies: [
-      {
-        title: "Shopee x L'Oréal — Chuỗi Livestream Mega Sale",
-        description:
-          'Tổ chức 12 buổi livestream liên tiếp với dàn KOLs hàng đầu Việt Nam, tạo nên chiến dịch viral trên Shopee Live, đạt doanh thu kỷ lục trong ngày sale đôi.',
-        imgSrc: 'setupLive.png',
-        metric: '2.5M+',
-        metricLabel: 'Lượt xem',
-        tags: ['Livestream', 'E-Commerce'],
-      },
-    ],
-  },
-  {
-    id: 'kol-marketing',
-    label: 'KOL Marketing',
-    studies: [
-      {
-        title: 'Vinamilk — Ra mắt sản phẩm với KOL đa tầng',
-        description:
-          'Chiến dịch booking 500+ micro & macro KOLs trên TikTok và Instagram, tạo hiệu ứng viral tự nhiên cho dòng sữa mới.',
-        imgSrc: 'booking.png',
-        metric: '500+',
-        metricLabel: 'KOLs tham gia',
-        tags: ['KOL Marketing', 'Product Launch'],
-      },
-    ],
-  },
-  {
-    id: 'branding',
-    label: 'Branding & Content',
-    studies: [
-      {
-        title: 'Local Brand X — Tái định vị thương hiệu thời trang',
-        description:
-          'Làm mới toàn bộ hình ảnh digital, xây dựng content strategy và influencer marketing trong 3 tháng, đưa thương hiệu trở lại top of mind.',
-        imgSrc: 'brandAw.png',
-        metric: '180%',
-        metricLabel: 'Tăng nhận diện',
-        tags: ['Branding', 'Content Strategy'],
-      },
-    ],
-  },
-  {
-    id: 'brand-awareness',
-    label: 'Brand Awareness',
-    studies: [
-      {
-        title: 'MoMo — Brand Awareness đa kênh cho Fintech',
-        description:
-          'Chiến dịch truyền thông kết hợp KOLs và paid media, tối ưu chi phí trên mỗi lượt tiếp cận, tăng cường nhận diện thương hiệu tại thị trường Gen Z.',
-        imgSrc: 'brandRejuvenation.png',
-        metric: '10M+',
-        metricLabel: 'Impressions',
-        tags: ['Brand Awareness', 'Paid Media'],
-      },
-    ],
-  },
-];
-
-const tabs = industries.map((ind) => ({
-  id: ind.id,
-  label: ind.label,
-}));
+import { Calendar, Tag, ChevronLeft } from 'lucide-react';
+import { fetchIndustries, fetchCaseStudies, fetchCaseStudyById, type ApiCaseStudy } from '../lib/api';
 
 const CaseStudiesPage = () => {
-  const [activeTab, setActiveTab] = useState(tabs[0].id);
+  const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
+  const [industriesData, setIndustriesData] = useState<{ id: string; label: string; studies: ApiCaseStudy[] }[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [activeTab, setActiveTab] = useState('');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [appliedSearchQuery, setAppliedSearchQuery] = useState('');
+  
+  // Single study state for detail view
+  const [study, setStudy] = useState<ApiCaseStudy | null>(null);
+  const [studyLoading, setStudyLoading] = useState(false);
+
   const sectionRefs = useRef<Record<string, HTMLElement | null>>({});
+  const isScrollingRef = useRef(false);
+
+  const handleSearch = () => {
+    if (id) navigate('/case-studies');
+    setAppliedSearchQuery(searchQuery);
+  };
+
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        setLoading(true);
+        const [industries, studies] = await Promise.all([
+          fetchIndustries(),
+          fetchCaseStudies()
+        ]);
+
+        const grouped = industries
+          .filter(ind => ind.isActive)
+          .map(ind => ({
+            id: ind._id,
+            label: ind.name,
+            studies: studies.filter(s => 
+              s.isActive && (typeof s.industry === 'string' ? s.industry === ind._id : (s.industry as any)?._id === ind._id)
+            ).sort((a, b) => (a.order || 0) - (b.order || 0))
+          }))
+          .sort((a, b) => {
+            const indA = industries.find(i => i._id === a.id);
+            const indB = industries.find(i => i._id === b.id);
+            return (indA?.order || 0) - (indB?.order || 0);
+          });
+
+        setIndustriesData(grouped);
+        if (grouped.length > 0 && !activeTab) {
+          setActiveTab(grouped[0].id);
+        }
+      } catch (error) {
+        console.error('Failed to load case studies data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadData();
+  }, []); // Only run on mount or tab change if needed, but not on activeTab toggle
+
+  // Handle auto-scroll if hash is present
+  useEffect(() => {
+    if (!loading && window.location.hash && !id && industriesData.length > 0) {
+      const hashId = window.location.hash.slice(1);
+      // Wait for DOM to settle
+      const timeout = setTimeout(() => {
+        const element = sectionRefs.current[hashId];
+        if (element) {
+          scrollToSection(hashId);
+        }
+      }, 400); // Slightly longer for more stability
+      return () => clearTimeout(timeout);
+    }
+  }, [loading, id, industriesData]);
+
+  // Handle single study fetching for detail view
+  useEffect(() => {
+    if (id) {
+      setStudyLoading(true);
+      fetchCaseStudyById(id)
+        .then(setStudy)
+        .catch(err => {
+          console.error(err);
+          navigate('/case-studies');
+        })
+        .finally(() => setStudyLoading(false));
+    } else {
+      setStudy(null);
+    }
+  }, [id, navigate]);
+
+  const filteredData = industriesData.map(ind => ({
+    ...ind,
+    studies: ind.studies.filter((study: ApiCaseStudy) => 
+      appliedSearchQuery === '' || 
+      study.tags.some((tag: string) => tag.toLowerCase().includes(appliedSearchQuery.toLowerCase()))
+    )
+  })).filter(ind => appliedSearchQuery === '' || ind.studies.length > 0);
+
+  const tabs = filteredData.map((ind) => ({
+    id: ind.id,
+    label: ind.label,
+  }));
 
   // Scroll-spy: stable position-based approach with debounce
   // — no IntersectionObserver jumpiness on mobile
@@ -87,15 +120,17 @@ const CaseStudiesPage = () => {
     let debounceTimer: ReturnType<typeof setTimeout>;
 
     const detectActive = () => {
+      if (isScrollingRef.current) return;
+      
       const vh = window.innerHeight;
-      // Target point: 40% from the top of the viewport
-      const targetY = vh * 0.4;
+      // Target point: 30% from the top for better precision
+      const targetY = vh * 0.3;
 
       let closest = '';
       let closestDist = Infinity;
 
       Object.entries(sectionRefs.current).forEach(([id, el]) => {
-        if (!el) return;
+        if (!el || typeof el.getBoundingClientRect !== 'function') return;
         const rect = el.getBoundingClientRect();
         // Distance from the section's center to our target point
         const sectionCenter = rect.top + rect.height / 2;
@@ -132,10 +167,19 @@ const CaseStudiesPage = () => {
   }, []);
 
   const scrollToSection = (id: string) => {
+    if (!id) return;
+    
     const element = sectionRefs.current[id];
     if (element) {
+      isScrollingRef.current = true;
       setActiveTab(id);
+      
       element.scrollIntoView({ behavior: 'smooth' });
+      
+      // Unlock after scroll finishes
+      setTimeout(() => {
+        isScrollingRef.current = false;
+      }, 1000); // Wait for smooth scroll to settle
     }
   };
 
@@ -215,7 +259,12 @@ const CaseStudiesPage = () => {
             <div className="relative w-full max-w-sm">
               <input
                 type="text"
-                placeholder="Tìm kiếm ngành hàng..."
+                placeholder="Tìm kiếm theo thẻ (Tags)..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') handleSearch();
+                }}
                 className="w-full px-5 py-3 rounded-xl text-sm outline-none transition-all pr-12 shadow-sm"
                 style={{
                   backgroundColor: 'var(--bg-card)',
@@ -223,20 +272,25 @@ const CaseStudiesPage = () => {
                   color: 'var(--input-text)',
                 }}
               />
-              <svg
-                className="w-5 h-5 absolute right-4 top-1/2 -translate-y-1/2"
-                style={{ color: 'var(--text-faint)' }}
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
+              <button
+                onClick={handleSearch}
+                className="absolute right-4 top-1/2 -translate-y-1/2 p-1 hover:bg-gray-100/10 rounded-lg transition-colors"
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                />
-              </svg>
+                <svg
+                  className="w-5 h-5"
+                  style={{ color: 'var(--text-faint)' }}
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                  />
+                </svg>
+              </button>
             </div>
           </div>
         </ScrollReveal>
@@ -250,65 +304,188 @@ const CaseStudiesPage = () => {
           />
 
           {/* Cards grouped by industry */}
-          <div className="flex-1 flex flex-col gap-14">
-            {industries.map((industry) => (
-              <div
-                key={industry.id}
-                data-industry={industry.id}
-                ref={(el) => {
-                  sectionRefs.current[industry.id] = el;
-                }}
-                className="scroll-mt-24"
-              >
-                {/* Industry heading */}
-                <ScrollReveal>
-                  <div className="flex items-center gap-3 mb-6">
-                    <div
-                      className="w-1 h-6 rounded-full"
-                      style={{ backgroundColor: 'var(--accent)' }}
-                    ></div>
-                    <h2
-                      className="text-lg font-bold"
-                      style={{ color: 'var(--text-primary)' }}
-                    >
-                      {industry.label}
-                    </h2>
-                    <div
-                      className="flex-1 h-px"
-                      style={{ backgroundColor: 'var(--border-color)' }}
-                    ></div>
-                    <span
-                      className="text-xs font-medium"
-                      style={{ color: 'var(--text-faint)' }}
-                    >
-                      {industry.studies.length} dự án
-                    </span>
-                  </div>
-                </ScrollReveal>
-
-                {/* Cards in this industry */}
-                <div className="flex flex-col gap-6">
-                  {industry.studies.map((study, idx) => (
-                    <ScrollReveal3D
-                      key={idx}
-                      delayIndex={idx + 1}
-                      variant={idx % 2 === 0 ? 'default' : 'right'}
-                    >
-                      <CaseStudyCard
-                        id={`${industry.id}-${idx}`}
-                        title={study.title}
-                        description={study.description}
-                        imgSrc={study.imgSrc}
-                        metric={study.metric}
-                        metricLabel={study.metricLabel}
-                        tags={study.tags}
-                        isReversed={idx % 2 !== 0}
-                      />
-                    </ScrollReveal3D>
-                  ))}
+          <div className="flex-1 flex flex-col gap-14 min-w-0">
+            {id ? (
+              // Case Study Detail View
+              studyLoading ? (
+                <div className="flex flex-col items-center justify-center py-20 gap-4">
+                  <div className="w-10 h-10 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+                  <p className="text-gray-500 font-medium">Đang tải nội dung...</p>
                 </div>
-              </div>
-            ))}
+              ) : study ? (
+                <div className="bg-white rounded-3xl p-6 md:p-10 lg:p-12 shadow-sm border border-gray-100/50">
+                  {/* Back button */}
+                  <button 
+                    onClick={() => navigate('/case-studies')} 
+                    className="flex items-center gap-2 text-gray-400 hover:text-blue-600 transition-colors mb-10 text-xs font-bold uppercase tracking-widest"
+                  >
+                    <ChevronLeft className="w-4 h-4" />
+                    Quay lại danh sách
+                  </button>
+
+                  <ScrollReveal>
+                    <div className="space-y-6 mb-12">
+                      <div className="flex flex-wrap items-center gap-4 text-[10px] font-bold uppercase tracking-[2px] text-blue-600">
+                        <span className="bg-blue-50 px-3 py-1.5 rounded-full">
+                          {study.industry && typeof study.industry === 'object' 
+                            ? (study.industry as any).name 
+                            : study.industry}
+                        </span>
+                        {study.publishDate && (
+                          <span className="flex items-center gap-2 text-gray-400">
+                            <Calendar className="w-3.5 h-3.5" />
+                            {new Date(study.publishDate).toLocaleDateString('vi-VN')}
+                          </span>
+                        )}
+                      </div>
+                      <h1 className="text-3xl md:text-5xl font-extrabold leading-tight text-gray-900 tracking-tight">
+                        {study.title}
+                      </h1>
+                      {study.introduction && (
+                        <p className="text-base md:text-lg text-gray-500 font-medium leading-relaxed max-w-3xl">
+                          {study.introduction}
+                        </p>
+                      )}
+                    </div>
+                  </ScrollReveal>
+
+                  {/* Featured Image */}
+                  <ScrollReveal delay={0.1}>
+                    <div className="aspect-[16/9] rounded-2xl overflow-hidden mb-12 border border-gray-100">
+                      <img 
+                        src={study.imgSrc.startsWith('http') ? study.imgSrc : `/${study.imgSrc}`} 
+                        alt={study.title} 
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                  </ScrollReveal>
+
+                  {/* Content & Sidebar */}
+                  <div className="flex flex-col xl:flex-row gap-12">
+                    <div className="flex-1 min-w-0">
+                      <ScrollReveal delay={0.2}>
+                        <div 
+                          className="prose prose-blue prose-lg max-w-none 
+                            prose-headings:font-bold prose-headings:text-gray-900 prose-headings:tracking-tight
+                            prose-p:text-gray-600 prose-p:leading-relaxed prose-p:mb-6
+                            prose-strong:text-gray-900 prose-strong:font-bold
+                            prose-a:text-blue-600 prose-a:font-semibold hover:prose-a:underline
+                            prose-img:rounded-2xl prose-img:shadow-sm prose-img:border prose-img:border-gray-100
+                            prose-li:text-gray-600"
+                          dangerouslySetInnerHTML={{ __html: study.content || '' }}
+                        />
+                      </ScrollReveal>
+                    </div>
+
+                    {/* Meta info sidebar */}
+                    <div className="w-full xl:w-80 shrink-0 space-y-10">
+                      <ScrollReveal delay={0.3}>
+                        <div className="bg-gray-50/50 rounded-2xl p-8 border border-gray-100 flex flex-col items-start">
+                          <h4 className="text-[10px] font-bold uppercase tracking-[2px] text-gray-400 mb-6">Kết quả đạt được</h4>
+                          <div className="space-y-2">
+                            <p className="text-5xl font-black text-blue-600 tracking-tighter">{study.metric}</p>
+                            <p className="text-xs font-bold text-gray-400 uppercase tracking-widest">{study.metricLabel}</p>
+                          </div>
+                        </div>
+
+                        <div className="pt-4">
+                          <h4 className="text-[10px] font-bold uppercase tracking-[2px] text-gray-400 mb-6 pl-2">Thẻ dự án</h4>
+                          <div className="flex flex-wrap gap-2">
+                            {study.tags.map((tag: string, i: number) => (
+                              <span key={i} className="flex items-center gap-2 px-4 py-2 bg-white border border-gray-100 rounded-xl text-xs font-bold text-gray-500 hover:border-blue-200 hover:text-blue-600 transition-all cursor-default">
+                                <Tag className="w-3 h-3 text-blue-400" />
+                                {tag}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      </ScrollReveal>
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <div className="text-center py-20 text-gray-400 font-medium bg-white rounded-3xl border border-dashed border-gray-200">
+                  Không tìm thấy thông tin dự án.
+                </div>
+              )
+            ) : (
+              // Industry List View
+              loading ? (
+                <div className="flex flex-col items-center justify-center py-20 gap-4">
+                  <div className="w-10 h-10 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+                  <p className="text-gray-500 font-medium">Đang tải dữ liệu...</p>
+                </div>
+              ) : filteredData.length === 0 ? (
+                <div className="text-center py-20 text-gray-400 font-medium bg-white rounded-3xl border border-dashed border-gray-200">
+                  {appliedSearchQuery ? 'Không tìm thấy kết quả phù hợp với thẻ tìm kiếm.' : 'Chưa có dữ liệu dự án.'}
+                </div>
+              ) : (
+                filteredData.map((industry) => (
+                  <div
+                    key={industry.id}
+                    data-industry={industry.id}
+                    ref={(el: HTMLElement | null) => {
+                      sectionRefs.current[industry.id] = el;
+                    }}
+                    className="scroll-mt-[100px] md:scroll-mt-[120px]"
+                  >
+                    {/* Industry heading */}
+                    <ScrollReveal>
+                      <div className="flex items-center gap-4 mb-8">
+                        <div
+                          className="w-1.5 h-8 rounded-full shadow-[0_0_10px_rgba(0,129,201,0.3)]"
+                          style={{ backgroundColor: 'var(--accent)' }}
+                        ></div>
+                        <h2
+                          className="text-2xl font-extrabold tracking-tight"
+                          style={{ color: 'var(--text-primary)' }}
+                        >
+                          {industry.label}
+                        </h2>
+                        <div
+                          className="flex-1 h-px opacity-50"
+                          style={{ backgroundColor: 'var(--border-color)' }}
+                        ></div>
+                        <span
+                          className="text-[10px] font-bold uppercase tracking-widest px-3 py-1 bg-gray-100 rounded-full"
+                          style={{ color: 'var(--text-faint)' }}
+                        >
+                          {industry.studies.length} dự án
+                        </span>
+                      </div>
+                    </ScrollReveal>
+
+                    {/* Cards in this industry */}
+                    <div className="flex flex-col gap-8">
+                      {industry.studies.length > 0 ? (
+                        industry.studies.map((study: ApiCaseStudy, idx: number) => (
+                          <ScrollReveal3D
+                            key={study._id}
+                            delayIndex={idx + 1}
+                            variant={idx % 2 === 0 ? 'default' : 'right'}
+                          >
+                            <CaseStudyCard
+                              id={study._id}
+                              title={study.title}
+                              description={study.description}
+                              imgSrc={study.imgSrc.startsWith('http') ? study.imgSrc : `/${study.imgSrc}`}
+                              metric={study.metric}
+                              metricLabel={study.metricLabel}
+                              tags={study.tags}
+                              isReversed={idx % 2 !== 0}
+                            />
+                          </ScrollReveal3D>
+                        ))
+                      ) : (
+                        <div className="py-10 text-center border-2 border-dashed border-gray-100 rounded-2xl text-gray-400 text-sm">
+                          Chưa có dự án nào trong ngành này.
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                ))
+              )
+            )}
           </div>
         </div>
       </div>

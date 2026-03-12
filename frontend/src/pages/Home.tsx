@@ -124,7 +124,7 @@ const Home = () => {
             </div>
           </div>
         </section> */}
-        <Services/>
+        <Services />
       </ScrollReveal>
 
       <ScrollReveal>
@@ -188,7 +188,9 @@ const Home = () => {
                           />
                         </svg>
                       </div>
-                      <span className="text-white/70">Annanguyenn@xalomedia.vn</span>
+                      <span className="text-white/70">
+                        annanguyenn@xalomedia.vn
+                      </span>
                     </div>
 
                     <div className="flex items-center gap-4">
@@ -214,7 +216,8 @@ const Home = () => {
                         </svg>
                       </div>
                       <span className="text-white/70">
-                        250 Nguyễn Đình Chính, P. Phú Nhuận, TP.HCM
+                        250 Nguyễn Đình Chính, Phường 11, Phú Nhuận, Thành phố
+                        Hồ Chí Minh, Việt Nam
                       </span>
                     </div>
                   </div>

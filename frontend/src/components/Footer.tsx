@@ -109,14 +109,14 @@ const Footer = () => (
         </div>
 
         <div className="md:col-span-2 text-left">
-          <h4 className="font-bold mb-8 text-base text-white/95">Về Xa Lộ</h4>
+          <h4 className="font-bold mb-8 text-base text-white/95">Công ty</h4>
           <ul className="space-y-4 opacity-70 text-sm font-medium list-none p-0 m-0">
             <li>
               <a
                 href="/about"
                 className="hover:text-[#5BC0F8] transition-colors"
               >
-                About Us
+                Giới thiệu
               </a>
             </li>
             <li>
@@ -124,16 +124,12 @@ const Footer = () => (
                 href="/case-studies"
                 className="hover:text-[#5BC0F8] transition-colors"
               >
-                Case Studies
+                Dự án
               </a>
             </li>
+
             <li>
-              <a href="#" className="hover:text-[#5BC0F8] transition-colors">
-                Network KOLs
-              </a>
-            </li>
-            <li>
-              <a href="#" className="hover:text-[#5BC0F8] transition-colors">
+              <a href="/recruitment" className="hover:text-[#5BC0F8] transition-colors">
                 Tuyển dụng
               </a>
             </li>
@@ -183,10 +179,10 @@ const Footer = () => (
           <div className="flex items-center gap-4">
             <span className="hidden md:inline w-px h-4 bg-white/30"></span>
             <a href="#" className="hover:text-white transition-colors">
-              Terms of Use
+              Điều khoản sử dụng
             </a>
             <a href="#" className="hover:text-white transition-colors">
-              Privacy Policy
+              Chính sách bảo mật
             </a>
           </div>
         </div>

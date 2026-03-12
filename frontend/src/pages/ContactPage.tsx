@@ -162,7 +162,8 @@ const ContactPage = () => {
                   </svg>
                 ),
                 title: 'Văn phòng',
-                value: '250 Nguyễn Đình Chính, P. Phú Nhuận, TP.HCM',
+                value:
+                  '250 Nguyễn Đình Chính, Phường 11, Phú Nhuận, Thành phố Hồ Chí Minh, Việt Nam',
                 small: true,
               },
             ].map((card, i) => (

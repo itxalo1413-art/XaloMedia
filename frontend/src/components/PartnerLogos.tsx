@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { ScrollReveal } from '../hooks/useScrollReveal';
 import { fetchPartners } from '../lib/api';
 import type { ApiPartner } from '../lib/api';
+import { Link } from 'react-router-dom';
 
 const FALLBACK_PARTNERS = [
   {
@@ -138,61 +139,75 @@ const PartnerLogos = () => {
 
         {/* Partner list — editorial row style */}
         <div>
-          {partners.map((partner, i) => (
-            <div
-              key={partner._id}
-              className="group flex items-center justify-between py-5 transition-colors duration-200 cursor-default"
-              style={{
-                borderTop: '1px solid var(--card-border)',
-                borderBottom:
-                  i === partners.length - 1
-                    ? '1px solid var(--card-border)'
-                    : 'none',
-              }}
-            >
-              {/* Index */}
-              <span
-                className="text-xs tabular-nums w-8 flex-shrink-0 hidden md:block"
-                style={{ color: 'var(--text-faint)' }}
-              >
-                {String(i + 1).padStart(2, '0')}
-              </span>
+          {partners.map((partner, i) => {
+            const hasCaseStudy = !!partner.caseStudyId;
+            const linkTo = hasCaseStudy 
+              ? `/case-studies/${typeof partner.caseStudyId === 'object' ? partner.caseStudyId._id : partner.caseStudyId}`
+              : '#';
 
-              {/* Logo */}
-              <div className="w-[120px] md:w-[160px] flex items-center flex-shrink-0">
-                <img
-                  src={`/${partner.logo}`}
-                  alt={partner.name}
-                  className="max-h-[36px] max-w-full object-contain opacity-60 group-hover:opacity-100 transition-opacity duration-300"
-                  style={{ filter: 'var(--logo-filter)' }}
-                />
+            const Content = (
+              <div
+                className={`group flex items-center justify-between py-5 transition-colors duration-200 ${hasCaseStudy ? 'cursor-pointer hover:bg-gray-50/5' : 'cursor-default'}`}
+                style={{
+                  borderTop: '1px solid var(--card-border)',
+                  borderBottom:
+                    i === partners.length - 1
+                      ? '1px solid var(--card-border)'
+                      : 'none',
+                }}
+              >
+                {/* Index */}
+                <span
+                  className="text-xs tabular-nums w-8 flex-shrink-0 hidden md:block"
+                  style={{ color: 'var(--text-faint)' }}
+                >
+                  {String(i + 1).padStart(2, '0')}
+                </span>
+
+                {/* Logo */}
+                <div className="w-[120px] md:w-[160px] flex items-center flex-shrink-0">
+                  <img
+                    src={partner.logo.startsWith('http') ? partner.logo : `/${partner.logo}`}
+                    alt={partner.name}
+                    className="max-h-[36px] max-w-full object-contain opacity-60 group-hover:opacity-100 transition-opacity duration-300"
+                    style={{ filter: 'var(--logo-filter)' }}
+                  />
+                </div>
+
+                {/* Name */}
+                <span
+                  className="flex-1 font-semibold text-base md:text-lg transition-colors duration-300 px-4"
+                  style={{ color: 'var(--text-primary)' }}
+                >
+                  {partner.name}
+                </span>
+
+                {/* Category */}
+                <span
+                  className="text-sm hidden sm:block flex-shrink-0 text-right"
+                  style={{ color: 'var(--text-faint)' }}
+                >
+                  {partner.category}
+                </span>
+
+                {/* Arrow on hover */}
+                <span
+                  className="ml-6 text-lg opacity-0 group-hover:opacity-100 transition-all duration-300 -translate-x-2 group-hover:translate-x-0 flex-shrink-0"
+                  style={{ color: 'var(--accent)' }}
+                >
+                  →
+                </span>
               </div>
+            );
 
-              {/* Name */}
-              <span
-                className="flex-1 font-semibold text-base md:text-lg transition-colors duration-300 px-4"
-                style={{ color: 'var(--text-primary)' }}
-              >
-                {partner.name}
-              </span>
-
-              {/* Category */}
-              <span
-                className="text-sm hidden sm:block flex-shrink-0 text-right"
-                style={{ color: 'var(--text-faint)' }}
-              >
-                {partner.category}
-              </span>
-
-              {/* Arrow on hover */}
-              <span
-                className="ml-6 text-lg opacity-0 group-hover:opacity-100 transition-all duration-300 -translate-x-2 group-hover:translate-x-0 flex-shrink-0"
-                style={{ color: 'var(--accent)' }}
-              >
-                →
-              </span>
-            </div>
-          ))}
+            return hasCaseStudy ? (
+              <Link key={partner._id} to={linkTo}>
+                {Content}
+              </Link>
+            ) : (
+              <div key={partner._id}>{Content}</div>
+            );
+          })}
         </div>
 
         {/* Footer note */}
