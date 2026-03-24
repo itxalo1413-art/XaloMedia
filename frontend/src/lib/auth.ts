@@ -12,9 +12,19 @@ export const clearAccessToken = () => {
   localStorage.removeItem(TOKEN_KEY);
 };
 
+export const isTokenExpired = (token: string) => {
+  try {
+    const payload = JSON.parse(atob(token.split('.')[1]));
+    if (!payload.exp) return false;
+    // Buffer of 10 seconds
+    return payload.exp * 1000 < Date.now() - 10000;
+  } catch (e) {
+    return true;
+  }
+};
+
 export const isAuthenticated = () => {
   const token = getAccessToken();
   if (!token) return false;
-  // basic check: could expand to decode jwt and check expiration
-  return true;
+  return !isTokenExpired(token);
 };

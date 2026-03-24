@@ -124,25 +124,25 @@ const Hero = () => {
           className="text-[#93D8FF] font-semibold text-sm uppercase tracking-[4px] mb-6 hero-fade-in"
           style={{ animationDelay: '0.2s' }}
         >
-          Digital Marketing Agency
+          Agency
         </p>
         <h1
           className="text-4xl md:text-[4rem] lg:text-[4.5rem] font-bold mb-6 leading-[1.1] hero-fade-in"
           style={{ animationDelay: '0.4s' }}
         >
-          Kết nối thương hiệu với
+          Deliver what you need,
           <br />
           <span className="bg-gradient-to-r from-[#93D8FF] to-white bg-clip-text text-transparent">
-            hàng triệu khách hàng
+            Achieve what you want
           </span>
         </h1>
         <p
           className="text-lg md:text-xl text-white/70 mb-10 leading-relaxed max-w-[600px] mx-auto hero-fade-in"
           style={{ animationDelay: '0.6s' }}
         >
-          Livestream, KOLs, Content — Giải pháp truyền thông toàn diện
+          Mang đến những gì bạn cần — giúp bạn đạt được những gì bạn muốn.
           <br className="hidden md:block" />
-          giúp thương hiệu của bạn bứt phá thị trường.
+          Giải pháp toàn diện từ chiến lược đến thực thi.
         </p>
 
         <div className="hero-fade-in" style={{ animationDelay: '0.8s' }}>

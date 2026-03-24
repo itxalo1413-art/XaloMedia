@@ -50,8 +50,8 @@ const About = () => {
                 className="max-w-[400px] text-base leading-relaxed"
                 style={{ color: 'var(--text-muted)' }}
               >
-                Đồng hành cùng hàng trăm thương hiệu trên hành trình chinh phục
-                thị trường số Việt Nam.
+                Chúng tôi lắng nghe, thấu hiểu và biến mục tiêu của bạn thành
+                kết quả thực chất — đúng nhu cầu, đúng kết quả.
               </p>
             </div>
           </ScrollReveal>
@@ -76,11 +76,14 @@ const About = () => {
                 Since 2020
               </p>
               <h2 className="text-4xl md:text-6xl font-bold text-white leading-tight">
-                Digital Marketing{' '}
+                Deliver what you need,{' '}
                 <span className="bg-gradient-to-r from-[#93D8FF] to-white bg-clip-text text-transparent">
-                  Agency
+                  Achieve what you want
                 </span>
               </h2>
+              <p className="text-white/50 text-base md:text-lg mt-4">
+                Agency — Đồng hành cùng thương hiệu từ chiến lược đến thực thi
+              </p>
             </div>
           </div>
         </ScrollReveal3D>
@@ -109,8 +112,8 @@ const About = () => {
                 className="max-w-[340px] text-sm leading-relaxed"
                 style={{ color: 'var(--text-muted)' }}
               >
-                Hơn 5 năm hoạt động, Xalo Media đã xây dựng hệ sinh thái truyền
-                thông số mạnh mẽ tại thị trường Việt Nam.
+                Hơn 5 năm đồng hành — từng dự án chúng tôi thực hiện đều
+                hướng đến một mục tiêu: mang lại kết quả xứng đáng với kỳ vọng của bạn.
               </p>
             </div>
 
@@ -195,25 +198,25 @@ const About = () => {
                   className="font-semibold text-sm uppercase tracking-[3px] mb-3"
                   style={{ color: 'var(--accent)' }}
                 >
-                  Mạng lưới
+                  Năng lực
                 </p>
                 <h3
                   className="text-2xl md:text-4xl font-bold mb-5 leading-snug"
                   style={{ color: 'var(--text-primary)' }}
                 >
-                  Kết nối thương hiệu với{' '}
+                  Chúng tôi mang đến{' '}
                   <span style={{ color: 'var(--accent)' }}>
-                    hệ sinh thái số
+                    những gì bạn cần
                   </span>
                 </h3>
                 <p
                   className="leading-relaxed mb-6"
                   style={{ color: 'var(--text-muted)' }}
                 >
-                  Xalo Media sở hữu mạng lưới KOLs/KOCs lớn ở Việt Nam, bao phủ
-                  mọi ngành hàng từ FMCG, Thời trang, Công nghệ đến Fintech.
-                  Chúng tôi không chỉ kết nối — mà còn tối ưu từng chiến dịch để
-                  mang lại ROI cao nhất.
+                  Dù bạn cần influencer phù hợp, chiến dịch livestream hiệu quả
+                  hay một chiến lược nội dung dài hơi — chúng tôi lắng nghe, phân
+                  tích và triển khai giải pháp phù hợp nhất với mục tiêu của bạn.
+                  Không có giải pháp "một cỡ vừa tất cả" — chỉ có giải pháp đúng cho bạn.
                 </p>
               </div>
               <ScrollReveal3D variant="right" className="flex-1">
@@ -322,9 +325,9 @@ const About = () => {
                     className="text-base md:text-lg leading-relaxed max-w-[90%]"
                     style={{ color: 'var(--text-muted)' }}
                   >
-                    Kết nối thương hiệu với đúng người, đúng thời điểm — thông
-                    qua mạng lưới KOLs/KOCs lớn và giải pháp truyền thông sáng
-                    tạo, giúp doanh nghiệp bứt phá trên nền tảng số.
+                  Lắng nghe đúng nhu cầu, mang đến đúng giải pháp — từ influencer
+                  marketing, livestream đến chiến lược nội dung toàn kênh. Chúng
+                  tôi cam kết thực thi để bạn đạt được mục tiêu tăng trưởng thực chất.
                   </p>
                 </div>
 
@@ -345,9 +348,9 @@ const About = () => {
                     className="text-base md:text-lg leading-relaxed max-w-[90%]"
                     style={{ color: 'var(--text-muted)' }}
                   >
-                    Trở thành agency hàng đầu Việt Nam về Influencer Marketing
-                    và Livestream Commerce — nơi mà mọi thương hiệu đều có thể
-                    tìm thấy giải pháp tăng trưởng bền vững.
+                    Trở thành agency được lựa chọn khi doanh nghiệp cần kết quả
+                    thực chất — nơi mọi mục tiêu đều được lắng nghe, mọi chiến
+                    dịch đều được tối ưu để bạn đạt được điều bạn muốn.
                   </p>
                 </div>
 
@@ -367,10 +370,10 @@ const About = () => {
                         style={{ color: 'var(--text-muted)' }}
                       >
                         <strong style={{ color: 'var(--text-primary)' }}>
-                          Sáng tạo bứt phá:
+                          Tập trung vào kết quả:
                         </strong>{' '}
-                        Không lối mòn, luôn tìm kiếm góc nhìn mới để tạo ra sự
-                        khác biệt.
+                        Mọi quyết định đều hướng đến mục tiêu cuối cùng của bạn.
+                        Không làm cho có — chỉ làm để đạt được.
                       </p>
                     </div>
                     <div className="flex items-start gap-4">
@@ -380,10 +383,10 @@ const About = () => {
                         style={{ color: 'var(--text-muted)' }}
                       >
                         <strong style={{ color: 'var(--text-primary)' }}>
-                          Chất lượng thực chất:
+                          Lắng nghe trước, hành động sau:
                         </strong>{' '}
-                        View thật, số thật, chuyển đổi thật. Đặt ROI của khách
-                        hàng lên hàng đầu.
+                        Hiểu đúng nhu cầu mới đưa ra giải pháp đúng. Không áp
+                        đặt sản phẩm — chỉ mang đến những gì bạn thực sự cần.
                       </p>
                     </div>
                     <div className="flex items-start gap-4">
@@ -393,10 +396,10 @@ const About = () => {
                         style={{ color: 'var(--text-muted)' }}
                       >
                         <strong style={{ color: 'var(--text-primary)' }}>
-                          Đồng hành trọn vẹn:
+                          Cam kết đến cùng:
                         </strong>{' '}
-                        Cùng thương hiệu đi qua mọi giai đoạn, từ lúc lên ý
-                        tưởng cho tới lúc chốt deal.
+                        Từ brief đầu tiên đến khi bạn đạt mục tiêu — chúng tôi
+                        đồng hành và chịu trách nhiệm về kết quả.
                       </p>
                     </div>
                   </div>
@@ -436,17 +439,16 @@ const About = () => {
                   className="text-3xl md:text-5xl font-bold mb-6 leading-tight"
                   style={{ color: 'var(--text-primary)' }}
                 >
-                  Xây dựng tương lai{' '}
-                  <span style={{ color: 'var(--accent)' }}>Digital Marketing</span>{' '}
-                  cùng Xalo Media
+                  Xây dựng sự nghiệp cùng{' '}
+                  <span style={{ color: 'var(--accent)' }}>Xalo Media</span>
                 </h2>
                 <p
                   className="text-base md:text-lg mb-10 leading-relaxed"
                   style={{ color: 'var(--text-muted)' }}
                 >
-                  Chúng tôi luôn tìm kiếm những tài năng sáng tạo, đam mê và sẵn
-                  sàng bứt phá giới hạn. Khám phá các cơ hội nghề nghiệp và đồng
-                  hành cùng chúng tôi ngay hôm nay.
+                  Chúng tôi tìm kiếm những người thực sự muốn tạo ra kết quả —
+                  không chỉ làm việc, mà giúp khách hàng đạt được điều họ muốn.
+                  Nếu bạn chia sẻ tư duy đó, hãy gia nhập cùng chúng tôi.
                 </p>
                 <div className="flex flex-wrap items-center justify-center gap-4">
                   <button
@@ -494,8 +496,8 @@ const About = () => {
                 className="max-w-[400px] text-base leading-relaxed"
                 style={{ color: 'var(--text-muted)' }}
               >
-                Giải pháp truyền thông toàn diện, từ livestream đến chiến lược
-                thương hiệu — giúp bạn tiếp cận đúng khách hàng.
+                Mỗi dịch vụ được thiết kế để đáp ứng đúng nhu cầu của bạn —
+                không thừa, không thiếu.
               </p>
             </div>
           </ScrollReveal>

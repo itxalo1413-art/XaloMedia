@@ -62,13 +62,12 @@ const Footer = () => (
             </span>
           </div>
           <h3 className="text-xl font-bold mb-5 text-white/95 text-left">
-            Digital Marketing Agency
+            Agency
           </h3>
           <p className="opacity-70 leading-relaxed max-w-sm text-[0.95rem] text-left">
-            Đồng hành cùng thương hiệu kiến tạo sức bật mạnh mẽ trên không gian
-            số. Từ chiến lược sáng tạo đa kênh đến mạng lưới 10,000+ KOLs/KOCs,
-            chúng tôi cam kết mang lại tăng trưởng thực chất và những chiến dịch
-            đột phá.
+            Deliver what you need, Achieve what you want. Đồng hành cùng thương
+            hiệu từ chiến lược đến thực thi — mạng lưới 10,000+ KOLs/KOCs,
+            livestream, content và brand partnership toàn diện.
           </p>
         </div>
 

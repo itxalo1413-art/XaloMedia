@@ -1,5 +1,5 @@
 const BASE_URL = import.meta.env.VITE_API_URL ?? 'http://localhost:3005/api';
-import { getAccessToken } from './auth';
+import { getAccessToken, clearAccessToken } from './auth';
 
 async function apiFetch<T>(path: string, options?: RequestInit): Promise<T> {
   const mergedHeaders = {
@@ -11,6 +11,13 @@ async function apiFetch<T>(path: string, options?: RequestInit): Promise<T> {
     ...options,
     headers: mergedHeaders,
   });
+
+  if (res.status === 401 && path.includes('/admin')) {
+    clearAccessToken();
+    window.location.href = '/admin/login';
+    throw new Error('Unauthorized');
+  }
+
   if (!res.ok) {
     const err = await res.json().catch(() => ({}));
     throw new Error((err as { message?: string }).message ?? `API error ${res.status}`);

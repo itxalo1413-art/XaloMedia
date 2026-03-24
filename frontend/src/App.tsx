@@ -12,6 +12,7 @@ import About from './pages/About';
 import CaseStudiesPage from './pages/CaseStudiesPage';
 import ContactPage from './pages/ContactPage';
 import RecruitmentPage from './pages/RecruitmentPage';
+import NotFoundPage from './pages/NotFoundPage';
 import SEO from './components/SEO';
 
 import AdminLayout from './components/admin/AdminLayout';
@@ -69,6 +70,9 @@ function App() {
               <Route path="partners" element={<AdminPartners />} />
             </Route>
           </Route>
+
+          {/* 404 Route */}
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </div>
     </Router>

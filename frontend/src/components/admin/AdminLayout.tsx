@@ -1,10 +1,17 @@
+import { useEffect } from 'react';
 import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
-import { clearAccessToken } from '../../lib/auth';
+import { clearAccessToken, isAuthenticated } from '../../lib/auth';
 import { LogOut, Home } from 'lucide-react';
 
 const AdminLayout = () => {
   const location = useLocation();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!isAuthenticated()) {
+      navigate('/admin/login', { state: { from: location.pathname } });
+    }
+  }, [location.pathname, navigate]);
 
   const handleLogout = () => {
     clearAccessToken();
