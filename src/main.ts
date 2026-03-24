@@ -4,9 +4,13 @@ import { ValidationPipe } from '@nestjs/common';
 import { join } from 'path';
 import { AppModule } from './app.module';
 import hbs from 'hbs';
+import helmet from 'helmet';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
+
+  // Security headers
+  app.use(helmet());
 
   // Global validation pipe (uses class-validator DTOs)
   app.useGlobalPipes(

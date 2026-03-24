@@ -169,7 +169,8 @@ async function adminApiFetch<T>(path: string, method: 'GET' | 'POST' | 'PATCH' |
   const options: RequestInit = { 
     method,
     headers: {
-      ...(token ? { Authorization: `Bearer ${token}` } : {})
+      ...(payload ? { 'Content-Type': 'application/json' } : {}),
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
     }
    };
   if (payload) {
