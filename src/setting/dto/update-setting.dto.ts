@@ -1,4 +1,23 @@
-import { IsOptional, IsString, IsBoolean } from 'class-validator';
+import { IsOptional, IsString, IsBoolean, ValidateNested } from 'class-validator';
+import { Type } from 'class-transformer';
+
+export class PageSeoDto {
+  @IsOptional()
+  @IsString()
+  title?: string;
+
+  @IsOptional()
+  @IsString()
+  description?: string;
+
+  @IsOptional()
+  @IsString()
+  keywords?: string;
+
+  @IsOptional()
+  @IsString()
+  ogImage?: string;
+}
 
 export class UpdateSettingDto {
   @IsOptional()
@@ -60,6 +79,36 @@ export class UpdateSettingDto {
   @IsOptional()
   @IsString()
   defaultOgImage?: string;
+
+  @IsOptional()
+  @ValidateNested()
+  @Type(() => PageSeoDto)
+  homeSeo?: PageSeoDto;
+
+  @IsOptional()
+  @ValidateNested()
+  @Type(() => PageSeoDto)
+  aboutSeo?: PageSeoDto;
+
+  @IsOptional()
+  @ValidateNested()
+  @Type(() => PageSeoDto)
+  servicesSeo?: PageSeoDto;
+
+  @IsOptional()
+  @ValidateNested()
+  @Type(() => PageSeoDto)
+  caseStudiesSeo?: PageSeoDto;
+
+  @IsOptional()
+  @ValidateNested()
+  @Type(() => PageSeoDto)
+  contactSeo?: PageSeoDto;
+
+  @IsOptional()
+  @ValidateNested()
+  @Type(() => PageSeoDto)
+  recruitmentSeo?: PageSeoDto;
 
   @IsOptional()
   @IsBoolean()

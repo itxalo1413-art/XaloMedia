@@ -5,6 +5,13 @@ import ImageUpload from '../../components/admin/ImageUpload';
 
 import { getAccessToken } from '../../lib/auth';
 
+export interface PageSeo {
+  title: string;
+  description: string;
+  keywords: string;
+  ogImage: string;
+}
+
 interface Settings {
   // General
   siteName: string;
@@ -24,10 +31,18 @@ interface Settings {
   youtube: string;
   instagram: string;
 
-  // SEO
+  // Default SEO
   defaultMetaTitle: string;
   defaultMetaDescription: string;
   defaultOgImage: string;
+
+  // Specific Page SEO
+  homeSeo: PageSeo;
+  aboutSeo: PageSeo;
+  servicesSeo: PageSeo;
+  caseStudiesSeo: PageSeo;
+  contactSeo: PageSeo;
+  recruitmentSeo: PageSeo;
 
   // Popup
   popupActive: boolean;
@@ -38,6 +53,10 @@ interface Settings {
 export default function AdminSettingsPage() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [activeTab, setActiveTab] = useState<'general' | 'seo'>('general');
+
+  const defaultPageSeo = { title: '', description: '', keywords: '', ogImage: '' };
+  
   const [settings, setSettings] = useState<Settings>({
     siteName: '',
     siteDescription: '',
@@ -54,6 +73,12 @@ export default function AdminSettingsPage() {
     defaultMetaTitle: '',
     defaultMetaDescription: '',
     defaultOgImage: '',
+    homeSeo: { ...defaultPageSeo },
+    aboutSeo: { ...defaultPageSeo },
+    servicesSeo: { ...defaultPageSeo },
+    caseStudiesSeo: { ...defaultPageSeo },
+    contactSeo: { ...defaultPageSeo },
+    recruitmentSeo: { ...defaultPageSeo },
     popupActive: false,
     popupImageUrl: '',
     popupLinkUrl: '',
@@ -136,8 +161,33 @@ export default function AdminSettingsPage() {
         </div>
       </div>
 
+      <div className="flex bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden mb-6 p-1">
+        <button
+          onClick={() => setActiveTab('general')}
+          className={`flex-1 flex items-center justify-center gap-2 py-3 px-6 text-sm font-bold rounded-lg transition-all ${
+            activeTab === 'general'
+              ? 'bg-blue-50 text-blue-700 shadow-sm'
+              : 'text-gray-500 hover:text-gray-700 hover:bg-gray-50'
+          }`}
+        >
+          Thông tin chung
+        </button>
+        <button
+          onClick={() => setActiveTab('seo')}
+          className={`flex-1 flex items-center justify-center gap-2 py-3 px-6 text-sm font-bold rounded-lg transition-all ${
+            activeTab === 'seo'
+              ? 'bg-orange-50 text-orange-600 shadow-sm'
+              : 'text-gray-500 hover:text-gray-700 hover:bg-gray-50'
+          }`}
+        >
+          <Globe className="w-4 h-4" /> SEO Từng Trang
+        </button>
+      </div>
+
       <form onSubmit={handleSubmit} className="space-y-8">
-        {/* General Info */}
+        {activeTab === 'general' && (
+          <>
+            {/* General Info */}
         <div className="bg-white p-8 rounded-[24px] border border-gray-100 shadow-sm space-y-6">
           <div className="flex items-center gap-3 pb-4 border-b border-gray-50">
             <div className="p-2 bg-blue-50 text-digital-blue rounded-xl">
@@ -376,14 +426,112 @@ export default function AdminSettingsPage() {
             </div>
           </div>
         </div>
+        </>
+        )}
+
+        {activeTab === 'seo' && (
+          <div className="space-y-8">
+            {[
+              { key: 'homeSeo', title: 'Trang chủ (Home)' },
+              { key: 'aboutSeo', title: 'Giới thiệu (About Us)' },
+              { key: 'servicesSeo', title: 'Dịch vụ (Services)' },
+              { key: 'caseStudiesSeo', title: 'Dự án (Case Studies)' },
+              { key: 'recruitmentSeo', title: 'Tuyển dụng (Careers)' },
+              { key: 'contactSeo', title: 'Liên hệ (Contact)' },
+            ].map((page) => (
+              <div key={page.key} className="bg-white p-8 rounded-[24px] border border-gray-100 shadow-sm space-y-6">
+                <div className="flex items-center gap-3 pb-4 border-b border-gray-50">
+                  <div className="p-2 bg-orange-50 text-orange-600 rounded-xl">
+                    <Globe className="w-5 h-5" />
+                  </div>
+                  <h3 className="text-lg font-black text-gray-900">
+                    SEO: {page.title}
+                  </h3>
+                </div>
+
+                <div className="grid grid-cols-1 gap-6">
+                  <div className="space-y-2">
+                    <label className="text-xs font-black text-gray-400 uppercase tracking-widest">
+                      Meta Title
+                    </label>
+                    <input
+                      type="text"
+                      value={(settings as any)[page.key]?.title || ''}
+                      onChange={(e) =>
+                        setSettings((prev: any) => ({
+                          ...prev,
+                          [page.key]: { ...(prev[page.key] || {}), title: e.target.value },
+                        }))
+                      }
+                      className="w-full px-4 py-3 bg-gray-50 rounded-xl border-none focus:ring-2 focus:ring-digital-blue font-bold text-gray-900"
+                      placeholder={`Tiêu đề SEO cho ${page.title}`}
+                    />
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <label className="text-xs font-black text-gray-400 uppercase tracking-widest">
+                      Meta Description
+                    </label>
+                    <textarea
+                      value={(settings as any)[page.key]?.description || ''}
+                      onChange={(e) =>
+                        setSettings((prev: any) => ({
+                          ...prev,
+                          [page.key]: { ...(prev[page.key] || {}), description: e.target.value },
+                        }))
+                      }
+                      className="w-full px-4 py-3 bg-gray-50 rounded-xl border-none focus:ring-2 focus:ring-digital-blue font-medium text-gray-900 min-h-[80px]"
+                      placeholder={`Mô tả SEO cho ${page.title}`}
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <label className="text-xs font-black text-gray-400 uppercase tracking-widest">
+                      Meta Keywords
+                    </label>
+                    <input
+                      type="text"
+                      value={(settings as any)[page.key]?.keywords || ''}
+                      onChange={(e) =>
+                        setSettings((prev: any) => ({
+                          ...prev,
+                          [page.key]: { ...(prev[page.key] || {}), keywords: e.target.value },
+                        }))
+                      }
+                      className="w-full px-4 py-3 bg-gray-50 rounded-xl border-none focus:ring-2 focus:ring-digital-blue font-bold text-gray-900"
+                      placeholder="marketing, agency, ..."
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <label className="text-xs font-black text-gray-400 uppercase tracking-widest">
+                      OG Image URL
+                    </label>
+                    <ImageUpload
+                      value={(settings as any)[page.key]?.ogImage || ''}
+                      onChange={(url) =>
+                        setSettings((prev: any) => ({
+                          ...prev,
+                          [page.key]: { ...(prev[page.key] || {}), ogImage: url },
+                        }))
+                      }
+                      folder={`seo-${page.key}`}
+                    />
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
 
         <button
           onClick={handleSubmit}
           disabled={saving}
-          className="flex items-center gap-2 bg-blue-400 text-white font-black px-6 py-3 rounded-2xl shadow-lg shadow-blue-500/20 hover:bg-blue-600 transition-all disabled:opacity-70"
+          type="button"
+          className="flex items-center gap-2 bg-blue-400 text-white font-black px-6 py-3 rounded-2xl shadow-lg shadow-blue-500/20 hover:bg-blue-600 transition-all disabled:opacity-70 mt-8"
         >
           <Save className="w-5 h-5" />
-          {saving ? 'Đang lưu...' : 'Lưu thay đổi'}
+          {saving ? 'Đang lưu...' : 'Lưu cài đặt'}
         </button>
 
         {/* Popup Configuration */}

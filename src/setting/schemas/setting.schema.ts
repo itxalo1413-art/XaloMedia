@@ -3,6 +3,23 @@ import { Document } from 'mongoose';
 
 export type SettingDocument = Setting & Document;
 
+@Schema()
+export class PageSeo {
+  @Prop({ default: '' })
+  title: string;
+
+  @Prop({ default: '' })
+  description: string;
+
+  @Prop({ default: '' })
+  keywords: string;
+
+  @Prop({ default: '' })
+  ogImage: string;
+}
+
+export const PageSeoSchema = SchemaFactory.createForClass(PageSeo);
+
 @Schema({ timestamps: true })
 export class Setting {
   @Prop({ default: 'Xalo Media' })
@@ -50,6 +67,26 @@ export class Setting {
   @Prop({ default: '' })
   defaultOgImage: string;
 
+  // --- Specific Page SEO ---
+  @Prop({ type: PageSeoSchema, default: {} })
+  homeSeo: PageSeo;
+
+  @Prop({ type: PageSeoSchema, default: {} })
+  aboutSeo: PageSeo;
+
+  @Prop({ type: PageSeoSchema, default: {} })
+  servicesSeo: PageSeo;
+
+  @Prop({ type: PageSeoSchema, default: {} })
+  caseStudiesSeo: PageSeo;
+
+  @Prop({ type: PageSeoSchema, default: {} })
+  contactSeo: PageSeo;
+
+  @Prop({ type: PageSeoSchema, default: {} })
+  recruitmentSeo: PageSeo;
+
+  // --- Popups ---
   @Prop({ default: false })
   popupActive: boolean;
 
