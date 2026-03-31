@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import BackgroundGrid from '../components/BackgroundGrid';
@@ -13,6 +13,7 @@ import { fetchIndustries, fetchCaseStudies, fetchCaseStudyById, type ApiCaseStud
 const CaseStudiesPage = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const location = useLocation();
   const [industriesData, setIndustriesData] = useState<{ id: string; label: string; studies: ApiCaseStudy[] }[]>([]);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('');
@@ -71,8 +72,8 @@ const CaseStudiesPage = () => {
 
   // Handle auto-scroll if hash is present
   useEffect(() => {
-    if (!loading && window.location.hash && !id && industriesData.length > 0) {
-      const hashId = window.location.hash.slice(1);
+    if (!loading && location.hash && !id && industriesData.length > 0) {
+      const hashId = location.hash.slice(1);
       // Wait for DOM to settle
       const timeout = setTimeout(() => {
         const element = sectionRefs.current[hashId];
@@ -82,7 +83,7 @@ const CaseStudiesPage = () => {
       }, 400); // Slightly longer for more stability
       return () => clearTimeout(timeout);
     }
-  }, [loading, id, industriesData]);
+  }, [loading, id, industriesData, location.hash]);
 
   // Handle single study fetching for detail view
   useEffect(() => {
@@ -301,6 +302,7 @@ const CaseStudiesPage = () => {
             tabs={tabs}
             activeTab={activeTab}
             onTabClick={scrollToSection}
+            isDetailView={!!id}
           />
 
           {/* Cards grouped by industry */}
@@ -326,11 +328,20 @@ const CaseStudiesPage = () => {
                   <ScrollReveal>
                     <div className="space-y-6 mb-12">
                       <div className="flex flex-wrap items-center gap-4 text-[10px] font-bold uppercase tracking-[2px] text-blue-600">
-                        <span className="bg-blue-50 px-3 py-1.5 rounded-full">
+                        <button
+                          onClick={() => {
+                            const industryId = study.industry && typeof study.industry === 'object'
+                              ? (study.industry as any)._id
+                              : study.industry;
+                            navigate(`/case-studies${industryId ? `#${industryId}` : ''}`);
+                          }}
+                          className="bg-blue-50 px-3 py-1.5 rounded-full hover:bg-blue-100 hover:text-blue-700 transition-colors cursor-pointer"
+                          title="Xem tất cả dự án trong ngành này"
+                        >
                           {study.industry && typeof study.industry === 'object' 
                             ? (study.industry as any).name 
                             : study.industry}
-                        </span>
+                        </button>
                         {study.publishDate && (
                           <span className="flex items-center gap-2 text-gray-400">
                             <Calendar className="w-3.5 h-3.5" />

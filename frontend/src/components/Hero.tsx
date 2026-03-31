@@ -137,7 +137,7 @@ const Hero = () => {
           </span>
         </h1>
         <p
-          className="text-lg md:text-xl text-white/70 mb-10 leading-relaxed max-w-[600px] mx-auto hero-fade-in"
+          className="text-lg md:text-xl text-white/70 mb-10 leading-relaxed max-w-[800px] mx-auto hero-fade-in"
           style={{ animationDelay: '0.6s' }}
         >
           Mang đến những gì bạn cần — giúp bạn đạt được những gì bạn muốn.

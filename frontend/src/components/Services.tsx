@@ -1,6 +1,11 @@
-import useEmblaCarousel from 'embla-carousel-react';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Mousewheel, Pagination, Keyboard } from 'swiper/modules';
+
+// Import Swiper styles
+import 'swiper/css';
+import 'swiper/css/pagination';
 
 import { fetchServices, type ApiService } from '../lib/api';
 
@@ -9,126 +14,72 @@ type ServiceType = Pick<
   'title' | 'description' | 'details' | 'highlights' | 'image' | 'industry'
 >;
 
-const isTouch =
-  typeof window !== 'undefined' &&
-  ('ontouchstart' in window || navigator.maxTouchPoints > 0);
-
 // ─────────────────────────────────────────────
-// Shared Card Content (Inline Expansion)
+// Shared Card Content
 // ─────────────────────────────────────────────
 const CardInner = ({
   service,
-  isExpanded,
 }: {
   service: ServiceType;
-  isExpanded: boolean;
 }) => {
   const navigate = useNavigate();
 
   return (
-    <>
-      <img
-        src={service.image}
-        alt={service.title}
-        loading="eager"
-        decoding="async"
-        className="absolute inset-0 w-full h-full object-cover opacity-85 group-hover:opacity-100 transition-all duration-700"
-        style={{
-          transform: isExpanded ? 'scale(1.02)' : 'scale(1)',
-        }}
-      />
-
-      {/* Short view gradient */}
-      <div
-        className={`absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent group-hover:from-black/60 transition-opacity duration-500 ${isExpanded ? 'opacity-0' : 'opacity-100'}`}
-      />
-
-      {/* Expanded view gradient (darker to read text) */}
-      <div
-        className={`absolute inset-0 bg-gradient-to-t from-black/95 via-black/70 to-black/30 transition-opacity duration-500 ${isExpanded ? 'opacity-100' : 'opacity-0'}`}
-      />
-
-      {/* ── Short Content ── */}
-      <div
-        className={`absolute bottom-0 left-0 right-0 p-6 md:p-8 z-10 transition-all duration-500 ${
-          isExpanded
-            ? 'opacity-0 translate-y-4 pointer-events-none'
-            : 'opacity-100 translate-y-0'
-        }`}
-      >
-        <h3 className="text-xl md:text-2xl lg:text-3xl font-extrabold tracking-tight text-white mb-2">
-          {service.title}
-        </h3>
-        <p className="text-white/70 text-sm md:text-base leading-relaxed max-w-[500px] opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-2 group-hover:translate-y-0">
-          {service.description}
-        </p>
-        <span className="inline-flex items-center gap-1.5 mt-3 text-[#93D8FF] text-xs font-semibold uppercase tracking-wider opacity-0 group-hover:opacity-100 transition-all duration-500">
-          Bấm để mở rộng
-          <svg
-            width="12"
-            height="12"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <polyline points="9 18 15 12 9 6" />
-          </svg>
-        </span>
+    <div className="relative w-full h-full group overflow-hidden bg-[#f5f5f3ff]">
+      {/* Image Background Wrapper with 200px Top Padding and 20px Sides/Bottom */}
+      <div className="absolute inset-0 pt-[200px] px-5 pb-5 z-0">
+        <img
+          src={service.image}
+          alt={service.title}
+          loading="eager"
+          decoding="async"
+          className="w-full h-full object-cover rounded-3xl opacity-90"
+        />
+        {/* Image Overlay (inside padding to match rounded corners) */}
+        <div className="absolute inset-x-5 bottom-5 top-[200px] bg-gradient-to-t from-[#0A1628] via-[#0A1628]/40 to-transparent rounded-3xl" />
       </div>
 
-      {/* ── Expanded Content ── */}
-      <div
-        className={`absolute inset-0 flex flex-col justify-end p-6 md:p-10 lg:p-12 z-20 transition-all duration-500 delay-[50ms] ${
-          isExpanded
-            ? 'opacity-100 translate-y-0'
-            : 'opacity-0 translate-y-8 pointer-events-none'
-        }`}
-      >
-        <div className="max-w-[800px]">
-          <p className="text-[#93D8FF] text-xs font-semibold uppercase tracking-[3px] mb-2 md:mb-3">
-            Dịch vụ chi tiết
-          </p>
-          <h2 className="text-2xl md:text-4xl font-extrabold text-white mb-3 md:mb-4 leading-tight">
+      {/* Content */}
+      <div className="absolute inset-0 flex flex-col justify-end p-8 md:p-16 lg:p-24 z-10 max-w-5xl">
+        <div className="animate-in fade-in slide-in-from-bottom-12 duration-1000 ease-out">
+          
+          <h2 className="text-4xl md:text-6xl lg:text-7xl font-black text-white mb-6 md:mb-8 leading-[1.1] tracking-tight animate-in fade-in slide-in-from-bottom-12 duration-1000 delay-150 ease-out fill-mode-both">
             {service.title}
           </h2>
-          <p className="text-white/85 text-sm md:text-base leading-relaxed mb-6 lg:mb-8">
-            {service.details}
+
+          <p className="text-white/80 text-base md:text-xl leading-relaxed mb-8 md:mb-12 max-w-2xl font-medium animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-300 ease-out fill-mode-both">
+            {service.description}
           </p>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 md:gap-4 mb-6 lg:mb-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-3 gap-x-8 mb-10 md:mb-14 animate-in fade-in slide-in-from-bottom-6 duration-1000 delay-500 ease-out fill-mode-both">
             {(service.highlights || []).map((h, i) => (
-              <div key={i} className="flex items-center gap-2.5">
-                <div className="w-1.5 h-1.5 rounded-full bg-[#93D8FF] flex-shrink-0 shadow-[0_0_8px_rgba(147,216,255,0.6)]" />
-                <span className="text-white/95 text-xs md:text-sm font-medium">
+              <div key={i} className="flex items-center gap-3 group/item">
+                <div className="w-1.5 h-1.5 rounded-full bg-[#93D8FF] shadow-[0_0_12px_rgba(147,216,255,0.8)]" />
+                <span className="text-white/90 text-sm md:text-base font-semibold tracking-wide group-hover/item:text-[#93D8FF] transition-colors duration-500">
                   {h}
                 </span>
               </div>
             ))}
           </div>
 
-          <div className="flex flex-wrap items-center gap-4">
+          <div className="flex flex-wrap items-center gap-6">
             <button
-              onClick={(e) => {
-                e.stopPropagation();
+              onClick={() => {
                 const industryId = service.industry 
                   ? (typeof service.industry === 'string' ? service.industry : (service.industry as any)?._id)
                   : '';
                 navigate(industryId ? `/case-studies#${industryId}` : '/case-studies');
               }}
-              className="inline-flex items-center gap-2.5 px-6 py-3 rounded-full font-semibold text-sm
-                bg-white text-[#0A1628] hover:bg-[#93D8FF] transition-all duration-300 hover:scale-105 active:scale-95"
+              className="group/btn relative inline-flex items-center gap-3 px-8 py-4 rounded-full font-bold text-base
+                bg-[#93D8FF] text-[#0A1628] hover:bg-white transition-all duration-300 hover:scale-105 active:scale-95 shadow-lg shadow-[#93D8FF]/20"
             >
               Xem Case Studies
               <svg
-                width="16"
-                height="16"
+                className="w-5 h-5 transition-transform duration-300 group-hover/btn:translate-x-1"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
-                strokeWidth="2.2"
+                strokeWidth="2.5"
                 strokeLinecap="round"
                 strokeLinejoin="round"
               >
@@ -139,98 +90,12 @@ const CardInner = ({
           </div>
         </div>
       </div>
-    </>
-  );
-};
 
-// ─────────────────────────────────────────────
-// Mobile carousel (Embla)
-// ─────────────────────────────────────────────
-const MobileCarousel = ({ services }: { services: ServiceType[] }) => {
-  const [emblaRef, emblaApi] = useEmblaCarousel({
-    align: 'center',
-    dragFree: false,
-    containScroll: 'trimSnaps',
-    skipSnaps: false,
-  });
-
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [expandedTitle, setExpandedTitle] = useState<string | null>(null);
-
-  const onSelect = useCallback(() => {
-    if (!emblaApi) return;
-    setActiveIndex(emblaApi.selectedScrollSnap());
-  }, [emblaApi]);
-
-  useEffect(() => {
-    if (!emblaApi) return;
-    emblaApi.on('select', onSelect);
-    return () => {
-      emblaApi.off('select', onSelect);
-    };
-  }, [emblaApi, onSelect]);
-
-  // When a card expands, re-initialize Embla so physics adapt to the new slide width
-  useEffect(() => {
-    if (!emblaApi) return;
-    // Delay slightly to let css transition occur
-    const timeout = setTimeout(() => emblaApi.reInit(), 350);
-    return () => clearTimeout(timeout);
-  }, [expandedTitle, emblaApi]);
-
-  const goTo = (i: number) => emblaApi?.scrollTo(i);
-
-  const handleToggle = (title: string, index: number) => {
-    const isExpanding = expandedTitle !== title;
-    setExpandedTitle(isExpanding ? title : null);
-    if (isExpanding) {
-      setTimeout(() => emblaApi?.scrollTo(index), 100);
-    }
-  };
-
-  return (
-    <div className="flex-1 overflow-hidden relative flex flex-col">
-      <div ref={emblaRef} className="overflow-hidden flex-1">
-        <div className="flex gap-4 h-full pl-5 pr-5">
-          {services.map((service, i) => {
-            const isExpanded = expandedTitle === service.title;
-            return (
-              <div
-                key={i}
-                onClick={() => handleToggle(service.title, i)}
-                className="flex-shrink-0 rounded-2xl overflow-hidden relative cursor-pointer active:scale-[0.99] group overflow-y-auto"
-                style={{
-                  flex: isExpanded ? '0 0 92vw' : '0 0 80vw',
-                  height: 'calc(100% - 40px)',
-                  marginTop: '20px',
-                  transition: 'flex 0.4s cubic-bezier(0.25, 1, 0.5, 1)',
-                  // Tắt thanh cuộn nếu đang đóng (tránh scroll bar bật lên xấu)
-                  overflowY: isExpanded ? 'auto' : 'hidden',
-                }}
-              >
-                <CardInner service={service} isExpanded={isExpanded} />
-              </div>
-            );
-          })}
-        </div>
-      </div>
-
-      {/* Dot indicators */}
-      <div className="flex justify-center gap-2 pb-4 pt-4">
-        {services.map((_, i) => (
-          <button
-            key={i}
-            onClick={() => goTo(i)}
-            aria-label={`Slide ${i + 1}`}
-            className="rounded-full transition-all duration-300"
-            style={{
-              width: i === activeIndex ? '20px' : '6px',
-              height: '6px',
-              background:
-                i === activeIndex ? '#93D8FF' : 'rgba(255,255,255,0.3)',
-            }}
-          />
-        ))}
+      {/* Right Side Decoration */}
+      <div className="hidden lg:block absolute top-1/2 right-12 -translate-y-1/2 vertical-text">
+        <span className="text-white/10 text-9xl font-black uppercase tracking-[20px] select-none pointer-events-none">
+          XALO MEDIA
+        </span>
       </div>
     </div>
   );
@@ -240,23 +105,7 @@ const MobileCarousel = ({ services }: { services: ServiceType[] }) => {
 // Main Services section
 // ─────────────────────────────────────────────
 const Services = () => {
-  const sectionRef = useRef<HTMLElement>(null);
-  const trackRef = useRef<HTMLDivElement>(null);
-  const headerRef = useRef<HTMLDivElement>(null);
-  const rafRef = useRef<number>(0);
-  const [headerVisible, setHeaderVisible] = useState(false);
-  const [expandedTitle, setExpandedTitle] = useState<string | null>(null);
   const [services, setServices] = useState<ServiceType[]>([]);
-  const [isDesktop, setIsDesktop] = useState(typeof window !== 'undefined' ? window.innerWidth >= 1024 : true);
-
-  useEffect(() => {
-    if (typeof window === 'undefined') return;
-    const handleResize = () => {
-      setIsDesktop(window.innerWidth >= 1024);
-    };
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
 
   useEffect(() => {
     fetchServices()
@@ -264,183 +113,81 @@ const Services = () => {
       .catch((err) => console.error('Error fetching services:', err));
   }, []);
 
-  // ── Mobile: giữ user 3s bằng cách block vertical touchmove ──
-  useEffect(() => {
-    if (!isTouch) return;
-    const section = sectionRef.current;
-    if (!section) return;
-
-    const LOCK_MS = 3000;
-    let lockUntil = 0;
-    let touchStartX = 0;
-    let touchStartY = 0;
-
-    const onScroll = () => {
-      const rect = section.getBoundingClientRect();
-      if (rect.top <= 0 && rect.bottom >= window.innerHeight - 10) {
-        lockUntil = Date.now() + LOCK_MS;
-      }
-    };
-
-    const onTouchStart = (e: TouchEvent) => {
-      touchStartX = e.touches[0].clientX;
-      touchStartY = e.touches[0].clientY;
-    };
-
-    const onTouchMove = (e: TouchEvent) => {
-      if (Date.now() > lockUntil) return;
-      const rect = section.getBoundingClientRect();
-      if (rect.top > 10 || rect.bottom < window.innerHeight - 10) return;
-      const dx = Math.abs(e.touches[0].clientX - touchStartX);
-      const dy = Math.abs(e.touches[0].clientY - touchStartY);
-      if (dy > dx) e.preventDefault();
-    };
-
-    window.addEventListener('scroll', onScroll, { passive: true });
-    section.addEventListener('touchstart', onTouchStart, { passive: true });
-    section.addEventListener('touchmove', onTouchMove, { passive: false });
-
-    return () => {
-      window.removeEventListener('scroll', onScroll);
-      section.removeEventListener('touchstart', onTouchStart);
-      section.removeEventListener('touchmove', onTouchMove);
-    };
-  }, []);
-
-  // ── Desktop: scroll-driven horizontal animation ──
-  useEffect(() => {
-    if (!isDesktop) return;
-
-    const compute = () => {
-      const section = sectionRef.current;
-      const track = trackRef.current;
-      if (!section || !track) return;
-
-      const rect = section.getBoundingClientRect();
-      const scrolled = -rect.top;
-      const maxScroll = section.offsetHeight - window.innerHeight;
-      const maxTranslate = track.scrollWidth - window.innerWidth;
-
-      if (maxScroll <= 0) return;
-
-      const progress = Math.max(0, Math.min(1, scrolled / maxScroll));
-      track.style.transform = `translate3d(${-progress * maxTranslate}px,0,0)`;
-    };
-
-    const onScroll = () => {
-      cancelAnimationFrame(rafRef.current);
-      rafRef.current = requestAnimationFrame(compute);
-    };
-
-    // ── Lắng nghe sự thay đổi kích thước của track (khi card nở ra) ──
-    // Giúp scroll mượt mà và tự điều chỉnh lại transform ngay cả khi user không scroll
-    const resizeObserver = new ResizeObserver(() => compute());
-    if (trackRef.current) resizeObserver.observe(trackRef.current);
-
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', compute);
-    compute();
-
-    return () => {
-      window.removeEventListener('scroll', onScroll);
-      window.removeEventListener('resize', compute);
-      resizeObserver.disconnect();
-      cancelAnimationFrame(rafRef.current);
-    };
-  }, []);
-
-  // ── Header reveal ──
-  useEffect(() => {
-    const el = headerRef.current;
-    if (!el) return;
-    const obs = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setHeaderVisible(true);
-          obs.unobserve(el);
-        }
-      },
-      { threshold: 0.2 },
-    );
-    obs.observe(el);
-    return () => obs.disconnect();
-  }, []);
+  if (services.length === 0) return null;
 
   return (
-    <section
-      ref={sectionRef}
-      id="services"
-      className="bg-[#0A1628] relative"
-      style={{
-        height: !isDesktop ? '100vh' : `${Math.max(1, services.length) * 100}vh`,
-      }}
-    >
-      <div className="sticky top-0 h-screen overflow-hidden flex flex-col justify-center">
-        {/* Background glow */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-[#0081C9] opacity-[0.07] blur-[120px] rounded-full pointer-events-none" />
-
-        {/* Header */}
-        <div
-          ref={headerRef}
-          className="px-5 md:px-10 lg:px-[max(40px,calc((100vw-1240px)/2+20px))] mb-6 mt-24 flex-shrink-0 relative z-10"
-          style={{
-            opacity: headerVisible ? 1 : 0,
-            transform: headerVisible ? 'translateY(0)' : 'translateY(30px)',
-            transition: 'opacity .3s ease, transform .4s ease',
-          }}
-        >
-          <p className="text-[#93D8FF] font-semibold text-sm uppercase tracking-[3px] mb-3">
-            Dịch vụ
+    <section className="h-screen w-screen bg-[#0A1628] relative scroll-mt-0">
+      <div className="absolute top-20 left-8 md:left-24 lg:left-32 z-50 pointer-events-none select-none">
+        <div className="animate-in fade-in slide-in-from-bottom-8 duration-1000 ease-out">
+          <p className="text-[#0081C9] text-xs md:text-sm font-bold uppercase tracking-[4px] mb-4">
+            DỊCH VỤ
           </p>
-          <h2 className="text-3xl md:text-5xl font-bold text-white leading-tight">
+          <h2 className="text-4xl md:text-4xl lg:text-6xl font-bold text-[#0A1628] tracking-tight">
             Chúng tôi làm gì?
           </h2>
         </div>
-
-        {/* Mobile: Embla carousel */}
-        {!isDesktop && services.length > 0 && (
-          <MobileCarousel services={services} />
-        )}
-
-        {/* Desktop: horizontal scroll track */}
-        {isDesktop && (
-          <div className="flex-1 min-h-0 overflow-hidden relative">
-            <div
-              ref={trackRef}
-              className="flex gap-5 h-full absolute top-0 left-0 pl-5 md:pl-10 lg:pl-[max(40px,calc((100vw-1240px)/2+20px))] pr-10"
-              style={{
-                transform: 'translate3d(0,0,0)',
-                willChange: 'transform',
-                // Tắt transition vì transform được update liên tục bằng onScroll()
-              }}
-            >
-              {services.map((service, i) => {
-                const isExpanded = expandedTitle === service.title;
-                return (
-                  <div
-                    key={i}
-                    onClick={() =>
-                      setExpandedTitle(isExpanded ? null : service.title)
-                    }
-                    className="flex-shrink-0 rounded-2xl overflow-hidden relative cursor-pointer group services-card overflow-y-auto mix-blend-normal"
-                    style={{
-                      width: isExpanded
-                        ? 'clamp(600px, 80vw, 1200px)'
-                        : 'clamp(220px, 44vw, 700px)',
-                      height: 'calc(100% - 40px)',
-                      marginTop: '20px',
-                      transition: 'width 0.5s cubic-bezier(0.25, 1, 0.5, 1)',
-                      overflowY: isExpanded ? 'auto' : 'hidden',
-                    }}
-                  >
-                    <CardInner service={service} isExpanded={isExpanded} />
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        )}
       </div>
+
+      <Swiper
+        direction="vertical"
+        slidesPerView={1}
+        speed={1000}
+        mousewheel={{
+          forceToAxis: true,
+          sensitivity: 1,
+          releaseOnEdges: true,
+          thresholdDelta: 50,
+          thresholdTime: 400,
+        }}
+        resistance={true}
+        resistanceRatio={0}
+        threshold={20}
+        pagination={{
+            clickable: true,
+            renderBullet: (_, className) => {
+                return `<span class="${className}"></span>`;
+            }
+        }}
+        keyboard={{
+            enabled: true,
+        }}
+        modules={[Mousewheel, Pagination, Keyboard]}
+        className="h-full w-full swiper-services"
+        onSlideChange={() => {
+            // Optional: Handle slide change animations
+        }}
+        touchReleaseOnEdges={true}
+      >
+        {services.map((service, i) => (
+          <SwiperSlide key={i} className="h-full w-full">
+            <CardInner service={service} />
+          </SwiperSlide>
+        ))}
+      </Swiper>
+
+      <style>{`
+        .swiper-services .swiper-pagination-bullet {
+          width: 2px;
+          height: 30px;
+          border-radius: 0;
+          background: rgba(255,255,255,0.2);
+          opacity: 1;
+          transition: all 0.3s ease;
+          margin: 12px 0 !important;
+        }
+        .swiper-services .swiper-pagination-bullet-active {
+          background: #93D8FF;
+          height: 50px;
+          box-shadow: 0 0 15px rgba(147,216,255,0.5);
+        }
+        .swiper-services .swiper-pagination {
+          right: 32px !important;
+        }
+        .vertical-text {
+          writing-mode: vertical-rl;
+          transform: rotate(180deg) translateY(50%);
+        }
+      `}</style>
     </section>
   );
 };

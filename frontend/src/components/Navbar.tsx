@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
 
 const Navbar = () => {
@@ -7,7 +7,6 @@ const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState<string>('');
   const location = useLocation();
-  const navigate = useNavigate();
   const {
     isDark,
     // ,toggle
@@ -64,18 +63,11 @@ const Navbar = () => {
   }, [isHomePage, location.pathname]);
 
   const handleServicesClick = (e: React.MouseEvent) => {
-    e.preventDefault();
     if (isHomePage) {
+      e.preventDefault();
       document
         .getElementById('services')
         ?.scrollIntoView({ behavior: 'smooth' });
-    } else {
-      navigate('/');
-      setTimeout(() => {
-        document
-          .getElementById('services')
-          ?.scrollIntoView({ behavior: 'smooth' });
-      }, 100);
     }
   };
 
@@ -163,8 +155,8 @@ const Navbar = () => {
               )}
             </li>
             <li className="relative h-16 flex items-center">
-              <a
-                href="/#services"
+              <Link
+                to="/#services"
                 onClick={handleServicesClick}
                 className={`transition-colors cursor-pointer ${
                   activeSection === 'services' && isHomePage
@@ -173,7 +165,7 @@ const Navbar = () => {
                 }`}
               >
                 Dịch vụ
-              </a>
+              </Link>
               {activeSection === 'services' && isHomePage && (
                 <div
                   className={`absolute bottom-0 left-0 right-0 h-1 rounded-t-full ${activeBorderColor}`}
@@ -278,8 +270,8 @@ const Navbar = () => {
               Trang chủ
             </Link>
 
-            <a
-              href="/#services"
+            <Link
+              to="/#services"
               onClick={(e) => {
                 handleServicesClick(e);
                 setIsOpen(false);
@@ -296,7 +288,7 @@ const Navbar = () => {
                   className={`absolute left-[-1rem] top-1/2 -translate-y-1/2 w-1.5 h-1/2 rounded-r-md ${activeBorderColor}`}
                 ></span>
               )}
-            </a>
+            </Link>
             <Link
               to="/about"
               onClick={() => setIsOpen(false)}

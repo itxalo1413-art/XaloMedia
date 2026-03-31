@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-
 import { fetchCaseStudies, type ApiCaseStudy } from '../lib/api';
 
 /* ── Scroll-reveal hook ───────────────────────────────────── */
@@ -39,82 +38,60 @@ const CaseStudyCard = ({
 }) => {
   const { ref, revealed } = useScrollReveal(0.15);
 
-  // Khác biệt layout để tạo masonry bất đối xứng
-  // Card chẵn thì ngắn hơn, card lẻ thì dài hơn
-  const isLarge = index === 0 || index === 3 || index === 4;
-  const aspectRatio = isLarge
-    ? 'aspect-[4/5] md:aspect-[3/4]'
-    : 'aspect-square md:aspect-[4/3]';
+  const aspectRatio = 'aspect-[4/3]';
+  const isStaggered = false; // Removed staggered effect for 2-row layout
 
   return (
     <div
       ref={ref}
-      className={`relative group cursor-pointer w-full transition-all duration-1000 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-        revealed ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-24'
-      }`}
+      className={`relative group cursor-pointer w-full h-full transition-all duration-1000 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+        revealed ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
+      } ${isStaggered ? 'md:mt-24' : ''}`}
       style={{
-        transitionDelay: `${(index % 2) * 150}ms`,
+        transitionDelay: `${(index % 8) * 100}ms`,
       }}
       onClick={() => onClick(cs._id)}
     >
-      <div
-        className={`relative w-full overflow-hidden rounded-2xl ${aspectRatio} bg-[#E2E0D9]`}
-      >
-        {/* Background Image with Parallax & Scale effect */}
-        <img
-          src={cs.imgSrc.startsWith('http') ? cs.imgSrc : `/${cs.imgSrc}`}
-          alt={cs.title}
-          loading="lazy"
-          className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1.2s] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-110"
-        />
+      {/* Container for Image & Big Number */}
+      <div className="relative pt-6 md:pt-10 pr-4 md:pr-8">
+        {/* Large Number background */}
+        <div 
+          className="absolute top-0 right-0 -z-10 text-[80px] md:text-[120px] font-black text-white leading-none tracking-tighter select-none"
+        >
+          0{index + 1}
+        </div>
+        
+        {/* Image */}
+        <div className={`relative w-full overflow-hidden ${aspectRatio} bg-[#E2E0D9] z-10 rounded-sm shadow-sm`}>
+          <img
+            src={cs.imgSrc.startsWith('http') ? cs.imgSrc : `/${cs.imgSrc}`}
+            alt={cs.title}
+            loading="lazy"
+            className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-105"
+          />
+        </div>
+      </div>
 
-        {/* Overlay gradient - fades in slightly on hover */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-500" />
-
-        {/* Diagonal reveal overlay effect (slide away on hover) */}
-        <div className="absolute inset-0 bg-black/40 translate-y-0 group-hover:-translate-y-full transition-transform duration-700 ease-in-out origin-top" />
-
-        {/* Content Box */}
-        <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8 lg:p-10 z-10 flex flex-col justify-end transform transition-transform duration-500 group-hover:-translate-y-2">
-          {/* Category Pill */}
-          <div className="overflow-hidden mb-3">
-            <span className="inline-block px-3 py-1 bg-white/10 backdrop-blur-md border border-white/20 rounded-full text-[10px] md:text-xs font-semibold uppercase tracking-widest text-[#93D8FF] transform translate-y-0 transition-transform duration-500 group-hover:-translate-y-1">
-              {typeof cs.industry === 'object' ? (cs.industry as any).name : 'Dự án'}
-            </span>
-          </div>
-
-          <h3 className="text-xl md:text-2xl lg:text-3xl font-bold text-white leading-tight mb-2 drop-shadow-lg">
+      {/* Content Below Image */}
+      <div className="mt-5 flex flex-col gap-1.5 px-2">
+        <span className="text-[#646464] text-xs md:text-sm font-semibold tracking-wide">
+          {typeof cs.industry === 'object' ? (cs.industry as any).name : 'Solutions'}
+        </span>
+        <div className="flex items-start justify-between gap-3">
+          <h3 className="text-lg md:text-xl font-bold text-[#111] leading-snug group-hover:text-[#0081C9] transition-colors duration-300 line-clamp-2">
             {cs.title}
           </h3>
-
-          {/* Read more button layout */}
-          <div className="overflow-hidden">
-            <div className="flex items-center gap-2 transform translate-y-10 opacity-0 transition-all duration-500 ease-out group-hover:translate-y-0 group-hover:opacity-100 mt-2">
-              <span className="text-white text-sm font-semibold tracking-wider uppercase">
-                Khám phá
-              </span>
-              <svg
-                className="w-5 h-5 text-white"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth={2}
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M17 8l4 4m0 0l-4 4m4-4H3"
-                />
-              </svg>
-            </div>
+          <div className="shrink-0 mt-1 w-6 h-6 md:w-8 md:h-8 rounded-full bg-[#2A2A2A] text-white flex items-center justify-center group-hover:bg-[#0081C9] transition-colors duration-300">
+            <svg
+              className="w-3 h-3 md:w-4 md:h-4 transform group-hover:rotate-45 transition-transform duration-300"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth={2.5}
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+            </svg>
           </div>
-        </div>
-
-        {/* Floating Number (Minimalist Deco) */}
-        <div className="absolute top-6 right-6 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
-          <span className="text-white/40 font-black text-4xl md:text-5xl tracking-tighter">
-            0{index + 1}
-          </span>
         </div>
       </div>
     </div>
@@ -130,8 +107,29 @@ const CaseStudies = () => {
 
   useEffect(() => {
     fetchCaseStudies()
-      .then((data) => setStudies(data.slice(0, 6))) // Show only first 6 on homepage
-      .catch((err) => console.error('Failed to fetch case studies:', err))
+      .then((data) => {
+        const sorted = data.sort((a, b) => (a.order || 0) - (b.order || 0));
+        
+        // If 4 or fewer items, don't reorder, just show in 1 row
+        if (sorted.length <= 4) {
+          setStudies(sorted);
+          return;
+        }
+
+        // Reorder for 2rd row grid with grid-auto-flow: column
+        const reordered: ApiCaseStudy[] = [];
+        const half = Math.ceil(sorted.length / 2);
+        for (let i = 0; i < half; i++) {
+          reordered.push(sorted[i]); // Top row
+          if (i + half < sorted.length) {
+            reordered.push(sorted[i + half]); // Bottom row
+          }
+        }
+        setStudies(reordered);
+      })
+      .catch((err) => {
+        console.error('Failed to fetch case studies:', err);
+      })
       .finally(() => setLoading(false));
   }, []);
 
@@ -179,6 +177,38 @@ const CaseStudies = () => {
         </div>
       </div>
 
+      {/* Style for slider */}
+      <style>{`
+        .hide-scrollbar::-webkit-scrollbar {
+          display: none;
+        }
+        .hide-scrollbar {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+        .slider-grid {
+          display: grid;
+          grid-template-rows: ${studies.length <= 4 ? '1fr' : 'repeat(2, 1fr)'};
+          grid-auto-flow: column;
+          gap: 2rem;
+          overflow-x: auto;
+          scroll-behavior: smooth;
+          scroll-snap-type: x mandatory;
+          grid-auto-columns: 100%;
+          padding-bottom: 3rem;
+        }
+        @media (min-width: 640px) {
+          .slider-grid {
+            grid-auto-columns: calc((100% - 2rem) / 2);
+          }
+        }
+        @media (min-width: 1024px) {
+          .slider-grid {
+            grid-auto-columns: calc((100% - 3 * 2rem) / 4);
+          }
+        }
+      `}</style>
+      
       {/* Dynamic Grid Layout */}
       <div className="max-w-[1400px] mx-auto px-6 md:px-10">
         {loading ? (
@@ -188,36 +218,65 @@ const CaseStudies = () => {
         ) : studies.length === 0 ? (
           <div className="text-center py-20 text-gray-500">Chưa có dữ liệu dự án.</div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10 lg:gap-16 items-start">
-            {/* Left Column (Even items, pushed down slightly for staggered look) */}
-            <div className="flex flex-col gap-6 md:gap-10 lg:gap-16 md:mt-16">
-              {studies
-                .filter((_, i) => i % 2 === 0)
-                .map((cs, i) => (
-                  <CaseStudyCard
-                    key={cs._id}
-                    cs={cs}
-                    index={i * 2} // Original index
-                    onClick={handleCardClick}
-                  />
-                ))}
+          <div className="relative group/slider">
+            {/* Buttons for desktop slider control */}
+            <div className="absolute -top-16 right-0 hidden md:flex gap-2">
+              <button 
+                onClick={() => {
+                  const el = document.getElementById('case-studies-slider');
+                  if (el) el.scrollBy({ left: -400, behavior: 'smooth' });
+                }}
+                className="w-10 h-10 rounded-full border border-gray-300 flex items-center justify-center hover:bg-[#0081C9] hover:text-white hover:border-[#0081C9] transition-colors"
+                aria-label="Previous"
+              >
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" /></svg>
+              </button>
+              <button 
+                onClick={() => {
+                  const el = document.getElementById('case-studies-slider');
+                  if (el) el.scrollBy({ left: 400, behavior: 'smooth' });
+                }}
+                className="w-10 h-10 rounded-full border border-gray-300 flex items-center justify-center hover:bg-[#0081C9] hover:text-white hover:border-[#0081C9] transition-colors"
+                aria-label="Next"
+              >
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" /></svg>
+              </button>
             </div>
 
-            {/* Right Column (Odd items) */}
-            <div className="flex flex-col gap-6 md:gap-10 lg:gap-16">
-              {studies
-                .filter((_, i) => i % 2 === 1)
-                .map((cs, i) => (
-                  <CaseStudyCard
-                    key={cs._id}
-                    cs={cs}
-                    index={i * 2 + 1} // Original index
-                    onClick={handleCardClick}
-                  />
-                ))}
+            <div id="case-studies-slider" className="slider-grid hide-scrollbar">
+              {studies.map((cs, i) => {
+                // Find original sorted rank for numbering
+                // If sorted = [1,2,3,4, 5,6,7,8]
+                // and studies = [1,5, 2,6, 3,7, 4,8]
+                // i = 0 (1) -> should show 01
+                // i = 1 (5) -> should show 05
+                // i = 2 (2) -> should show 02
+                // ...
+                // Actually the current numbering logic is fine if we want 1-8.
+                // But the user want 1,2,3,4 horizontally. 
+                // So Row 1 should be 01, 02, 03, 04.
+                // With i=0,2,4,6 we want 01,02,03,04.
+                // Formula for i: 
+                // Row 1 (even index): 0, 2, 4, 6 -> (i/2) + 1
+                // Row 2 (odd index): 1, 3, 5, 7 -> (i-1)/2 + half + 1
+                const half = Math.ceil(studies.length / 2);
+                const originalRank = studies.length <= 4 
+                  ? i 
+                  : ((i % 2 === 0) ? (i / 2) : (Math.floor(i / 2) + half));
+                
+                return (
+                  <div key={cs._id} className="snap-start w-full h-full">
+                    <CaseStudyCard
+                      cs={cs}
+                      index={originalRank}
+                      onClick={handleCardClick}
+                    />
+                  </div>
+                );
+              })}
             </div>
 
-            <div className="hidden md:block pb-2">
+            <div className="hidden md:flex justify-center mt-8 pb-2">
               <button
                 onClick={handleViewAll}
                 className="group relative inline-flex items-center justify-center text-sm font-bold tracking-[2px] uppercase transition-all duration-300 hover:text-[#0081C9] text-[#0A1628]"
@@ -242,9 +301,9 @@ const CaseStudies = () => {
               </span>
               <span className="absolute bottom-0 left-0 w-full h-[1px] bg-black/10 origin-right transition-transform duration-300 scale-x-100 group-hover:scale-x-0" />
             </button>
+            </div>
           </div>
-        </div>
-      )}
+        )}
       </div>
 
       {/* Mobile-only View All Button */}

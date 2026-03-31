@@ -30,11 +30,15 @@ import AdminLogin from './pages/admin/AdminLogin';
 import ProtectedRoute from './components/admin/ProtectedRoute';
 
 const ScrollToTop = () => {
-  const { pathname } = useLocation();
+  const { pathname, hash } = useLocation();
 
   useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [pathname]);
+    // Nếu có hash (ví dụ /case-studies#industryId), không scroll về top
+    // vì component đích sẽ tự xử lý scroll đến section đó
+    if (!hash) {
+      window.scrollTo(0, 0);
+    }
+  }, [pathname, hash]);
 
   return null;
 };

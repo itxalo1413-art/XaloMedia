@@ -15,6 +15,7 @@ import {
   generateArticleWithAI,
 } from '../../lib/api';
 import ImageUpload from '../../components/admin/ImageUpload';
+import Pagination from '../../components/admin/Pagination';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import {
   ClassicEditor,
@@ -69,6 +70,10 @@ export default function AdminCaseStudies() {
   const [services, setServices] = useState<ApiService[]>([]);
   const [loading, setLoading] = useState(true);
 
+  // Pagination State
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
+
   // Form State
   const [editingId, setEditingId] = useState<string | null>(null);
   const [formData, setFormData] = useState({
@@ -116,6 +121,11 @@ export default function AdminCaseStudies() {
   useEffect(() => {
     loadData();
   }, []);
+
+  const paginatedCaseStudies = caseStudies.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage,
+  );
 
   const handleEdit = (cs: ApiCaseStudy) => {
     setEditingId(cs._id);
@@ -336,7 +346,7 @@ export default function AdminCaseStudies() {
                     </td>
                   </tr>
                 ) : (
-                  caseStudies.map((cs) => (
+                  paginatedCaseStudies.map((cs) => (
                     <tr key={cs._id} className="hover:bg-gray-50 group">
                       <td className="px-6 py-4">
                         <div
@@ -448,6 +458,12 @@ export default function AdminCaseStudies() {
               </tbody>
             </table>
           </div>
+          <Pagination
+            totalItems={caseStudies.length}
+            itemsPerPage={itemsPerPage}
+            currentPage={currentPage}
+            onPageChange={setCurrentPage}
+          />
         </div>
       )}
 

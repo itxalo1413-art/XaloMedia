@@ -73,7 +73,7 @@ const About = () => {
 
             <div className="absolute inset-0 flex flex-col items-center justify-center z-10 text-center px-5">
               <p className="text-white/60 text-sm tracking-[4px] uppercase mb-4">
-                Since 2020
+                Agency — Since 2020
               </p>
               <h2 className="text-4xl md:text-6xl font-bold text-white leading-tight">
                 Deliver what you need,{' '}
@@ -82,7 +82,7 @@ const About = () => {
                 </span>
               </h2>
               <p className="text-white/50 text-base md:text-lg mt-4">
-                Agency — Đồng hành cùng thương hiệu từ chiến lược đến thực thi
+                Đồng hành cùng thương hiệu từ chiến lược đến thực thi
               </p>
             </div>
           </div>
@@ -210,13 +210,10 @@ const About = () => {
                   </span>
                 </h3>
                 <p
-                  className="leading-relaxed mb-6"
+                  className="leading-relaxed mb-6 text-[0.9rem]"
                   style={{ color: 'var(--text-muted)' }}
                 >
-                  Dù bạn cần influencer phù hợp, chiến dịch livestream hiệu quả
-                  hay một chiến lược nội dung dài hơi — chúng tôi lắng nghe, phân
-                  tích và triển khai giải pháp phù hợp nhất với mục tiêu của bạn.
-                  Không có giải pháp "một cỡ vừa tất cả" — chỉ có giải pháp đúng cho bạn.
+                  Chúng tôi không chỉ cung cấp dịch vụ, chúng tôi làm chủ mọi điểm chạm từ Influencer, Livestream đến Content Marketing để đưa thương hiệu đi đúng hướng. <br/> Bằng tư duy thực thi quyết liệt và khả năng tối ưu hóa dữ liệu, XaloM cam kết mang lại những giải pháp được thiết kế riêng biệt, đảm bảo mọi nguồn lực đầu tư đều chuyển hóa thành giá trị tăng trưởng bền vững.
                 </p>
               </div>
               <ScrollReveal3D variant="right" className="flex-1">
@@ -410,65 +407,7 @@ const About = () => {
         </div>
       </section>
 
-      {/* ═══════ RECRUITMENT CTA ═══════ */}
-      <section
-        className="relative w-full py-20"
-        style={{ backgroundColor: 'var(--bg-primary)' }}
-      >
-        <div className="max-w-[1240px] mx-auto px-5">
-          <ScrollReveal>
-            <div
-              className="relative rounded-3xl overflow-hidden p-8 md:p-16 text-center"
-              style={{
-                backgroundColor: 'var(--bg-card)',
-                border: '1px solid var(--card-border)',
-              }}
-            >
-              {/* Background Accents */}
-              <div className="absolute top-0 right-0 w-[300px] h-[300px] bg-[#0081C9]/5 blur-[80px] -mr-32 -mt-32 rounded-full" />
-              <div className="absolute bottom-0 left-0 w-[200px] h-[200px] bg-[#93D8FF]/5 blur-[60px] -ml-20 -mb-20 rounded-full" />
 
-              <div className="relative z-10 w-full max-w-[800px] mx-auto">
-                <p
-                  className="font-semibold text-sm uppercase tracking-[4px] mb-4"
-                  style={{ color: 'var(--accent)' }}
-                >
-                  Gia nhập đội ngũ
-                </p>
-                <h2
-                  className="text-3xl md:text-5xl font-bold mb-6 leading-tight"
-                  style={{ color: 'var(--text-primary)' }}
-                >
-                  Xây dựng sự nghiệp cùng{' '}
-                  <span style={{ color: 'var(--accent)' }}>Xalo Media</span>
-                </h2>
-                <p
-                  className="text-base md:text-lg mb-10 leading-relaxed"
-                  style={{ color: 'var(--text-muted)' }}
-                >
-                  Chúng tôi tìm kiếm những người thực sự muốn tạo ra kết quả —
-                  không chỉ làm việc, mà giúp khách hàng đạt được điều họ muốn.
-                  Nếu bạn chia sẻ tư duy đó, hãy gia nhập cùng chúng tôi.
-                </p>
-                <div className="flex flex-wrap items-center justify-center gap-4">
-                  <button
-                    onClick={() => navigate('/recruitment')}
-                    className="group bg-[#0081C9] text-white font-semibold px-8 py-4 rounded-xl hover:bg-[#0081C9]/90 transition-all duration-300 flex items-center gap-2 shadow-lg shadow-[#0081C9]/20"
-                  >
-                    Xem vị trí đang tuyển{' '}
-                    <span className="group-hover:translate-x-1 transition-transform">
-                      →
-                    </span>
-                  </button>
-                  <p className="text-sm font-medium" style={{ color: 'var(--text-muted)' }}>
-                    Hoặc gửi CV trực tiếp tới <span className="text-[#93D8FF]">hr@xalomedia.vn</span>
-                  </p>
-                </div>
-              </div>
-            </div>
-          </ScrollReveal>
-        </div>
-      </section>
 
       {/* ═══════ WHAT WE DO — with Images ═══════ */}
       <section
@@ -678,6 +617,66 @@ const About = () => {
       </section>
 
       <FloatingCTA />
+
+            {/* ═══════ RECRUITMENT CTA ═══════ */}
+      <section
+        className="relative w-full py-20"
+        style={{ backgroundColor: 'var(--bg-primary)' }}
+      >
+        <div className="max-w-[1240px] mx-auto px-5">
+          <ScrollReveal>
+            <div
+              className="relative rounded-3xl overflow-hidden p-8 md:p-16 text-center"
+              style={{
+                backgroundColor: 'var(--bg-card)',
+                border: '1px solid var(--card-border)',
+              }}
+            >
+              {/* Background Accents */}
+              <div className="absolute top-0 right-0 w-[300px] h-[300px] bg-[#0081C9]/5 blur-[80px] -mr-32 -mt-32 rounded-full" />
+              <div className="absolute bottom-0 left-0 w-[200px] h-[200px] bg-[#93D8FF]/5 blur-[60px] -ml-20 -mb-20 rounded-full" />
+
+              <div className="relative z-10 w-full max-w-[800px] mx-auto">
+                <p
+                  className="font-semibold text-sm uppercase tracking-[4px] mb-4"
+                  style={{ color: 'var(--accent)' }}
+                >
+                  Gia nhập đội ngũ
+                </p>
+                <h2
+                  className="text-3xl md:text-4xl font-bold mb-6 leading-tight"
+                  style={{ color: 'var(--text-primary)' }}
+                >
+                  Xây dựng sự nghiệp cùng{' '}
+                  <span style={{ color: 'var(--accent)' }}>Xalo Media</span>
+                </h2>
+                <p
+                  className="text-base md:text-lg mb-10 leading-relaxed"
+                  style={{ color: 'var(--text-muted)' }}
+                >
+                  Chúng tôi tìm kiếm những người thực sự muốn tạo ra kết quả —
+                  không chỉ làm việc, mà giúp khách hàng đạt được điều họ muốn.
+                  Nếu bạn chia sẻ tư duy đó, hãy gia nhập cùng chúng tôi.
+                </p>
+                <div className="flex flex-wrap items-center justify-center gap-4">
+                  <button
+                    onClick={() => navigate('/recruitment')}
+                    className="group bg-[#0081C9] text-white font-semibold px-8 py-4 rounded-xl hover:bg-[#0081C9]/90 transition-all duration-300 flex items-center gap-2 shadow-lg shadow-[#0081C9]/20"
+                  >
+                    Xem vị trí đang tuyển{' '}
+                    <span className="group-hover:translate-x-1 transition-transform">
+                      →
+                    </span>
+                  </button>
+                  <p className="text-sm font-medium" style={{ color: 'var(--text-muted)' }}>
+                    Hoặc gửi CV trực tiếp tới <span className="text-[#93D8FF]">hr@xalomedia.vn</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </ScrollReveal>
+        </div>
+      </section>
       <Footer />
     </div>
   );

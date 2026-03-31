@@ -9,10 +9,15 @@ import {
   type ApiIndustry,
 } from '../../lib/api';
 import ImageUpload from '../../components/admin/ImageUpload';
+import Pagination from '../../components/admin/Pagination';
 
 export default function AdminServices() {
   const [services, setServices] = useState<ApiService[]>([]);
   const [loading, setLoading] = useState(true);
+
+  // Pagination State
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
 
   // Form State
   const [editingId, setEditingId] = useState<string | null>(null);
@@ -34,10 +39,10 @@ export default function AdminServices() {
     try {
       const [svcData, indData] = await Promise.all([
         fetchServices('all'),
-        fetchIndustries()
+        fetchIndustries(),
       ]);
       setServices(svcData);
-      setIndustries(indData.filter(i => i.isActive));
+      setIndustries(indData.filter((i) => i.isActive));
     } catch (err) {
       console.error(err);
       alert('Failed to load data');
@@ -50,6 +55,11 @@ export default function AdminServices() {
     loadData();
   }, []);
 
+  const paginatedServices = services.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage,
+  );
+
   const handleEdit = (svc: ApiService) => {
     setEditingId(svc._id);
     setFormData({
@@ -61,7 +71,10 @@ export default function AdminServices() {
       image: svc.image,
       order: svc.order,
       isActive: svc.isActive,
-      industry: typeof svc.industry === 'string' ? svc.industry : svc.industry?._id || '',
+      industry:
+        typeof svc.industry === 'string'
+          ? svc.industry
+          : svc.industry?._id || '',
     });
   };
 
@@ -204,12 +217,16 @@ export default function AdminServices() {
         </label>
         <select
           value={formData.industry}
-          onChange={(e) => setFormData({ ...formData, industry: e.target.value })}
+          onChange={(e) =>
+            setFormData({ ...formData, industry: e.target.value })
+          }
           className="w-full px-4 py-2 border rounded-lg bg-white"
         >
           <option value="">-- Không liên kết --</option>
-          {industries.map(ind => (
-            <option key={ind._id} value={ind._id}>{ind.name}</option>
+          {industries.map((ind) => (
+            <option key={ind._id} value={ind._id}>
+              {ind.name}
+            </option>
           ))}
         </select>
       </div>
@@ -265,22 +282,6 @@ export default function AdminServices() {
 
   return (
     <div className="flex flex-col gap-8 max-w-6xl">
-      {/* Create Form Section */}
-      <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-        <h2 className="text-xl font-bold mb-4">Tạo mới Dịch vụ</h2>
-        {renderForm(false)}
-      </div>
-
-      {/* Edit Modal */}
-      {editingId && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
-          <div className="bg-white rounded-xl shadow-xl w-full max-w-3xl max-h-[90vh] overflow-y-auto p-6 animate-in fade-in zoom-in-95 duration-200">
-            <h2 className="text-xl font-bold mb-4">Chỉnh sửa Dịch vụ</h2>
-            {renderForm(true)}
-          </div>
-        </div>
-      )}
-
       {/* Table List Section */}
       <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
         <table className="min-w-full divide-y divide-gray-200">
@@ -311,13 +312,16 @@ export default function AdminServices() {
                 </td>
               </tr>
             ) : (
-              services.map((svc) => (
+              paginatedServices.map((svc) => (
                 <tr key={svc._id} className="hover:bg-gray-50">
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                     <div>{svc.title}</div>
                     {svc.industry && (
                       <div className="text-[10px] text-purple-600 font-bold uppercase mt-1">
-                        Linked: {typeof svc.industry === 'object' ? (svc.industry as any).name : svc.industry}
+                        Linked:{' '}
+                        {typeof svc.industry === 'object'
+                          ? (svc.industry as any).name
+                          : svc.industry}
                       </div>
                     )}
                   </td>
@@ -371,6 +375,27 @@ export default function AdminServices() {
           </tbody>
         </table>
       </div>
+      <Pagination
+        totalItems={services.length}
+        itemsPerPage={itemsPerPage}
+        currentPage={currentPage}
+        onPageChange={setCurrentPage}
+      />
+      {/* Create Form Section */}
+      <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+        <h2 className="text-xl font-bold mb-4">Tạo mới Dịch vụ</h2>
+        {renderForm(false)}
+      </div>
+
+      {/* Edit Modal */}
+      {editingId && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
+          <div className="bg-white rounded-xl shadow-xl w-full max-w-3xl max-h-[90vh] overflow-y-auto p-6 animate-in fade-in zoom-in-95 duration-200">
+            <h2 className="text-xl font-bold mb-4">Chỉnh sửa Dịch vụ</h2>
+            {renderForm(true)}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

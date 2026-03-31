@@ -31,7 +31,7 @@ const FAQ = () => {
     <section
       className="w-full relative overflow-hidden"
       style={{
-        backgroundColor: 'var(--bg-secondary)',
+        backgroundColor: '#F5F5F3',
       }}
     >
       <div className="max-w-[800px] mx-auto px-5 w-full pt-24 pb-24 relative">

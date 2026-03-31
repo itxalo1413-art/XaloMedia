@@ -6,10 +6,15 @@ import {
   deleteLevel,
   type ApiLevel,
 } from '../../lib/api';
+import Pagination from '../../components/admin/Pagination';
 
 export default function AdminLevels() {
   const [levels, setLevels] = useState<ApiLevel[]>([]);
   const [loading, setLoading] = useState(true);
+
+  // Pagination State
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
 
   // Form State
   const [editingId, setEditingId] = useState<string | null>(null);
@@ -36,6 +41,11 @@ export default function AdminLevels() {
   useEffect(() => {
     loadData();
   }, []);
+
+  const paginatedLevels = levels.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage,
+  );
 
   const handleEdit = (lvl: ApiLevel) => {
     setEditingId(lvl._id);
@@ -208,7 +218,7 @@ export default function AdminLevels() {
                 </td>
               </tr>
             ) : (
-              levels.map((lvl) => (
+              paginatedLevels.map((lvl) => (
                 <tr key={lvl._id} className="hover:bg-gray-50">
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                     {lvl.name}
@@ -253,6 +263,12 @@ export default function AdminLevels() {
           </tbody>
         </table>
       </div>
+      <Pagination
+        totalItems={levels.length}
+        itemsPerPage={itemsPerPage}
+        currentPage={currentPage}
+        onPageChange={setCurrentPage}
+      />
     </div>
   );
 }

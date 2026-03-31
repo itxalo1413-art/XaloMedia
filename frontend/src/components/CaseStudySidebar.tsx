@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 interface Tab {
   id: string;
@@ -9,13 +10,16 @@ interface CaseStudySidebarProps {
   tabs: Tab[];
   activeTab: string;
   onTabClick: (id: string) => void;
+  isDetailView?: boolean;
 }
 
 const CaseStudySidebar = ({
   tabs,
   activeTab,
   onTabClick,
+  isDetailView = false,
 }: CaseStudySidebarProps) => {
+  const navigate = useNavigate();
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const activeTabRef = useRef<HTMLLIElement>(null);
 
@@ -85,7 +89,13 @@ const CaseStudySidebar = ({
                   ></div>
 
                   <button
-                    onClick={() => onTabClick(tab.id)}
+                    onClick={() => {
+                      if (isDetailView) {
+                        navigate(`/case-studies#${tab.id}`);
+                      } else {
+                        onTabClick(tab.id);
+                      }
+                    }}
                     className="w-full text-center lg:text-left text-[13px] py-1.5 px-4 lg:py-2.5 lg:px-3 rounded-full lg:rounded-lg transition-all duration-300 leading-snug"
                     style={{
                       color: isActive ? 'var(--accent)' : 'var(--sidebar-text)',

@@ -1,3 +1,6 @@
+import Hero from '../components/Hero';
+import { useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Services from '../components/Services';
 import CaseStudies from '../components/CaseStudies';
@@ -6,137 +9,49 @@ import Footer from '../components/Footer';
 import FloatingCTA from '../components/FloatingCTA';
 import BackgroundGrid from '../components/BackgroundGrid';
 import { ScrollReveal, ScrollReveal3D } from '../hooks/useScrollReveal';
-import { useNavigate } from 'react-router-dom';
-import Hero from '../components/Hero';
 
 const Home = () => {
   const navigate = useNavigate();
+  const { hash } = useLocation();
+  
+  useEffect(() => {
+    if (hash === '#services') {
+      const element = document.getElementById('services');
+      if (element) {
+        const timer = setTimeout(() => {
+          const rect = element.getBoundingClientRect();
+          const targetY = rect.top + window.pageYOffset;
+          window.scrollTo({
+            top: targetY,
+            behavior: 'smooth'
+          });
+        }, 500);
+        return () => clearTimeout(timer);
+      }
+    }
+  }, [hash]);
+
   return (
     <div className="home">
       <BackgroundGrid />
       <Navbar />
-      <Hero />
-      <ScrollReveal>
-        {/* <Services /> */}
-        {/* ═══════ WHAT WE DO — with Images ═══════ */}
-        {/* <section
-          className="relative w-full py-20"
-          style={{ backgroundColor: 'var(--bg-secondary)' }}
-        >
-          <div className="max-w-[1240px] mx-auto px-5">
-            <ScrollReveal>
-              <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 mb-12">
-                <div>
-                  <p
-                    className="font-semibold text-sm uppercase tracking-[3px] mb-3"
-                    style={{ color: 'var(--accent)' }}
-                  >
-                    Dịch vụ
-                  </p>
-                  <h3
-                    className="text-2xl md:text-4xl font-bold"
-                    style={{ color: 'var(--text-primary)' }}
-                  >
-                    Chúng tôi làm gì?
-                  </h3>
-                </div>
-                <p
-                  className="max-w-[400px] text-base leading-relaxed"
-                  style={{ color: 'var(--text-muted)' }}
-                >
-                  Giải pháp truyền thông toàn diện, từ livestream đến chiến lược
-                  thương hiệu — giúp bạn tiếp cận đúng khách hàng.
-                </p>
-              </div>
-            </ScrollReveal>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-              {[
-                {
-                  img: '/setupLive.png',
-                  title: 'Setup Livestream',
-                  desc: 'Dàn dựng studio, trang thiết bị và ekip chuyên nghiệp cho mọi phiên live.',
-                },
-                {
-                  img: '/booking.png',
-                  title: 'Booking KOLs / KOCs',
-                  desc: 'Kết nối thương hiệu với 10,000+ influencer từ nano đến mega level.',
-                },
-                {
-                  img: '/about-content.png',
-                  title: 'Social Content',
-                  desc: 'Sản xuất content video, ảnh đa nền tảng — Reels, TikTok, YouTube Shorts.',
-                },
-                {
-                  img: '/about-livestream.png',
-                  title: 'TikTok Shop Management',
-                  desc: 'Quản lý toàn diện shop trên TikTok — từ listing đến chăm sóc đơn hàng.',
-                },
-                {
-                  img: '/brandAw.png',
-                  title: 'Brand Awareness',
-                  desc: 'Chiến lược truyền thông đa kênh nâng cao nhận diện thương hiệu.',
-                },
-                {
-                  img: '/brandRejuvenation.png',
-                  title: 'Brand Rejuvenation',
-                  desc: 'Tái định vị, làm mới hình ảnh thương hiệu cho thế hệ khách hàng mới.',
-                },
-              ].map((service, i) => (
-                <ScrollReveal3D
-                  key={i}
-                  className="h-full"
-                  delayIndex={(i % 3) + 1}
-                  variant={i % 2 === 0 ? 'default' : 'right'}
-                >
-                  <div
-                    className="group rounded-2xl overflow-hidden transition-all duration-500 h-full flex flex-col"
-                    style={{
-                      backgroundColor: 'var(--bg-card)',
-                      border: '1px solid var(--card-border)',
-                    }}
-                  >
-                    <div className="relative h-[180px] overflow-hidden shrink-0">
-                      <img
-                        src={service.img}
-                        alt={service.title}
-                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
-                    </div>
-                    <div className="p-6 flex-1 flex flex-col">
-                      <h4
-                        className="text-lg font-bold mb-2"
-                        style={{ color: 'var(--text-primary)' }}
-                      >
-                        {service.title}
-                      </h4>
-                      <p
-                        className="text-sm leading-relaxed"
-                        style={{ color: 'var(--text-muted)' }}
-                      >
-                        {service.desc}
-                      </p>
-                    </div>
-                  </div>
-                </ScrollReveal3D>
-              ))}
-            </div>
-          </div>
-        </section> */}
+      <div className="snap-section">
+        <Hero />
+      </div>
+      <ScrollReveal className="snap-section" id="services">
         <Services />
       </ScrollReveal>
 
-      <ScrollReveal>
+      <ScrollReveal className="snap-section">
         <CaseStudies />
       </ScrollReveal>
       {/* <Testimonials /> */}
-      <ScrollReveal>
+      <ScrollReveal className="snap-section">
         <FAQ />
       </ScrollReveal>
-      {/* <ContactHighlight /> */}
+      
       <section
-        className="relative w-full py-20"
+        className="relative w-full py-20 snap-section"
         style={{ backgroundColor: 'var(--bg-primary)' }}
       >
         <div className="max-w-[1240px] mx-auto px-5">
@@ -265,7 +180,9 @@ const Home = () => {
           </ScrollReveal3D>
         </div>
       </section>
-      <Footer />
+      <div className="snap-section">
+        <Footer />
+      </div>
       <FloatingCTA />
     </div>
   );

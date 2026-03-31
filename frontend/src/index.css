@@ -97,6 +97,7 @@ html.dark {
 @layer base {
   html {
     scroll-behavior: smooth;
+    scroll-snap-type: y mandatory;
   }
   body {
     @apply font-inter leading-normal antialiased;
@@ -105,6 +106,11 @@ html.dark {
     transition:
       background-color 0.3s ease,
       color 0.3s ease;
+  }
+
+  .snap-section {
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
   }
 }
 

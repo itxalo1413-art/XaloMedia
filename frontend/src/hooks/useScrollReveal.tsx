@@ -29,12 +29,14 @@ interface ScrollRevealProps {
   children: React.ReactNode;
   className?: string;
   delay?: number;
+  id?: string;
 }
 
 export const ScrollReveal = ({
   children,
   className = '',
   delay = 0,
+  id,
 }: ScrollRevealProps) => {
   const { ref, isVisible } = useScrollReveal<HTMLDivElement>();
 
@@ -42,6 +44,7 @@ export const ScrollReveal = ({
     <div
       ref={ref}
       className={className}
+      id={id}
       style={{
         opacity: isVisible ? 1 : 0,
         transform: isVisible ? 'translateY(0)' : 'translateY(30px)',
@@ -59,6 +62,7 @@ interface ScrollReveal3DProps {
   className?: string;
   variant?: 'default' | 'right' | 'float';
   delayIndex?: number;
+  id?: string;
 }
 
 export const ScrollReveal3D = ({
@@ -66,6 +70,7 @@ export const ScrollReveal3D = ({
   className = '',
   variant = 'default',
   delayIndex = 0,
+  id,
 }: ScrollReveal3DProps) => {
   const { ref, isVisible } = useScrollReveal<HTMLDivElement>();
 
@@ -83,6 +88,7 @@ export const ScrollReveal3D = ({
     <div
       ref={ref}
       className={`sr3d ${variantClass} ${delayClass} ${className}`}
+      id={id}
     >
       <div className={`sr3d-inner h-full ${isVisible ? 'revealed' : ''}`}>
         {children}

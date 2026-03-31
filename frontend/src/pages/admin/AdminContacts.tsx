@@ -2,10 +2,15 @@ import { useState, useEffect } from 'react';
 import { fetchContacts, markContactRead, type ApiContact } from '../../lib/api';
 import { CheckCircle2, Circle } from 'lucide-react';
 import { toast } from 'sonner';
+import Pagination from '../../components/admin/Pagination';
 
 export default function AdminContacts() {
   const [contacts, setContacts] = useState<ApiContact[]>([]);
   const [loading, setLoading] = useState(true);
+
+  // Pagination State
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
 
   const loadData = async () => {
     setLoading(true);
@@ -23,6 +28,11 @@ export default function AdminContacts() {
   useEffect(() => {
     loadData();
   }, []);
+
+  const paginatedContacts = contacts.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage,
+  );
 
   const handleMarkRead = async (id: string, status: string) => {
     if (status !== 'new') return; // already read or replied
@@ -87,7 +97,7 @@ export default function AdminContacts() {
                   </td>
                 </tr>
               ) : (
-                contacts.map((c) => (
+                paginatedContacts.map((c) => (
                   <tr
                     key={c._id}
                     className={
@@ -151,6 +161,12 @@ export default function AdminContacts() {
           </table>
         </div>
       </div>
+      <Pagination
+        totalItems={contacts.length}
+        itemsPerPage={itemsPerPage}
+        currentPage={currentPage}
+        onPageChange={setCurrentPage}
+      />
     </div>
   );
 }

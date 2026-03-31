@@ -10,17 +10,6 @@ const FacebookIcon = () => (
   </svg>
 );
 
-const TwitterIcon = () => (
-  <svg
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill="currentColor"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231 5.451-6.231zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77z" />
-  </svg>
-);
 
 const InstagramIcon = () => (
   <svg
@@ -64,7 +53,7 @@ const Footer = () => (
           <h3 className="text-xl font-bold mb-5 text-white/95 text-left">
             Agency
           </h3>
-          <p className="opacity-70 leading-relaxed max-w-sm text-[0.95rem] text-left">
+          <p className="opacity-70 leading-relaxed max-w-sm text-[0.98rem] text-left">
             Deliver what you need, Achieve what you want. Đồng hành cùng thương
             hiệu từ chiến lược đến thực thi — mạng lưới 10,000+ KOLs/KOCs,
             livestream, content và brand partnership toàn diện.
@@ -75,32 +64,32 @@ const Footer = () => (
           <h4 className="font-bold mb-8 text-base text-white/95">Dịch vụ</h4>
           <ul className="space-y-4 opacity-70 text-sm font-medium list-none p-0 m-0">
             <li>
-              <a href="#" className="hover:text-[#5BC0F8] transition-colors">
+              <a href="/#services" className="hover:text-[#5BC0F8] transition-colors">
                 Influencer Marketing
               </a>
             </li>
             <li>
-              <a href="#" className="hover:text-[#5BC0F8] transition-colors">
+              <a href="/#services" className="hover:text-[#5BC0F8] transition-colors">
                 TikTok Management
               </a>
             </li>
             <li>
-              <a href="#" className="hover:text-[#5BC0F8] transition-colors">
+              <a href="/#services" className="hover:text-[#5BC0F8] transition-colors">
                 Livestream Services
               </a>
             </li>
             <li>
-              <a href="#" className="hover:text-[#5BC0F8] transition-colors">
+              <a href="/#services" className="hover:text-[#5BC0F8] transition-colors">
                 Talent Booking
               </a>
             </li>
             <li>
-              <a href="#" className="hover:text-[#5BC0F8] transition-colors">
+              <a href="/#services" className="hover:text-[#5BC0F8] transition-colors">
                 Content Creation
               </a>
             </li>
             <li>
-              <a href="#" className="hover:text-[#5BC0F8] transition-colors">
+              <a href="/#services" className="hover:text-[#5BC0F8] transition-colors">
                 Brand Partnership
               </a>
             </li>
@@ -188,17 +177,12 @@ const Footer = () => (
 
         <div className="flex gap-6 items-center">
           <a
-            href="#"
+            href="https://www.facebook.com/xalomedia.vn/"
             className="opacity-60 hover:opacity-100 transition-opacity hover:text-[#5BC0F8]"
           >
             <FacebookIcon />
           </a>
-          <a
-            href="#"
-            className="opacity-60 hover:opacity-100 transition-opacity hover:text-[#5BC0F8]"
-          >
-            <TwitterIcon />
-          </a>
+
           <a
             href="#"
             className="opacity-60 hover:opacity-100 transition-opacity hover:text-[#5BC0F8]"

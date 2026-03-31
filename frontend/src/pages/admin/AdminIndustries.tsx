@@ -6,10 +6,15 @@ import {
   deleteIndustry,
   type ApiIndustry,
 } from '../../lib/api';
+import Pagination from '../../components/admin/Pagination';
 
 export default function AdminIndustries() {
   const [industries, setIndustries] = useState<ApiIndustry[]>([]);
   const [loading, setLoading] = useState(true);
+
+  // Pagination State
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
 
   // Form State
   const [editingId, setEditingId] = useState<string | null>(null);
@@ -36,6 +41,11 @@ export default function AdminIndustries() {
   useEffect(() => {
     loadData();
   }, []);
+
+  const paginatedIndustries = industries.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage,
+  );
 
   const handleEdit = (ind: ApiIndustry) => {
     setEditingId(ind._id);
@@ -208,7 +218,7 @@ export default function AdminIndustries() {
                 </td>
               </tr>
             ) : (
-              industries.map((ind) => (
+              paginatedIndustries.map((ind) => (
                 <tr key={ind._id} className="hover:bg-gray-50">
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                     {ind.name}
@@ -253,6 +263,12 @@ export default function AdminIndustries() {
           </tbody>
         </table>
       </div>
+      <Pagination
+        totalItems={industries.length}
+        itemsPerPage={itemsPerPage}
+        currentPage={currentPage}
+        onPageChange={setCurrentPage}
+      />
     </div>
   );
 }

@@ -6,12 +6,17 @@ import {
   deleteJob,
   type ApiJob,
 } from '../../lib/api';
+import Pagination from '../../components/admin/Pagination';
 import { Pencil, Trash2, Plus, X } from 'lucide-react';
 import { toast } from 'sonner';
 
 export default function AdminRecruitment() {
   const [jobs, setJobs] = useState<ApiJob[]>([]);
   const [loading, setLoading] = useState(true);
+
+  // Pagination State
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
 
   const [showModal, setShowModal] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
@@ -39,6 +44,11 @@ export default function AdminRecruitment() {
   useEffect(() => {
     loadData();
   }, []);
+
+  const paginatedJobs = jobs.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage,
+  );
 
   const handleOpenNew = () => {
     setEditingId(null);
@@ -155,7 +165,7 @@ export default function AdminRecruitment() {
                   </td>
                 </tr>
               ) : (
-                jobs.map((job) => (
+                paginatedJobs.map((job) => (
                   <tr key={job._id} className="hover:bg-gray-50">
                     <td className="px-6 py-4 font-medium text-gray-900">
                       {job.title}
@@ -195,6 +205,13 @@ export default function AdminRecruitment() {
           </table>
         </div>
       )}
+
+      <Pagination
+        totalItems={jobs.length}
+        itemsPerPage={itemsPerPage}
+        currentPage={currentPage}
+        onPageChange={setCurrentPage}
+      />
 
       {/* Basic Modal */}
       {showModal && (
