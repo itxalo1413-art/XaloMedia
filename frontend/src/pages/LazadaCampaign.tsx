@@ -13,7 +13,7 @@ export default function LazadaCampaign() {
     >
 
       {/* Form Section */}
-      <section className="relative w-full py-16 -mt-10 z-10">
+      <section className="relative w-full py-16">
         <div className="max-w-[1000px] mx-auto px-4">
           <div
             className="rounded-2xl p-2 md:p-6 transition-all duration-500 shadow-2xl"
@@ -26,7 +26,7 @@ export default function LazadaCampaign() {
               <iframe
                 id="JotFormIFrame-261680345359463"
                 title="ĐĂNG KÝ POST BÀI LAZADA CAMPAIGN"
-                src="https://form.jotform.com/261680345359463"
+                src="[https://www.jotform.us/261680345359463](https://www.jotform.us/261680345359463)"
                 style={{ width: '100%', height: '900px', border: 'none' }}
                 allowFullScreen
               />
