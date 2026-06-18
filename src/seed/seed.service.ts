@@ -1,4 +1,5 @@
 import { Injectable, OnApplicationBootstrap } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Service, ServiceDocument } from '../service/entities/service.entity';
@@ -11,6 +12,7 @@ import { Level, LevelDocument } from '../level/entities/level.entity';
 @Injectable()
 export class SeedService implements OnApplicationBootstrap {
   constructor(
+    private readonly configService: ConfigService,
     @InjectModel(Service.name) private readonly serviceModel: Model<ServiceDocument>,
     @InjectModel(CaseStudy.name) private readonly caseStudyModel: Model<CaseStudyDocument>,
     @InjectModel(Partner.name) private readonly partnerModel: Model<PartnerDocument>,
@@ -20,6 +22,9 @@ export class SeedService implements OnApplicationBootstrap {
   ) {}
 
   async onApplicationBootstrap() {
+    const runSeed = this.configService.get<string>('RUN_SEED') === 'true';
+    if (!runSeed) return;
+
     await this.seedServices();
     await this.seedIndustries();
     await this.seedLevels();

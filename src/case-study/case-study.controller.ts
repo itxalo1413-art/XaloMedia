@@ -9,8 +9,15 @@ export class CaseStudyController {
   constructor(private readonly caseStudyService: CaseStudyService) {}
 
   @Get()
-  findAll(@Query('industry') industry?: string) {
-    return this.caseStudyService.findAll(industry);
+  findAll(
+    @Query('industry') industry?: string,
+    @Query('limit') limit?: string,
+    @Query('page') page?: string,
+  ) {
+    return this.caseStudyService.findAll(industry, {
+      limit: limit ? Number(limit) : undefined,
+      page: page ? Number(page) : undefined,
+    });
   }
 
   @Get(':id')

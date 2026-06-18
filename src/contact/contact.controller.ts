@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Patch, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, Patch, Post, Query, UseGuards } from '@nestjs/common';
 import { ContactService } from './contact.service';
 import { CreateContactDto } from './dto/create-contact.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
@@ -14,8 +14,11 @@ export class ContactController {
 
   @UseGuards(JwtAuthGuard)
   @Get()
-  findAll() {
-    return this.contactService.findAll();
+  findAll(@Query('limit') limit?: string, @Query('page') page?: string) {
+    return this.contactService.findAll({
+      limit: limit ? Number(limit) : undefined,
+      page: page ? Number(page) : undefined,
+    });
   }
 
   @UseGuards(JwtAuthGuard)

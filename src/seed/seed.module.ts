@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Service, ServiceSchema } from '../service/entities/service.entity';
 import { CaseStudy, CaseStudySchema } from '../case-study/entities/case-study.entity';
@@ -10,6 +11,7 @@ import { SeedService } from './seed.service';
 
 @Module({
   imports: [
+    ConfigModule,
     MongooseModule.forFeature([
       { name: Service.name, schema: ServiceSchema },
       { name: CaseStudy.name, schema: CaseStudySchema },

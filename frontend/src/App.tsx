@@ -12,6 +12,7 @@ import About from './pages/About';
 import CaseStudiesPage from './pages/CaseStudiesPage';
 import ContactPage from './pages/ContactPage';
 import RecruitmentPage from './pages/RecruitmentPage';
+import LazadaCampaign from './pages/LazadaCampaign';
 import NotFoundPage from './pages/NotFoundPage';
 import SEO from './components/SEO';
 
@@ -57,6 +58,7 @@ function App() {
           <Route path="/case-studies/:id" element={<CaseStudiesPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/recruitment" element={<RecruitmentPage />} />
+          <Route path="/dang-ky-lazada" element={<LazadaCampaign />} />
 
           {/* Admin Routes */}
           <Route path="/admin/login" element={<AdminLogin />} />

@@ -27,7 +27,12 @@ const setting_module_1 = require("./setting/setting.module");
 const auth_module_1 = require("./auth/auth.module");
 const ai_module_1 = require("./ai/ai.module");
 const recruitment_module_1 = require("./recruitment/recruitment.module");
+const health_module_1 = require("./health/health.module");
+const request_id_middleware_1 = require("./common/middleware/request-id.middleware");
 let AppModule = class AppModule {
+    configure(consumer) {
+        consumer.apply(request_id_middleware_1.RequestIdMiddleware).forRoutes('*');
+    }
 };
 exports.AppModule = AppModule;
 exports.AppModule = AppModule = __decorate([
@@ -61,6 +66,7 @@ exports.AppModule = AppModule = __decorate([
             auth_module_1.AuthModule,
             ai_module_1.AiModule,
             recruitment_module_1.RecruitmentModule,
+            health_module_1.HealthModule,
         ],
         controllers: [app_controller_1.AppController],
         providers: [

@@ -9,10 +9,12 @@ const path_1 = require("path");
 const app_module_1 = require("./app.module");
 const hbs_1 = __importDefault(require("hbs"));
 const helmet_1 = __importDefault(require("helmet"));
+const http_logging_interceptor_1 = require("./common/interceptors/http-logging.interceptor");
 async function bootstrap() {
     const app = await core_1.NestFactory.create(app_module_1.AppModule);
     app.use((0, helmet_1.default)());
     app.useGlobalPipes(new common_1.ValidationPipe({ whitelist: true, transform: true }));
+    app.useGlobalInterceptors(new http_logging_interceptor_1.HttpLoggingInterceptor());
     const allowedOrigins = process.env.ALLOWED_ORIGINS
         ? process.env.ALLOWED_ORIGINS.split(',').map((o) => o.trim())
         : ['http://localhost:5173', 'http://localhost:5174', 'http://localhost:3000'];

@@ -52,3 +52,7 @@ export class CaseStudy {
 }
 
 export const CaseStudySchema = SchemaFactory.createForClass(CaseStudy);
+
+CaseStudySchema.index({ isActive: 1, order: 1 });
+CaseStudySchema.index({ industry: 1, isActive: 1, order: 1 });
+CaseStudySchema.index({ createdAt: -1 });

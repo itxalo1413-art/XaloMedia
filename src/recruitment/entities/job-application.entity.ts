@@ -28,3 +28,7 @@ export class JobApplication {
 }
 
 export const JobApplicationSchema = SchemaFactory.createForClass(JobApplication);
+
+JobApplicationSchema.index({ createdAt: -1 });
+JobApplicationSchema.index({ jobId: 1, createdAt: -1 });
+JobApplicationSchema.index({ status: 1, createdAt: -1 });

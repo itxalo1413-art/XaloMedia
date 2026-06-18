@@ -5,6 +5,7 @@ import { join } from 'path';
 import { AppModule } from './app.module';
 import hbs from 'hbs';
 import helmet from 'helmet';
+import { HttpLoggingInterceptor } from './common/interceptors/http-logging.interceptor';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -16,6 +17,9 @@ async function bootstrap() {
   app.useGlobalPipes(
     new ValidationPipe({ whitelist: true, transform: true }),
   );
+
+  // Basic HTTP logging (JSON) with requestId correlation
+  app.useGlobalInterceptors(new HttpLoggingInterceptor());
 
   // CORS — read from ALLOWED_ORIGINS env var in production
   // e.g. ALLOWED_ORIGINS=https://xalomedia.vn,https://www.xalomedia.vn

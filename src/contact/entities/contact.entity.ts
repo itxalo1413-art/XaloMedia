@@ -43,3 +43,6 @@ export class Contact {
 }
 
 export const ContactSchema = SchemaFactory.createForClass(Contact);
+
+ContactSchema.index({ createdAt: -1 });
+ContactSchema.index({ status: 1, createdAt: -1 });

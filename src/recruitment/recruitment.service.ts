@@ -6,6 +6,10 @@ import { UpdateJobDto } from './dto/update-job.dto';
 import { Job, JobDocument } from './entities/job.entity';
 import { JobApplication, JobApplicationDocument } from './entities/job-application.entity';
 
+type PaginationParams = { limit?: number; page?: number };
+const DEFAULT_LIMIT = 20;
+const MAX_LIMIT = 100;
+
 @Injectable()
 export class RecruitmentService {
   constructor(
@@ -18,8 +22,18 @@ export class RecruitmentService {
     return createdJob.save();
   }
 
-  async findAll(): Promise<Job[]> {
-    return this.jobModel.find().sort({ createdAt: -1 }).exec();
+  async findAll(params: PaginationParams = {}): Promise<Job[]> {
+    const limit = clampLimit(params.limit);
+    const page = clampPage(params.page);
+    const skip = (page - 1) * limit;
+
+    return this.jobModel
+      .find()
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(limit)
+      .lean()
+      .exec() as unknown as Job[];
   }
 
   async findOne(id: string): Promise<Job> {
@@ -64,7 +78,28 @@ export class RecruitmentService {
     return application.save();
   }
 
-  async findAllApplications(): Promise<JobApplicationDocument[]> {
-    return this.applicationModel.find().sort({ createdAt: -1 }).populate('jobId').exec();
+  async findAllApplications(params: PaginationParams = {}): Promise<JobApplicationDocument[]> {
+    const limit = clampLimit(params.limit);
+    const page = clampPage(params.page);
+    const skip = (page - 1) * limit;
+
+    return this.applicationModel
+      .find()
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(limit)
+      .populate({ path: 'jobId', select: 'title slug createdAt' })
+      .lean()
+      .exec() as unknown as JobApplicationDocument[];
   }
+}
+
+function clampLimit(limit?: number) {
+  if (!Number.isFinite(limit) || !limit) return DEFAULT_LIMIT;
+  return Math.max(1, Math.min(MAX_LIMIT, Math.floor(limit)));
+}
+
+function clampPage(page?: number) {
+  if (!Number.isFinite(page) || !page) return 1;
+  return Math.max(1, Math.floor(page));
 }

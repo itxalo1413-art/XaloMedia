@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler';
@@ -18,6 +18,8 @@ import { SettingModule } from './setting/setting.module';
 import { AuthModule } from './auth/auth.module';
 import { AiModule } from './ai/ai.module';
 import { RecruitmentModule } from './recruitment/recruitment.module';
+import { HealthModule } from './health/health.module';
+import { RequestIdMiddleware } from './common/middleware/request-id.middleware';
 
 @Module({
   imports: [
@@ -50,6 +52,7 @@ import { RecruitmentModule } from './recruitment/recruitment.module';
     AuthModule,
     AiModule,
     RecruitmentModule,
+    HealthModule,
   ],
   controllers: [AppController],
   providers: [
@@ -61,4 +64,8 @@ import { RecruitmentModule } from './recruitment/recruitment.module';
     },
   ],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(RequestIdMiddleware).forRoutes('*');
+  }
+}

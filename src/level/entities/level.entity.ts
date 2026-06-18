@@ -23,3 +23,5 @@ export class Level {
 }
 
 export const LevelSchema = SchemaFactory.createForClass(Level);
+
+LevelSchema.index({ isActive: 1, order: 1 });

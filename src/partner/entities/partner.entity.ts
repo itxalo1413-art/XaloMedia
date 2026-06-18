@@ -25,3 +25,6 @@ export class Partner {
 }
 
 export const PartnerSchema = SchemaFactory.createForClass(Partner);
+
+PartnerSchema.index({ isActive: 1, order: 1 });
+PartnerSchema.index({ caseStudyId: 1 });

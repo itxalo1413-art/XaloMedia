@@ -22,3 +22,6 @@ export class Job {
 }
 
 export const JobSchema = SchemaFactory.createForClass(Job);
+
+JobSchema.index({ createdAt: -1 });
+JobSchema.index({ isActive: 1, createdAt: -1 });

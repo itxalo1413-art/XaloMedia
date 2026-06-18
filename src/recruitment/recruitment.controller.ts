@@ -1,10 +1,30 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, UseInterceptors, UploadedFile, BadRequestException } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UseGuards,
+  UseInterceptors,
+  UploadedFile,
+  BadRequestException,
+  Query,
+} from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { RecruitmentService } from './recruitment.service';
 import { CreateJobDto } from './dto/create-job.dto';
 import { UpdateJobDto } from './dto/update-job.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { UploadService } from '../upload/upload.service';
+
+const MAX_CV_SIZE_BYTES = 10 * 1024 * 1024; // 10MB
+const ALLOWED_CV_MIME_TYPES = new Set([
+  'application/pdf',
+  'application/msword',
+  'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+]);
 
 @Controller('recruitment')
 export class RecruitmentController {
@@ -20,8 +40,11 @@ export class RecruitmentController {
   }
 
   @Get()
-  findAll() {
-    return this.recruitmentService.findAll();
+  findAll(@Query('limit') limit?: string, @Query('page') page?: string) {
+    return this.recruitmentService.findAll({
+      limit: limit ? Number(limit) : undefined,
+      page: page ? Number(page) : undefined,
+    });
   }
 
   @Get(':id')
@@ -43,7 +66,17 @@ export class RecruitmentController {
 
   // ── Public: Submit Job Application ──────────────────────────────
   @Post(':id/apply')
-  @UseInterceptors(FileInterceptor('cv'))
+  @UseInterceptors(
+    FileInterceptor('cv', {
+      limits: { fileSize: MAX_CV_SIZE_BYTES },
+      fileFilter: (_req, file, cb) => {
+        if (!ALLOWED_CV_MIME_TYPES.has(file.mimetype)) {
+          return cb(new BadRequestException('Only PDF/DOC/DOCX are allowed'), false);
+        }
+        cb(null, true);
+      },
+    }),
+  )
   async apply(
     @Param('id') jobId: string,
     @UploadedFile() file: Express.Multer.File,
@@ -69,7 +102,10 @@ export class RecruitmentController {
   // ── Admin: View all applications ───────────────────────────────
   @UseGuards(JwtAuthGuard)
   @Get('applications/all')
-  findAllApplications() {
-    return this.recruitmentService.findAllApplications();
+  findAllApplications(@Query('limit') limit?: string, @Query('page') page?: string) {
+    return this.recruitmentService.findAllApplications({
+      limit: limit ? Number(limit) : undefined,
+      page: page ? Number(page) : undefined,
+    });
   }
 }

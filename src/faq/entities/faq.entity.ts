@@ -19,3 +19,6 @@ export class Faq {
 }
 
 export const FaqSchema = SchemaFactory.createForClass(Faq);
+
+FaqSchema.index({ isActive: 1, order: 1 });
+FaqSchema.index({ createdAt: -1 });

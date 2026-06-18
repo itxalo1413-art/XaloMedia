@@ -19,3 +19,5 @@ export class Industry {
 }
 
 export const IndustrySchema = SchemaFactory.createForClass(Industry);
+
+IndustrySchema.index({ isActive: 1, order: 1 });
