@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 import { setAccessToken } from '../../lib/auth';
+import { BASE_URL } from '../../lib/api';
 import { KeyRound, Mail, Loader2, ArrowRight } from 'lucide-react';
 
 export default function AdminLogin() {
@@ -9,8 +10,6 @@ export default function AdminLogin() {
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
-
-  const BASE_URL = import.meta.env.VITE_API_URL ?? 'http://localhost:3005/api';
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

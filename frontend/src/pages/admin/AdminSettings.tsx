@@ -4,6 +4,7 @@ import { Save, Info, Phone, Share2, Globe, MapPin } from 'lucide-react';
 import ImageUpload from '../../components/admin/ImageUpload';
 
 import { getAccessToken } from '../../lib/auth';
+import { BASE_URL } from '../../lib/api';
 
 export interface PageSeo {
   title: string;
@@ -83,9 +84,6 @@ export default function AdminSettingsPage() {
     popupImageUrl: '',
     popupLinkUrl: '',
   });
-
-  // Use environment variable for API URL just like the rest of the app
-  const BASE_URL = import.meta.env.VITE_API_URL ?? 'http://localhost:3005/api';
 
   useEffect(() => {
     fetchSettings();

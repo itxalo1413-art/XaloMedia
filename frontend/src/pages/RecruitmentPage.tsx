@@ -1,11 +1,9 @@
 import { useState, useEffect, useRef } from 'react';
-import { fetchJobs, type ApiJob } from '../lib/api';
+import { fetchJobs, BASE_URL, type ApiJob } from '../lib/api';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { Briefcase, MapPin, DollarSign, ChevronDown, ChevronUp, X, Upload, FileText } from 'lucide-react';
 import { toast } from 'sonner';
-
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3005/api/v1';
 
 export default function RecruitmentPage() {
   const [jobs, setJobs] = useState<ApiJob[]>([]);
@@ -77,7 +75,7 @@ export default function RecruitmentPage() {
       if (applicantPhone) formData.append('applicantPhone', applicantPhone);
       if (coverLetter) formData.append('coverLetter', coverLetter);
 
-      const res = await fetch(`${API_URL}/recruitment/${applyJobId}/apply`, {
+      const res = await fetch(`${BASE_URL}/recruitment/${applyJobId}/apply`, {
         method: 'POST',
         body: formData,
       });

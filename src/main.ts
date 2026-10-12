@@ -22,14 +22,23 @@ async function bootstrap() {
   app.useGlobalInterceptors(new HttpLoggingInterceptor());
 
   // CORS — read from ALLOWED_ORIGINS env var in production
-  // e.g. ALLOWED_ORIGINS=https://xalomedia.vn,https://www.xalomedia.vn
-  const allowedOrigins = process.env.ALLOWED_ORIGINS
+  // Automatically allows *.vercel.app, xalomedia.vn domains, and localhost
+  const configuredOrigins = process.env.ALLOWED_ORIGINS
     ? process.env.ALLOWED_ORIGINS.split(',').map((o) => o.trim())
     : ['http://localhost:5173', 'http://localhost:5174', 'http://localhost:3000'];
 
   app.enableCors({
-    origin: allowedOrigins,
-    methods: ['GET', 'POST', 'PATCH', 'PUT', 'DELETE'],
+    origin: (origin, callback) => {
+      if (!origin) return callback(null, true);
+
+      const isAllowed =
+        configuredOrigins.includes(origin) ||
+        /^https:\/\/[a-zA-Z0-9_.-]+\.vercel\.app$/.test(origin) ||
+        /^https:\/\/.*xalomedia\.vn$/.test(origin);
+
+      callback(null, isAllowed);
+    },
+    methods: ['GET', 'POST', 'PATCH', 'PUT', 'DELETE', 'OPTIONS'],
     credentials: true,
   });
 

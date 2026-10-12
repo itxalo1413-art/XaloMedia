@@ -15,12 +15,19 @@ async function bootstrap() {
     app.use((0, helmet_1.default)());
     app.useGlobalPipes(new common_1.ValidationPipe({ whitelist: true, transform: true }));
     app.useGlobalInterceptors(new http_logging_interceptor_1.HttpLoggingInterceptor());
-    const allowedOrigins = process.env.ALLOWED_ORIGINS
+    const configuredOrigins = process.env.ALLOWED_ORIGINS
         ? process.env.ALLOWED_ORIGINS.split(',').map((o) => o.trim())
         : ['http://localhost:5173', 'http://localhost:5174', 'http://localhost:3000'];
     app.enableCors({
-        origin: allowedOrigins,
-        methods: ['GET', 'POST', 'PATCH', 'PUT', 'DELETE'],
+        origin: (origin, callback) => {
+            if (!origin)
+                return callback(null, true);
+            const isAllowed = configuredOrigins.includes(origin) ||
+                /^https:\/\/[a-zA-Z0-9_.-]+\.vercel\.app$/.test(origin) ||
+                /^https:\/\/.*xalomedia\.vn$/.test(origin);
+            callback(null, isAllowed);
+        },
+        methods: ['GET', 'POST', 'PATCH', 'PUT', 'DELETE', 'OPTIONS'],
         credentials: true,
     });
     app.setGlobalPrefix('api');

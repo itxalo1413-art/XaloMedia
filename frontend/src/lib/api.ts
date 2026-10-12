@@ -1,4 +1,8 @@
-const BASE_URL = import.meta.env.VITE_API_URL ?? 'http://localhost:3005/api';
+export const BASE_URL =
+  import.meta.env.VITE_API_URL ||
+  (import.meta.env.PROD
+    ? 'https://api.xalomedia.vn/api'
+    : 'http://localhost:3005/api');
 import { getAccessToken, clearAccessToken } from './auth';
 
 async function apiFetch<T>(path: string, options?: RequestInit): Promise<T> {
@@ -138,9 +142,9 @@ export interface ApiJobApplication {
 // ─── Settings API ─────────────────────────────────────────────────────────────
 
 export const fetchSettings = () => apiFetch<any>('/v1/settings', { method: 'GET' });
-export const fetchAdminSettings = () => adminApiFetch<any>('/admin/settings', 'GET');
+export const fetchAdminSettings = () => adminApiFetch<any>('/v1/admin/settings', 'GET');
 export const updateAdminSettings = (payload: any) =>
-  adminApiFetch('/admin/settings', 'PATCH', payload);
+  adminApiFetch('/v1/admin/settings', 'PATCH', payload);
 
 // ─── Contact Management API ─────────────────────────────────────────────────────────────
 
