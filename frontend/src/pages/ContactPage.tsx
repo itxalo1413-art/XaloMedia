@@ -371,13 +371,13 @@ const ContactPage = () => {
                       color: 'var(--text-muted)',
                     }}
                   >
-                    <option value="">Chọn dịch vụ</option>
-                    <option value="livestream">Setup Livestream</option>
-                    <option value="kol">Booking KOLs / KOCs</option>
-                    <option value="content">Social Content</option>
-                    <option value="tiktok">TikTok Shop Management</option>
-                    <option value="branding">Brand Awareness</option>
-                    <option value="other">Khác</option>
+                    <option value="">Chọn dịch vụ quan tâm</option>
+                    <option value="kols-community-marketing">KOLs & Community Marketing</option>
+                    <option value="ecommerce-livestream">E-Commerce & Livestream</option>
+                    <option value="event-production">Event Production</option>
+                    <option value="product-sourcing-supply">Product Sourcing & Supply</option>
+                    <option value="performance-marketing-cro">Performance Marketing & CRO</option>
+                    <option value="other">Khác / Tư vấn tổng thể</option>
                   </select>
                 </div>
 

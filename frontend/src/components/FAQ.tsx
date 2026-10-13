@@ -5,7 +5,7 @@ const faqs = [
   {
     question: 'Xalo Media cung cấp những dịch vụ gì?',
     answer:
-      'Chúng tôi cung cấp dịch vụ Setup Livestream, Booking KOLs/KOCs, Brand Awareness và Brand Rejuvenation — giúp thương hiệu tối ưu chiến lược truyền thông số.',
+      'Xalo Media tập trung vào 5 mảng giải pháp trọng tâm: (1) KOLs & Community Marketing (Booking KOL/KOC, Fandom, MC); (2) E-Commerce & Livestream (Phiên live sàn TMĐT & Brand); (3) Event Production (Tổ chức sự kiện trọn gói mọi quy mô); (4) Product Sourcing & Supply (Cung ứng & tìm kiếm nguồn hàng); và (5) Performance Marketing & CRO (Chạy Ads, SEO tối ưu chuyển đổi).',
   },
   {
     question: 'Chi phí booking KOLs/KOCs như thế nào?',

@@ -36,88 +36,74 @@ export class SeedService implements OnApplicationBootstrap {
   private async seedServices() {
     const services = [
       {
-        title: 'Setup Livestream',
-        slug: 'setup-livestream',
-        description: 'Giải pháp livestream chuyên nghiệp từ thiết bị, bối cảnh đến kịch bản — giúp thương hiệu tạo dấu ấn mạnh mẽ trên mọi nền tảng.',
-        details: 'Xalo Media cung cấp giải pháp livestream trọn gói giúp doanh nghiệp bứt phá doanh thu trên các nền tảng Shopee, TikTok, Facebook. Chúng tôi tập trung vào trải nghiệm khách hàng và tối ưu hóa chuyển đổi thông qua công nghệ hiện đại.',
+        title: 'KOLs & Community Marketing',
+        slug: 'booking-kol-koc',
+        description: 'Kết nối thương hiệu với mạng lưới KOLs/KOCs đa tầng, xây dựng và quản trị Group cộng đồng, Fandom và cung cấp MC chuyên nghiệp.',
+        details: 'Xalo Media kết nối thương hiệu với hơn 10.000+ KOLs/KOCs uy tín từ Nano, Micro đến Mega Influencer. Chúng tôi đồng thời phát triển và vận hành hệ thống Community, Group cộng đồng, Fandom chuyên biệt cùng đội ngũ MC dẫn dắt giàu năng lượng, giúp gia tăng tối đa mức độ tin cậy và gắn kết của khách hàng.',
         highlights: [
-          'Thi công bối cảnh 3D/thực tế',
-          'Hệ thống âm thanh & ánh sáng chuẩn studio',
-          'Kịch bản tăng tỷ lệ chốt đơn',
-          'Kỹ thuật viên hỗ trợ 24/7'
+          'Mạng lưới 10,000+ KOLs / KOCs đa tầng',
+          'Quản trị & phát triển Community, Group, Fandom',
+          'Cung cấp MC sự kiện & Host livestream chuyên nghiệp',
+          'Cam kết KPI, hợp đồng minh bạch & đo lường realtime'
         ],
-        image: 'setupLive.png',
+        image: 'service-booking-kol.jpg',
         order: 1
       },
       {
-        title: 'Booking KOCs, KOLs',
-        slug: 'booking-kol-koc',
-        description: 'Kết nối thương hiệu với mạng lưới hàng ngàn KOLs/KOCs uy tín, phù hợp ngành hàng và ngân sách.',
-        details: 'Dịch vụ booking chuyên nghiệp giúp kết nối thương hiệu với đúng đối tượng mục tiêu thông qua những gương mặt có tầm ảnh hưởng. Chúng tôi quản lý toàn bộ quy trình từ lựa chọn, thương thảo đến báo cáo kết quả.',
+        title: 'E-Commerce & Livestream',
+        slug: 'ecommerce-livestream',
+        description: 'Dịch vụ livestream bán hàng bùng nổ doanh số trên các sàn TMĐT và chiến dịch livestream độc quyền dành riêng cho các Brand lớn.',
+        details: 'Giải pháp E-commerce và Livestream trọn gói từ setup bối cảnh studio chuẩn truyền hình, kịch bản chốt đơn kích thích mua sắm, đến vận hành livestream đa nền tảng (TikTok Shop, Shopee, Lazada). Xalo Media giúp các nhãn hàng và sàn TMĐT tối ưu hóa GMV, chi phí và nâng cao tỷ lệ hoàn tất đơn hàng.',
         highlights: [
-          'Mạng lưới 5000+ KOLs/KOCs',
-          'Đo lường hiệu quả chiến dịch realtime',
-          'Hợp đồng minh bạch, cam kết KPI',
-          'Phù hợp đa dạng ngành hàng'
+          'Livestream bán hàng chuẩn sàn (Shopee, TikTok, Lazada)',
+          'Mega Live độc quyền thiết kế riêng cho Brand',
+          'Hệ thống Studio, âm thanh ánh sáng chuẩn truyền hình',
+          'Kịch bản chốt đơn tối ưu GMV & giữ chân người xem'
         ],
-        image: 'booking.png',
+        image: 'service-ecommerce-live.jpg',
         order: 2
       },
       {
-        title: 'Brand Awareness',
-        slug: 'brand-awareness',
-        description: 'Chiến lược truyền thông đa kênh giúp thương hiệu tiếp cận đúng đối tượng, đúng thời điểm.',
-        details: 'Tăng cường sự hiện diện của thương hiệu trong tâm trí khách hàng thông qua các chiến dịch truyền thông sáng tạo và chiến lược. Chúng tôi giúp bạn kể câu chuyện thương hiệu một cách đầy cảm hứng.',
+        title: 'Event Production',
+        slug: 'event-production',
+        description: 'Outsource trọn gói tổ chức sự kiện cho doanh nghiệp ở tất cả các quy mô — từ workshop, activation đến đại nhạc hội.',
+        details: 'Xalo Media cung cấp dịch vụ tổ chức sự kiện chuyên nghiệp đáp ứng mọi quy mô. Chúng tôi đảm nhận toàn bộ quy trình: lên ý tưởng sáng tạo, thiết kế không gian sân khấu, thi công dàn dựng âm thanh - ánh sáng - visual LED, điều phối nghệ sĩ/KOL và quản lý vận hành hiện trường an toàn, chỉn chu.',
         highlights: [
-          'Chiến dịch viral đa nền tảng',
-          'Tối ưu hóa ngân sách quảng cáo',
-          'Sáng tạo thông điệp độc bản',
-          'Phủ sóng thương hiệu diện rộng'
+          'Outsource trọn gói sự kiện từ A đến Z',
+          'Đáp ứng mọi quy mô: Activation, Hội nghị, Mega Event',
+          'Ý tưởng sáng tạo, thiết kế sân khấu & visual đỉnh cao',
+          'Kỹ thuật âm thanh - ánh sáng hiện đại & quản trị rủi ro'
         ],
-        image: 'brandAw.png',
+        image: 'service-event-production.jpg',
         order: 3
       },
       {
-        title: 'Brand Rejuvenation',
-        slug: 'brand-rejuvenation',
-        description: 'Làm mới hình ảnh thương hiệu với chiến lược sáng tạo, tái định vị để bứt phá thị trường.',
-        details: 'Giúp các thương hiệu lâu đời tìm lại vị thế và sức hút đối với tệp khách hàng trẻ. Chúng tôi kết hợp giữa giá trị truyền thống và xu hướng hiện đại để tạo nên sự đột phá.',
+        title: 'Product Sourcing & Supply',
+        slug: 'cung-ung-san-pham',
+        description: 'Dịch vụ cung ứng và tìm kiếm nguồn hàng chất lượng cao (Sourcing), kết nối sản phẩm uy tín cho Creator và Brand.',
+        details: 'Dịch vụ cung ứng của Xalo Media là cầu nối bền vững giữa nhà sản xuất trực tiếp, các thương hiệu và mạng lưới nhà bán hàng/KOLs. Chúng tôi hỗ trợ sourcing sản phẩm hot trend, kiểm soát chất lượng, tối ưu giá vốn và quản lý chuỗi cung ứng, hoàn tất đơn hàng (fulfillment) trơn tru cho mọi chiến dịch bán lẻ.',
         highlights: [
-          'Tái định vị hình ảnh hiện đại',
-          'Tiếp cận phân khúc khách hàng mới',
-          'Cải tổ chiến lược nội dung',
-          'Giữ vững giá trị cốt lõi'
+          'Dịch vụ cung ứng hàng hóa cho Creator, Seller & Brand',
+          'Tìm kiếm & chọn lọc nguồn hàng (Sourcing) độc quyền giá tốt',
+          'Kết nối trực tiếp Nhà máy sản xuất với Kênh phân phối',
+          'Quản lý chuỗi cung ứng, kho bãi & fulfillment chuẩn xác'
         ],
-        image: 'brandRejuvenation.png',
+        image: 'service-product-supply.jpg',
         order: 4
       },
       {
-        title: 'TikTok Shop Management',
-        slug: 'tiktok-shop-management',
-        description: 'Quản lý toàn diện TikTok Shop — từ onboarding sản phẩm, tối ưu listing đến chăm sóc đơn hàng.',
-        details: 'Giải pháp quản lý toàn diện giúp doanh nghiệp tối ưu nguồn lực và tập trung vào sản phẩm. Xalo Media xử lý mọi khâu từ đăng tải sản phẩm đến chăm sóc khách hàng trên TikTok Shop.',
+        title: 'Performance Marketing & CRO',
+        slug: 'tang-ty-le-chuyen-doi',
+        description: 'Thúc đẩy doanh thu thông qua Performance Ads đa kênh và SEO tổng thể — biến lưu lượng truy cập thành khách hàng thực tế.',
+        details: 'Tập trung vào giá trị chuyển đổi cuối cùng thay vì số liệu ảo. Xalo Media triển khai chiến dịch quảng cáo chuyển đổi hiệu năng cao (TikTok Ads, Facebook Ads, Google Ads) kết hợp chiến lược SEO tổng thể bền vững. Chúng tôi tối ưu hóa từng điểm chạm trong phễu mua hàng (CRO, Landing Page) để tối đa hóa doanh thu trên từng đồng chi phí.',
         highlights: [
-          'Vận hành đơn hàng chuyên nghiệp',
-          'Tối ưu hóa SEO sản phẩm',
-          'Quản lý Affiliate & Creator',
-          'Báo cáo chỉ số tăng trưởng'
+          'Chạy Performance Ads tối ưu chuyển đổi (TikTok, Meta, Google)',
+          'Chiến lược SEO tổng thể đưa từ khóa lên top bền vững',
+          'Tối ưu hóa phễu mua hàng & Landing Page (CRO chuyên sâu)',
+          'Phân tích dữ liệu người dùng, remarketing tăng trưởng ROI'
         ],
-        image: 'about-livestream.png',
+        image: 'service-conversion-growth.jpg',
         order: 5
-      },
-      {
-        title: 'Social Content',
-        slug: 'social-content',
-        description: 'Sản xuất nội dung sáng tạo đa nền tảng — Reels, TikTok, YouTube Shorts.',
-        details: 'Sản xuất nội dung "chạm" đúng cảm xúc người xem. Chúng tôi biến người theo dõi thành khách hàng trung thành thông qua những nội dung giá trị và sáng tạo không ngừng.',
-        highlights: [
-          'Video ngắn (Reels, TikTok) trendy',
-          'Thiết kế đồ họa chuẩn nhận diện',
-          'Quản lý fanpage chuyên nghiệp',
-          'Tương tác khách hàng chủ động'
-        ],
-        image: 'about-content.png',
-        order: 6
       },
     ];
 
@@ -188,7 +174,7 @@ export class SeedService implements OnApplicationBootstrap {
     ]);
 
     const lvlMega = await findObj(this.levelModel, { slug: 'mega-campaign' });
-    const svcSetup = await findObj(this.serviceModel, { slug: 'setup-livestream' });
+    const svcSetup = (await findObj(this.serviceModel, { slug: 'ecommerce-livestream' })) || (await findObj(this.serviceModel, { slug: 'setup-livestream' }));
     const svcBooking = await findObj(this.serviceModel, { slug: 'booking-kol-koc' });
 
     const caseStudies = [
@@ -289,7 +275,7 @@ export class SeedService implements OnApplicationBootstrap {
     const count = await this.faqModel.countDocuments();
     if (count > 0) return;
     await this.faqModel.insertMany([
-      { question: 'Xalo Media cung cấp những dịch vụ gì?', answer: 'Chúng tôi cung cấp: Setup Livestream, Booking KOLs/KOCs, Brand Awareness, Brand Rejuvenation, TikTok Shop Management và Social Content Production.', order: 1 },
+      { question: 'Xalo Media cung cấp những dịch vụ gì?', answer: 'Chúng tôi cung cấp 5 mảng giải pháp trọng tâm: (1) KOLs & Community Marketing (Booking KOL/KOC, Fandom, MC); (2) E-Commerce & Livestream (Phiên live sàn TMĐT & Brand); (3) Event Production (Tổ chức sự kiện trọn gói mọi quy mô); (4) Product Sourcing & Supply (Cung ứng & tìm kiếm nguồn hàng); và (5) Performance Marketing & CRO (Chạy Ads, SEO tối ưu chuyển đổi).', order: 1 },
       { question: 'Thời gian triển khai một chiến dịch trung bình là bao lâu?', answer: 'Tùy theo quy mô chiến dịch, thông thường từ 1–4 tuần. Các chiến dịch lớn có thể kéo dài 1–3 tháng.', order: 2 },
       { question: 'Làm thế nào để bắt đầu hợp tác với Xalo Media?', answer: 'Bạn chỉ cần điền form liên hệ hoặc gọi hotline 078 668 8149. Đội ngũ sẽ phản hồi trong vòng 24 giờ.', order: 3 },
       { question: 'Xalo Media có kinh nghiệm với ngành hàng của tôi không?', answer: 'Chúng tôi đã hợp tác với 500+ thương hiệu thuộc nhiều lĩnh vực: FMCG, Thời trang, Công nghệ, Fintech, F&B, Hàng không và nhiều hơn nữa.', order: 4 },

@@ -8,13 +8,65 @@ import FloatingCTA from '../components/FloatingCTA';
 import { ScrollReveal, ScrollReveal3D } from '../hooks/useScrollReveal';
 import PartnerLogos from '../components/PartnerLogos';
 
+const DEFAULT_SERVICES: ApiService[] = [
+  {
+    _id: '1',
+    title: 'KOLs & Community Marketing',
+    slug: 'booking-kol-koc',
+    description: 'Kết nối thương hiệu với mạng lưới KOLs/KOCs đa tầng, xây dựng và quản trị Group cộng đồng, Fandom và cung cấp MC chuyên nghiệp.',
+    image: 'service-booking-kol.jpg',
+    order: 1,
+    isActive: true,
+  },
+  {
+    _id: '2',
+    title: 'E-Commerce & Livestream',
+    slug: 'ecommerce-livestream',
+    description: 'Dịch vụ livestream bán hàng bùng nổ doanh số trên các sàn TMĐT và chiến dịch livestream độc quyền dành riêng cho các Brand lớn.',
+    image: 'service-ecommerce-live.jpg',
+    order: 2,
+    isActive: true,
+  },
+  {
+    _id: '3',
+    title: 'Event Production',
+    slug: 'event-production',
+    description: 'Outsource trọn gói tổ chức sự kiện cho doanh nghiệp ở tất cả các quy mô — từ workshop, activation đến đại nhạc hội.',
+    image: 'service-event-production.jpg',
+    order: 3,
+    isActive: true,
+  },
+  {
+    _id: '4',
+    title: 'Product Sourcing & Supply',
+    slug: 'cung-ung-san-pham',
+    description: 'Dịch vụ cung ứng và tìm kiếm nguồn hàng chất lượng cao (Sourcing), kết nối sản phẩm uy tín cho Creator và Brand.',
+    image: 'service-product-supply.jpg',
+    order: 4,
+    isActive: true,
+  },
+  {
+    _id: '5',
+    title: 'Performance Marketing & CRO',
+    slug: 'tang-ty-le-chuyen-doi',
+    description: 'Thúc đẩy doanh thu thông qua Performance Ads đa kênh và SEO tổng thể — biến lưu lượng truy cập thành khách hàng thực tế.',
+    image: 'service-conversion-growth.jpg',
+    order: 5,
+    isActive: true,
+  },
+];
+
 const About = () => {
   const navigate = useNavigate();
-  const [services, setServices] = useState<ApiService[]>([]);
+  const [services, setServices] = useState<ApiService[]>(DEFAULT_SERVICES);
 
   useEffect(() => {
     fetchServices()
-      .then((data) => setServices(data))
+      .then((data) => {
+        if (data && data.length > 0) {
+          setServices(data);
+        }
+      })
       .catch((err) => console.error('Error fetching services:', err));
   }, []);
 
@@ -213,7 +265,7 @@ const About = () => {
                   className="leading-relaxed mb-6 text-[0.9rem]"
                   style={{ color: 'var(--text-muted)' }}
                 >
-                  Chúng tôi không chỉ cung cấp dịch vụ, chúng tôi làm chủ mọi điểm chạm từ Influencer, Livestream đến Content Marketing để đưa thương hiệu đi đúng hướng. <br/> Bằng tư duy thực thi quyết liệt và khả năng tối ưu hóa dữ liệu, XaloM cam kết mang lại những giải pháp được thiết kế riêng biệt, đảm bảo mọi nguồn lực đầu tư đều chuyển hóa thành giá trị tăng trưởng bền vững.
+                  Chúng tôi không chỉ cung cấp dịch vụ, chúng tôi làm chủ mọi điểm chạm từ KOLs & Community Marketing, E-Commerce & Livestream, Event Production, Product Sourcing & Supply đến Performance Marketing & CRO để đưa thương hiệu đi đúng hướng. <br/> Bằng tư duy thực thi quyết liệt và khả năng tối ưu hóa dữ liệu, XaloM cam kết mang lại những giải pháp được thiết kế riêng biệt, đảm bảo mọi nguồn lực đầu tư đều chuyển hóa thành giá trị tăng trưởng bền vững.
                 </p>
               </div>
               <ScrollReveal3D variant="right" className="flex-1">
@@ -451,7 +503,7 @@ const About = () => {
               >
                 <div
                   className="group rounded-2xl overflow-hidden transition-all duration-500 h-full flex flex-col cursor-pointer"
-                  onClick={() => navigate('/services')}
+                  onClick={() => navigate('/#services')}
                   style={{
                     backgroundColor: 'var(--bg-card)',
                     border: '1px solid var(--card-border)',
@@ -459,7 +511,11 @@ const About = () => {
                 >
                   <div className="relative h-[180px] overflow-hidden shrink-0">
                     <img
-                      src={service.image}
+                      src={
+                        service.image.startsWith('http') || service.image.startsWith('/')
+                          ? service.image
+                          : `/${service.image}`
+                      }
                       alt={service.title}
                       className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                     />

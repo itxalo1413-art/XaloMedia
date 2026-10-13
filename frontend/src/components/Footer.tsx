@@ -1,7 +1,7 @@
 const FacebookIcon = () => (
   <svg
-    width="24"
-    height="24"
+    width="22"
+    height="22"
     viewBox="0 0 24 24"
     fill="currentColor"
     xmlns="http://www.w3.org/2000/svg"
@@ -10,11 +10,10 @@ const FacebookIcon = () => (
   </svg>
 );
 
-
 const InstagramIcon = () => (
   <svg
-    width="24"
-    height="24"
+    width="22"
+    height="22"
     viewBox="0 0 24 24"
     fill="none"
     stroke="currentColor"
@@ -30,162 +29,182 @@ const InstagramIcon = () => (
 );
 
 const Footer = () => (
-  <footer className="w-full bg-[#00406E] text-white pt-20 pb-10">
-    <div className="max-w-[1200px] mx-auto px-5">
-      {/* Top Part */}
-      <div className="grid grid-cols-1 md:grid-cols-12 gap-10 mb-20">
-        <div className="md:col-span-5">
-          <div className="flex items-center mb-6">
-            <div className="w-16 h-16 flex items-center justify-center">
+  <footer className="w-full bg-[#00406E] text-white pt-16 pb-8">
+    <div className="max-w-[1240px] mx-auto px-5">
+      {/* Top 4-Column Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-10 mb-12">
+        {/* Col 1: Brand & Intro */}
+        <div className="md:col-span-5 text-left">
+          <div className="flex items-center gap-3 mb-5">
+            <div className="w-12 h-12 flex items-center justify-center bg-white/10 rounded-xl p-1.5 backdrop-blur-sm border border-white/15">
               <img
-                className="w-2/3 h-2/3 object-contain"
+                className="w-full h-full object-contain"
                 src="/LogoXalo.png"
-                alt="Logo"
+                alt="Logo Xalo Media"
               />
             </div>
-            <span className="text-2xl font-bold tracking-tight text-white">
-              xalo
-              <span className="opacity-100 font-bold text-[#5BC0F8]">
-                .media
+            <div>
+              <span className="text-2xl font-bold tracking-tight text-white block leading-tight">
+                xalo<span className="text-[#5BC0F8]">.media</span>
               </span>
-            </span>
+              <span className="text-[11px] text-white/50 tracking-wider uppercase font-semibold">
+                Creative & Growth Agency
+              </span>
+            </div>
           </div>
-          <h3 className="text-xl font-bold mb-5 text-white/95 text-left">
-            Agency
-          </h3>
-          <p className="opacity-70 leading-relaxed max-w-sm text-[0.98rem] text-left">
-            Deliver what you need, Achieve what you want. Đồng hành cùng thương
-            hiệu từ chiến lược đến thực thi — mạng lưới 10,000+ KOLs/KOCs,
-            livestream, content và brand partnership toàn diện.
+          
+          <p className="text-white/70 leading-relaxed max-w-sm text-sm">
+            Deliver what you need, Achieve what you want. Đồng hành cùng thương hiệu từ chiến lược đến thực thi — mạng lưới 10,000+ KOLs/KOCs, livestream, content và brand partnership toàn diện.
           </p>
         </div>
 
+        {/* Col 2: Dịch vụ */}
         <div className="md:col-span-2 text-left">
-          <h4 className="font-bold mb-8 text-base text-white/95">Dịch vụ</h4>
-          <ul className="space-y-4 opacity-70 text-sm font-medium list-none p-0 m-0">
+          <h4 className="font-bold mb-5 text-sm uppercase tracking-wider text-white">Dịch vụ</h4>
+          <ul className="space-y-3 text-white/70 text-sm font-medium list-none p-0 m-0">
             <li>
-              <a href="/#services" className="hover:text-[#5BC0F8] transition-colors">
-                Influencer Marketing
+              <a href="/#services" className="hover:text-[#5BC0F8] transition-colors block">
+                KOLs & Community
               </a>
             </li>
             <li>
-              <a href="/#services" className="hover:text-[#5BC0F8] transition-colors">
-                TikTok Management
+              <a href="/#services" className="hover:text-[#5BC0F8] transition-colors block">
+                E-Commerce & Livestream
               </a>
             </li>
             <li>
-              <a href="/#services" className="hover:text-[#5BC0F8] transition-colors">
-                Livestream Services
+              <a href="/#services" className="hover:text-[#5BC0F8] transition-colors block">
+                Event Production
               </a>
             </li>
             <li>
-              <a href="/#services" className="hover:text-[#5BC0F8] transition-colors">
-                Talent Booking
+              <a href="/#services" className="hover:text-[#5BC0F8] transition-colors block">
+                Product Sourcing & Supply
               </a>
             </li>
             <li>
-              <a href="/#services" className="hover:text-[#5BC0F8] transition-colors">
-                Content Creation
-              </a>
-            </li>
-            <li>
-              <a href="/#services" className="hover:text-[#5BC0F8] transition-colors">
-                Brand Partnership
+              <a href="/#services" className="hover:text-[#5BC0F8] transition-colors block">
+                Performance Marketing & CRO
               </a>
             </li>
           </ul>
         </div>
 
+        {/* Col 3: Công ty */}
         <div className="md:col-span-2 text-left">
-          <h4 className="font-bold mb-8 text-base text-white/95">Công ty</h4>
-          <ul className="space-y-4 opacity-70 text-sm font-medium list-none p-0 m-0">
+          <h4 className="font-bold mb-5 text-sm uppercase tracking-wider text-white">Công ty</h4>
+          <ul className="space-y-3 text-white/70 text-sm font-medium list-none p-0 m-0">
             <li>
-              <a
-                href="/about"
-                className="hover:text-[#5BC0F8] transition-colors"
-              >
+              <a href="/about" className="hover:text-[#5BC0F8] transition-colors block">
                 Giới thiệu
               </a>
             </li>
             <li>
-              <a
-                href="/case-studies"
-                className="hover:text-[#5BC0F8] transition-colors"
-              >
-                Dự án
+              <a href="/case-studies" className="hover:text-[#5BC0F8] transition-colors block">
+                Dự án tiêu biểu
               </a>
             </li>
-
             <li>
-              <a href="/recruitment" className="hover:text-[#5BC0F8] transition-colors">
+              <a href="/recruitment" className="hover:text-[#5BC0F8] transition-colors block">
                 Tuyển dụng
               </a>
             </li>
             <li>
-              <a
-                href="/contact"
-                className="hover:text-[#5BC0F8] transition-colors"
-              >
-                Liên hệ
+              <a href="/contact" className="hover:text-[#5BC0F8] transition-colors block">
+                Liên hệ hợp tác
               </a>
             </li>
           </ul>
         </div>
 
+        {/* Col 4: Thông tin liên hệ */}
         <div className="md:col-span-3 text-left">
-          <h4 className="font-bold mb-8 text-base text-white/95">
-            Thông tin Liên hệ
+          <h4 className="font-bold mb-5 text-sm uppercase tracking-wider text-white">
+            Liên hệ trực tiếp
           </h4>
-          <ul className="space-y-4 opacity-70 text-sm font-medium leading-relaxed list-none p-0 m-0">
-            <li>
-              <a
-                href="tel:0786688149"
-                className="hover:text-[#5BC0F8] transition-colors"
-              >
-                078 668 8149
-              </a>
+          <ul className="space-y-3 text-white/75 text-sm leading-relaxed list-none p-0 m-0">
+            <li className="flex items-start gap-2.5">
+              <span className="text-[#5BC0F8] mt-0.5">📞</span>
+              <div>
+                <a href="tel:0793159413" className="hover:text-[#5BC0F8] transition-colors font-medium">
+                  0793 159 413
+                </a>
+                <span className="text-white/40 mx-1.5">•</span>
+                <a href="tel:0786688149" className="hover:text-[#5BC0F8] transition-colors font-medium">
+                  078 668 8149
+                </a>
+              </div>
             </li>
-            <li>
-              <a
-                href="mailto:annanguyenn@xalomedia.vn"
-                className="hover:text-[#5BC0F8] transition-colors"
-              >
+            <li className="flex items-start gap-2.5">
+              <span className="text-[#5BC0F8] mt-0.5">✉️</span>
+              <a href="mailto:annanguyenn@xalomedia.vn" className="hover:text-[#5BC0F8] transition-colors">
                 annanguyenn@xalomedia.vn
               </a>
             </li>
-            <li>
-              250 Nguyễn Đình Chính, Phường Phú Nhuận, Thành Phố Hồ Chí Minh
+            <li className="flex items-start gap-2.5">
+              <span className="text-[#5BC0F8] mt-0.5">🏢</span>
+              <span>250 Nguyễn Đình Chính, Phường 11, Phú Nhuận, TP. Hồ Chí Minh</span>
             </li>
           </ul>
         </div>
       </div>
 
-      {/* Divider */}
-      <div className="border-t border-white/20 pt-8 flex flex-col md:flex-row justify-between items-center gap-6 text-white">
-        <div className="flex flex-col md:flex-row items-center gap-4 text-sm opacity-60">
-          <span>Copyright© 2026 XaloMedia. All Rights Reserved</span>
-          <div className="flex items-center gap-4">
-            <span className="hidden md:inline w-px h-4 bg-white/30"></span>
-            <a href="#" className="hover:text-white transition-colors">
-              Điều khoản sử dụng
-            </a>
-            <a href="#" className="hover:text-white transition-colors">
-              Chính sách bảo mật
-            </a>
-          </div>
+      {/* Middle Legal Block: Badge on Left, Info on Right */}
+      <div className="border-t border-white/15 pt-6 pb-6 flex flex-col md:flex-row items-center justify-between gap-6 text-white/70">
+        {/* Left: Bo Cong Thuong Official Badge */}
+        <div className="flex-shrink-0">
+          <a
+            href="http://online.gov.vn"
+            target="_blank"
+            rel="noopener noreferrer"
+            title="Đã thông báo Bộ Công Thương"
+            className="inline-block hover:opacity-90 transition-opacity"
+          >
+            <img
+              src="/bo-cong-thuong.png"
+              alt="Đã thông báo Bộ Công Thương"
+              className="h-11 sm:h-12 w-auto object-contain"
+            />
+          </a>
         </div>
 
-        <div className="flex gap-6 items-center">
+        {/* Right: Company Legal Information */}
+        <div className="text-center md:text-right max-w-2xl lg:max-w-3xl">
+          <p className="text-[12px] sm:text-[13px] leading-relaxed text-white/75">
+            CÔNG TY TNHH TRUYỀN THÔNG VÀ GIẢI TRÍ XA LỘ - GPĐKKD: 0316107165 cấp tại Thuế cơ sở 3 TP. Hồ Chí Minh.<br/> Địa chỉ văn phòng: 10/92 Kỳ Đồng, Phường Nhiêu Lộc, Thành phố Hồ Chí Minh, Việt Nam. Điện thoại: 0793 159 413.
+          </p>
+        </div>
+      </div>
+
+      {/* Bottom Copyright Bar */}
+      <div className="border-t border-white/10 pt-6 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-white/50">
+        <div className="flex flex-wrap items-center justify-center gap-4">
+          <span>Copyright © 2026 XaloMedia. All Rights Reserved.</span>
+          <span className="hidden md:inline w-px h-3 bg-white/20"></span>
+          <a href="#" className="hover:text-white transition-colors">
+            Điều khoản sử dụng
+          </a>
+          <span className="hidden md:inline w-px h-3 bg-white/20"></span>
+          <a href="#" className="hover:text-white transition-colors">
+            Chính sách bảo mật
+          </a>
+        </div>
+
+        <div className="flex gap-4 items-center">
           <a
             href="https://www.facebook.com/xalomedia.vn/"
-            className="opacity-60 hover:opacity-100 transition-opacity hover:text-[#5BC0F8]"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Facebook Xalo Media"
+            className="opacity-70 hover:opacity-100 hover:text-[#5BC0F8] transition-all"
           >
             <FacebookIcon />
           </a>
 
           <a
             href="#"
-            className="opacity-60 hover:opacity-100 transition-opacity hover:text-[#5BC0F8]"
+            aria-label="Instagram Xalo Media"
+            className="opacity-70 hover:opacity-100 hover:text-[#5BC0F8] transition-all"
           >
             <InstagramIcon />
           </a>
@@ -196,3 +215,4 @@ const Footer = () => (
 );
 
 export default Footer;
+

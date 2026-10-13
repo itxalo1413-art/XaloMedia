@@ -244,7 +244,25 @@ html.dark .theme-toggle .moon-icon {
     #0066aa
   );
   background-size: 400% 400%;
-  animation: hero-gradient-shift 12s ease infinite;
+  animation: hero-gradient-shift 26s ease infinite;
+}
+
+
+@keyframes progress-bar {
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 /* Hero Logo "xalo." impact intro */
@@ -767,7 +785,7 @@ html.dark .theme-toggle .moon-icon {
 @media (max-width: 1023px) {
   /* Gradient animation kept on mobile — slowed slightly for battery */
   .hero-gradient-bg {
-    animation-duration: 16s;
+    animation-duration: 32s;
   }
 
   /* Stop floating orbs */

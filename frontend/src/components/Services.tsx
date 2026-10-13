@@ -23,13 +23,16 @@ const CardInner = ({
   service: ServiceType;
 }) => {
   const navigate = useNavigate();
+  const imageUrl = service.image?.startsWith('http') || service.image?.startsWith('/')
+    ? service.image
+    : `/${service.image}`;
 
   return (
     <div className="relative w-full h-full group overflow-hidden bg-[#f5f5f3ff]">
       {/* Image Background Wrapper with 200px Top Padding and 20px Sides/Bottom */}
       <div className="absolute inset-0 pt-[200px] px-5 pb-5 z-0">
         <img
-          src={service.image}
+          src={imageUrl}
           alt={service.title}
           loading="eager"
           decoding="async"
@@ -40,18 +43,18 @@ const CardInner = ({
       </div>
 
       {/* Content */}
-      <div className="absolute inset-0 flex flex-col justify-end p-8 md:p-16 lg:p-24 z-10 max-w-5xl">
-        <div className="animate-in fade-in slide-in-from-bottom-12 duration-1000 ease-out">
+      <div className="absolute inset-x-5 bottom-5 top-[180px] md:top-[200px] flex flex-col justify-end p-6 md:p-12 lg:p-16 z-10 max-w-5xl pointer-events-none overflow-hidden">
+        <div className="pointer-events-auto animate-in fade-in slide-in-from-bottom-8 duration-700 ease-out">
           
-          <h2 className="text-4xl md:text-6xl lg:text-7xl font-black text-white mb-6 md:mb-8 leading-[1.1] tracking-tight animate-in fade-in slide-in-from-bottom-12 duration-1000 delay-150 ease-out fill-mode-both">
+          <h2 className="text-3xl md:text-5xl lg:text-6xl font-black text-white mb-4 md:mb-6 leading-[1.15] tracking-tight animate-in fade-in slide-in-from-bottom-8 duration-700 delay-100 ease-out fill-mode-both">
             {service.title}
           </h2>
 
-          <p className="text-white/80 text-base md:text-xl leading-relaxed mb-8 md:mb-12 max-w-2xl font-medium animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-300 ease-out fill-mode-both">
+          <p className="text-white/80 text-sm md:text-lg leading-relaxed mb-6 md:mb-8 max-w-2xl font-normal animate-in fade-in slide-in-from-bottom-6 duration-700 delay-200 ease-out fill-mode-both">
             {service.description}
           </p>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-3 gap-x-8 mb-10 md:mb-14 animate-in fade-in slide-in-from-bottom-6 duration-1000 delay-500 ease-out fill-mode-both">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-2.5 gap-x-6 mb-8 md:mb-10 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-300 ease-out fill-mode-both">
             {(service.highlights || []).map((h, i) => (
               <div key={i} className="flex items-center gap-3 group/item">
                 <div className="w-1.5 h-1.5 rounded-full bg-[#93D8FF] shadow-[0_0_12px_rgba(147,216,255,0.8)]" />
@@ -101,15 +104,82 @@ const CardInner = ({
   );
 };
 
+const DEFAULT_SERVICES: ServiceType[] = [
+  {
+    title: 'KOLs & Community Marketing',
+    description: 'Kết nối thương hiệu với mạng lưới KOLs/KOCs đa tầng, xây dựng và quản trị Group cộng đồng, Fandom và cung cấp MC chuyên nghiệp.',
+    details: 'Xalo Media kết nối thương hiệu với hơn 10.000+ KOLs/KOCs uy tín từ Nano, Micro đến Mega Influencer. Chúng tôi đồng thời phát triển và vận hành hệ thống Community, Group cộng đồng, Fandom chuyên biệt cùng đội ngũ MC dẫn dắt giàu năng lượng, giúp gia tăng tối đa mức độ tin cậy và gắn kết của khách hàng.',
+    highlights: [
+      'Mạng lưới 10,000+ KOLs / KOCs đa tầng',
+      'Quản trị & phát triển Community, Group, Fandom',
+      'Cung cấp MC sự kiện & Host livestream chuyên nghiệp',
+      'Cam kết KPI, hợp đồng minh bạch & đo lường realtime'
+    ],
+    image: 'service-booking-kol.jpg',
+  },
+  {
+    title: 'E-Commerce & Livestream',
+    description: 'Dịch vụ livestream bán hàng bùng nổ doanh số trên các sàn TMĐT và chiến dịch livestream độc quyền dành riêng cho các Brand lớn.',
+    details: 'Giải pháp E-commerce và Livestream trọn gói từ setup bối cảnh studio chuẩn truyền hình, kịch bản chốt đơn kích thích mua sắm, đến vận hành livestream đa nền tảng (TikTok Shop, Shopee, Lazada). Xalo Media giúp các nhãn hàng và sàn TMĐT tối ưu hóa GMV, chi phí và nâng cao tỷ lệ hoàn tất đơn hàng.',
+    highlights: [
+      'Livestream bán hàng chuẩn sàn (Shopee, TikTok, Lazada)',
+      'Mega Live độc quyền thiết kế riêng cho Brand',
+      'Hệ thống Studio, âm thanh ánh sáng chuẩn truyền hình',
+      'Kịch bản chốt đơn tối ưu GMV & giữ chân người xem'
+    ],
+    image: 'service-ecommerce-live.jpg',
+  },
+  {
+    title: 'Event Production',
+    description: 'Outsource trọn gói tổ chức sự kiện cho doanh nghiệp ở tất cả các quy mô — từ workshop, activation đến đại nhạc hội.',
+    details: 'Xalo Media cung cấp dịch vụ tổ chức sự kiện chuyên nghiệp đáp ứng mọi quy mô. Chúng tôi đảm nhận toàn bộ quy trình: lên ý tưởng sáng tạo, thiết kế không gian sân khấu, thi công dàn dựng âm thanh - ánh sáng - visual LED, điều phối nghệ sĩ/KOL và quản lý vận hành hiện trường an toàn, chỉn chu.',
+    highlights: [
+      'Outsource trọn gói sự kiện từ A đến Z',
+      'Đáp ứng mọi quy mô: Activation, Hội nghị, Mega Event',
+      'Ý tưởng sáng tạo, thiết kế sân khấu & visual đỉnh cao',
+      'Kỹ thuật âm thanh - ánh sáng hiện đại & quản trị rủi ro'
+    ],
+    image: 'service-event-production.jpg',
+  },
+  {
+    title: 'Product Sourcing & Supply',
+    description: 'Dịch vụ cung ứng và tìm kiếm nguồn hàng chất lượng cao (Sourcing), kết nối sản phẩm uy tín cho Creator và Brand.',
+    details: 'Dịch vụ cung ứng của Xalo Media là cầu nối bền vững giữa nhà sản xuất trực tiếp, các thương hiệu và mạng lưới nhà bán hàng/KOLs. Chúng tôi hỗ trợ sourcing sản phẩm hot trend, kiểm soát chất lượng, tối ưu giá vốn và quản lý chuỗi cung ứng, hoàn tất đơn hàng (fulfillment) trơn tru cho mọi chiến dịch bán lẻ.',
+    highlights: [
+      'Dịch vụ cung ứng hàng hóa cho Creator, Seller & Brand',
+      'Tìm kiếm & chọn lọc nguồn hàng (Sourcing) độc quyền giá tốt',
+      'Kết nối trực tiếp Nhà máy sản xuất với Kênh phân phối',
+      'Quản lý chuỗi cung ứng, kho bãi & fulfillment chuẩn xác'
+    ],
+    image: 'service-product-supply.jpg',
+  },
+  {
+    title: 'Performance Marketing & CRO',
+    description: 'Thúc đẩy doanh thu thông qua Performance Ads đa kênh và SEO tổng thể — biến lưu lượng truy cập thành khách hàng thực tế.',
+    details: 'Tập trung vào giá trị chuyển đổi cuối cùng thay vì số liệu ảo. Xalo Media triển khai chiến dịch quảng cáo chuyển đổi hiệu năng cao (TikTok Ads, Facebook Ads, Google Ads) kết hợp chiến lược SEO tổng thể bền vững. Chúng tôi tối ưu hóa từng điểm chạm trong phễu mua hàng (CRO, Landing Page) để tối đa hóa doanh thu trên từng đồng chi phí.',
+    highlights: [
+      'Chạy Performance Ads tối ưu chuyển đổi (TikTok, Meta, Google)',
+      'Chiến lược SEO tổng thể đưa từ khóa lên top bền vững',
+      'Tối ưu hóa phễu mua hàng & Landing Page (CRO chuyên sâu)',
+      'Phân tích dữ liệu người dùng, remarketing tăng trưởng ROI'
+    ],
+    image: 'service-conversion-growth.jpg',
+  },
+];
+
 // ─────────────────────────────────────────────
 // Main Services section
 // ─────────────────────────────────────────────
 const Services = () => {
-  const [services, setServices] = useState<ServiceType[]>([]);
+  const [services, setServices] = useState<ServiceType[]>(DEFAULT_SERVICES);
 
   useEffect(() => {
     fetchServices()
-      .then((data) => setServices(data))
+      .then((data) => {
+        if (data && data.length > 0) {
+          setServices(data);
+        }
+      })
       .catch((err) => console.error('Error fetching services:', err));
   }, []);
 
