@@ -39,7 +39,7 @@ const CaseStudyCard = ({
         >
           {imgSrc ? (
             <img
-              src={imgSrc}
+              src={imgSrc.startsWith('http') || imgSrc.startsWith('/') ? imgSrc : `/${imgSrc}`}
               alt={title}
               className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
             />
