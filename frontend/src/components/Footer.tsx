@@ -151,22 +151,7 @@ const Footer = () => (
 
       {/* Middle Legal Block: Badge on Left, Info on Right */}
       <div className="border-t border-white/15 pt-6 pb-6 flex flex-col md:flex-row items-center justify-between gap-6 text-white/70">
-        {/* Left: Bo Cong Thuong Official Badge */}
-        <div className="flex-shrink-0">
-          <a
-            href="http://online.gov.vn"
-            target="_blank"
-            rel="noopener noreferrer"
-            title="Đã thông báo Bộ Công Thương"
-            className="inline-block hover:opacity-90 transition-opacity"
-          >
-            <img
-              src="/bo-cong-thuong.png"
-              alt="Đã thông báo Bộ Công Thương"
-              className="h-11 sm:h-12 w-auto object-contain"
-            />
-          </a>
-        </div>
+
 
         {/* Right: Company Legal Information */}
         <div className="text-center md:text-right max-w-2xl lg:max-w-3xl">
